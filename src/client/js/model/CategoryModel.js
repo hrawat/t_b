@@ -1,6 +1,3 @@
-/**
- * Category - id, name, shared with whom?, total tasks, completed tasks, overdue tasks (?)
- */
 
 if (typeof(TaskBoard) == "undefined") {
     TaskBoard = {};
@@ -19,7 +16,7 @@ TaskBoard.CategoryModel = {
             "imageURL" : imageURL,
             "colorHexCode" : colorHexCode,
             "sharedWith" : sharedWith
-        }
+        };
         allCategories = this._allCategories();
         allCategories.push(category);
         this._saveAllCategories(allCategories);

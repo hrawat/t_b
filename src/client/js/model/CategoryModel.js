@@ -72,7 +72,7 @@ TaskBoard.CategoryModel = {
         return this._allCategories();
     },
 
-    changeCategoryPosition: function(categoryId, position) {
+    changePosition: function(categoryId, position) {
         var existingCategories, allCategories;
         var categoryAtPosition, toMoveCategoryPosition, toMoveCategory;
         var currPtr, index;
@@ -92,7 +92,7 @@ TaskBoard.CategoryModel = {
 
         allCategories = new Array();
         currPtr = 0;
-        for (index=0; existingCategories.length; index++) {
+        for (index=0; index < existingCategories.length; index++) {
             if (index == position) {
                 allCategories[currPtr++] = toMoveCategory;
                 allCategories[currPtr++] = existingCategories[index];

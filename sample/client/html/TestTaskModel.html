@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Task model test page</title>
+    <script type="text/javascript" src="../lib/jquery-1.7.2.js" > </script>
+</head>
+<body>
+<h1> Task model test
+    <page></page></h1>
+<form id="createTaskForm">
+    <input id="taskId" type="hidden" value="" />
+    <table id="createTaskFormTable">
+        <tr>
+            <td>
+                <label for="taskTitle" size="100">Title: </label>
+            </td>
+            <td>
+                <input id="taskTitle" type="text" />
+            </td>
+        </tr>
+        <tr style="vertical-align: top">
+            <td>
+                <label for="taskDescription" >Description:</label>
+            </td>
+            <td>
+                <textarea id="taskDescription" rows="4" size="100">  </textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="taskCategory">Category:</label>
+            </td>
+            <td>
+                <select id="taskCategory">
+                    <option value="personal">Personal</option>
+                    <option vakue="work">Task Management</option>
+                    <option vakue="tastMgmt">Task Management</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="taskCompleteBy" > Complete By:</label>
+            </td>
+            <td>
+                <select id="taskCompleteBy">
+                    <option value="today">Today</option>
+                    <option value="tomorrow">Tomorrow</option>
+                    <option vakue="thisWeek">This Week</option>
+                    <option value="later">Later</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr><td><br /></td></tr>
+        <tr>
+            <td></td>
+            <td>
+                <input id="submitTaskForm" type="submit" value="Create Task"/>
+            </td>
+        </tr>
+
+    </table>
+
+</form>
+
+<h2> List of Tasks </h2>
+<table id="listOfTasks" border="2">
+    <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Complete By</th>
+        <th></th>
+    </tr>
+
+</table>
+
+<script type="text/javascript" src="../utils/Utils.js" > </script>
+<script type="text/javascript" src="../lib/json2.js" > </script>
+<script type="text/javascript" src="../model/TaskListModel.js" > </script>
+<script type="text/javascript" src="../model/TaskModel.js" > </script>
+<script type="text/javascript">
+
+    function resetTaskForm(taskId, task, description, category, completeBy) {
+        $("#taskId").val(taskId);
+        $("#taskTitle").val(task);
+        $("#taskDescription").val(description);
+        $("#taskCategory").val(category);
+        $("#taskCompleteBy").val(completeBy);
+    }
+
+    function populateListOfTasksTable() {
+        var tasks = TaskBoard.TaskListModel.getAllTasks();
+
+        jQuery.each(tasks, function(index, task) {
+            var taskEntry = "<tr ><td><input id='{0}' type='checkbox' checked='true' value='false'/></td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>".format(task.id, task.title, task.description, task.category, task.completeBy);
+            $('#listOfTasks tr:last').after(taskEntry);
+        });
+        $("#listOfTasks input:checkbox").attr("checked", false);
+
+        $("#listOfTasks input:checkbox").click(function(){
+            var taskId = $(this).attr("id");
+            var checkedValue = $(this).attr("checked");
+            var task;
+            if (checkedValue == undefined) {
+                resetTaskForm('','', '', '', '');
+                $("#submitTaskForm").attr("value", "Create Task");
+            } else {
+                task = TaskBoard.TaskModel.get(taskId);
+                resetTaskForm(taskId, task.title, task.description, task.category, task.completeBy);
+                $("#submitTaskForm").attr("value", "Edit Task");
+            }
+        })
+    }
+
+    function setTaskListHandler() {
+        $("#listOfTasks ")
+    }
+
+    function setTaskSubmitFormHandler() {
+        $("#createTaskForm").submit(function() {
+            var taskId = $("#taskId").val();
+            var title = $("#taskTitle").val();
+            var description = $("#taskDescription").val();
+            var category  = $("#taskCategory").val();
+            var completeBy = $("#taskCompleteBy").val();
+
+            if ($("#submitTaskForm").attr("value") == "Create Task") {
+                TaskBoard.TaskModel.create(title, description, category, completeBy);
+            } else {
+                TaskBoard.TaskModel.save(taskId, title, description, category, completeBy);
+            }
+
+
+        });
+    };
+
+    $(document).ready(function() {
+        setTaskSubmitFormHandler();
+        populateListOfTasksTable();
+    });
+
+</script>
+
+</body>
+</html>

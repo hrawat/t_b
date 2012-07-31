@@ -5,11 +5,18 @@ function setUp() {
 QUnit.testStart(setUp);
 
 test('testCategoryModel()', function() {
-    var homeCategoryId, workCategoryId, categories;
+    var homeCategoryId, homeCategory, workCategoryId, categories;
 
     // Create home category
     homeCategoryId = TaskBoard.CategoryModel.create("Home", "home.png", "0xff000000", null);
     ok(homeCategoryId != null, 'category id is not null');
+
+    homeCategory = TaskBoard.CategoryModel.get(homeCategoryId);
+    ok(homeCategory.categoryId == homeCategoryId, "task id matches");
+    ok(homeCategory.name == "Home", "name matches");
+    ok(homeCategory.imageURL == "home.png", "imageURL matches");
+
+
 
     categories = TaskBoard.CategoryModel.list();
     ok(categories.length ==1, "list returns one entry");
@@ -53,6 +60,81 @@ test('testGetDate()', function() {
     later = TaskBoard.TaskModel._getDate(refDate, TaskBoard.TaskModel.LATER);
 
     ok((today.getDate() == 26) && (today.getMonth() == 7) && (today.getFullYear() == 2012), "today's calculation is correct");
+
+
+});
+
+test('testTaskModel()', function() {
+    var orderDinnerTask, orderDinnerTaskId, today, tomorrow;
+
+    today = new Date();
+    tomorrow = TaskBoard.TaskModel._getDate(today, TaskBoard.TaskModel.TOMORROW);
+
+    // Create task
+    orderDinnerTaskId = TaskBoard.TaskModel.create("Order Dinner", "Call XXX-XXX-XXXX",
+                                                "homeCategoryId", TaskBoard.TaskModel.TODAY);
+
+    ok(orderDinnerTaskId != null, "task id for order dinner task is not null");
+
+    orderDinnerTask = TaskBoard.TaskModel.get(orderDinnerTaskId);
+    ok(orderDinnerTask.title == "Order Dinner", "task title matches");
+    ok(orderDinnerTask.description == "Call XXX-XXX-XXXX", "task description matches");
+    ok(orderDinnerTask.categoryId == "homeCategoryId", "category id matches");
+    ok(orderDinnerTask.status == TaskBoard.TaskModel.TASK_STATUS_ACTIVE, "task status is active");
+    ok((orderDinnerTask.creationDate.getDate() == today.getDate()) &&
+                                    (today.getMonth() == today.getMonth()) &&
+                                    (today.getFullYear() == today.getFullYear()), "task creation date is correct");
+    ok(orderDinnerTask.completionDate.getDate() == today.getDate(), "task completion date is correct");
+
+    // Save task - move to tomorrow
+    TaskBoard.TaskModel.save(orderDinnerTaskId, "Order Dinner", "Call XXX-XXX-XXXX",
+                                                            "homeCategoryId", TaskBoard.TaskModel.TOMORROW);
+    orderDinnerTask = TaskBoard.TaskModel.get(orderDinnerTaskId);
+    ok((orderDinnerTask.completionDate.getDate() == tomorrow.getDate()) &&
+        (orderDinnerTask.completionDate.getMonth() == tomorrow.getMonth()) &&
+        (orderDinnerTask.completionDate.getFullYear() == tomorrow.getFullYear()), "task completion date is correct");
+
+    // Mark task as completed
+    TaskBoard.TaskModel.complete(orderDinnerTaskId);
+    orderDinnerTask = TaskBoard.TaskModel.get(orderDinnerTaskId);
+    ok(orderDinnerTask.status == TaskBoard.TaskModel.TASK_STATUS_COMPLETE, "task status is complete");
+
+    // Delete the task
+    TaskBoard.TaskModel.delete(orderDinnerTaskId);
+    orderDinnerTask = TaskBoard.TaskModel.get(orderDinnerTaskId);
+    ok(orderDinnerTask == null, "task is deleted");
+
+});
+
+test('testTaskListing()', function() {
+    var todayTask, tmrwTask, thisweekTask, laterTask;
+    var todayTaskList, tmrwTaskList, thisweekTaskList, laterTaskList;
+
+    todayTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Today Task", "Call XXX-XXX-XXXX",
+                                                        "homeCategoryId", TaskBoard.TaskModel.TODAY));
+    tmrwTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Tmrw Task", "Call XXX-XXX-XXXX",
+                                                        "homeCategoryId", TaskBoard.TaskModel.TOMORROW));
+    thisweekTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("This Week Task", "Call XXX-XXX-XXXX",
+                                                        "homeCategoryId", TaskBoard.TaskModel.THIS_WEEK));
+    laterTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Later Task", "Call XXX-XXX-XXXX",
+                                                        "homeCategoryId", TaskBoard.TaskModel.LATER));
+
+    todayTaskList = TaskBoard.TaskModel.todaysTasks(null);
+    ok(todayTaskList.length == 1, "today's task list length is correct");
+    ok(todayTaskList[0].title == "Today Task", "today's task list is correct");
+
+
+    tmrwTaskList = TaskBoard.TaskModel.tomorrowsTasks(null);
+    ok(tmrwTaskList.length == 1, "tomorrow's task list length is correct");
+    ok(tmrwTaskList[0].title == "Tmrw Task", "tomorrow's task list is correct");
+
+    thisweekTaskList = TaskBoard.TaskModel.thisWeeksTasks(null);
+    ok(thisweekTaskList.length == 1, "this weeks 's task list length is correct");
+    ok(thisweekTaskList[0].title == "This Week Task", "this week's task list is correct");
+
+    laterTaskList = TaskBoard.TaskModel.laterTasks(null);
+    ok(laterTaskList.length == 1, "Later task list length is correct");
+    ok(laterTaskList[0].title == "Later Task", "later's task list is correct");
 
 
 });

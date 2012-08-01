@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Task model test page</title>
-    <script type="text/javascript" src="../lib/jquery-1.7.2.js" > </script>
+    <script type="text/javascript" src="lib/jquery-1.7.2.js" > </script>
 </head>
 <body>
 <h1> Task model test
@@ -77,11 +77,9 @@
     </tr>
 
 </table>
-
-<script type="text/javascript" src="../utils/Utils.js" > </script>
-<script type="text/javascript" src="../lib/json2.js" > </script>
-<script type="text/javascript" src="../model/TaskListModel.js" > </script>
-<script type="text/javascript" src="../model/TaskModel.js" > </script>
+<script type="text/javascript" src="lib/json2.js" > </script>
+<script type="text/javascript" src="js/utils/Utils.js" > </script>
+<script type="text/javascript" src="js/model/TaskModel.js" > </script>
 <script type="text/javascript">
 
     function resetTaskForm(taskId, task, description, category, completeBy) {
@@ -140,7 +138,7 @@
 
     $(document).ready(function() {
         setTaskSubmitFormHandler();
-        populateListOfTasksTable();
+        //populateListOfTasksTable();
     });
 
 </script>

@@ -25,7 +25,6 @@ function createUUID() {
 }
 
 function createStandardCategories() {
-
     var homeCategory = TaskBoard.CategoryModel.getByName("Home");
     var workCategory = TaskBoard.CategoryModel.getByName("Work");
     if (homeCategory == null) {

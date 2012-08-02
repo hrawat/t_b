@@ -77,7 +77,7 @@ test('testTaskModel()', function() {
 
     // Create task
     orderDinnerTaskId = TaskBoard.TaskModel.create("Order Dinner", "Call XXX-XXX-XXXX",
-                                                "homeCategoryId", TaskBoard.TaskModel.TODAY);
+                                                "homeCategoryId", TaskBoard.TaskModel.MEDIUM_PRIORITY ,TaskBoard.TaskModel.TODAY);
 
     ok(orderDinnerTaskId != null, "task id for order dinner task is not null");
 
@@ -93,7 +93,7 @@ test('testTaskModel()', function() {
 
     // Save task - move to tomorrow
     TaskBoard.TaskModel.save(orderDinnerTaskId, "Order Dinner", "Call XXX-XXX-XXXX",
-                                                            "homeCategoryId", TaskBoard.TaskModel.TOMORROW);
+                                                            "homeCategoryId", TaskBoard.TaskModel.MEDIUM_PRIORITY ,TaskBoard.TaskModel.TOMORROW);
     orderDinnerTask = TaskBoard.TaskModel.get(orderDinnerTaskId);
     ok((orderDinnerTask.completionDate.getDate() == tomorrow.getDate()) &&
         (orderDinnerTask.completionDate.getMonth() == tomorrow.getMonth()) &&
@@ -116,13 +116,13 @@ test('testTaskListing()', function() {
     var todayTaskList, tmrwTaskList, thisweekTaskList, laterTaskList;
 
     todayTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Today Task", "Call XXX-XXX-XXXX",
-                                                        "homeCategoryId", TaskBoard.TaskModel.TODAY));
+                                                        "homeCategoryId", TaskBoard.TaskModel.MEDIUM_PRIORITY ,TaskBoard.TaskModel.TODAY));
     tmrwTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Tmrw Task", "Call XXX-XXX-XXXX",
-                                                        "homeCategoryId", TaskBoard.TaskModel.TOMORROW));
+                                                        "homeCategoryId", TaskBoard.TaskModel.MEDIUM_PRIORITY ,TaskBoard.TaskModel.TOMORROW));
     thisweekTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("This Week Task", "Call XXX-XXX-XXXX",
-                                                        "homeCategoryId", TaskBoard.TaskModel.THIS_WEEK));
+                                                        "homeCategoryId", TaskBoard.TaskModel.MEDIUM_PRIORITY ,TaskBoard.TaskModel.THIS_WEEK));
     laterTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Later Task", "Call XXX-XXX-XXXX",
-                                                        "homeCategoryId", TaskBoard.TaskModel.LATER));
+                                                        "homeCategoryId", TaskBoard.TaskModel.MEDIUM_PRIORITY ,TaskBoard.TaskModel.LATER));
 
     todayTaskList = TaskBoard.TaskModel.todaysTasks(0);
     ok(todayTaskList.length == 1, "today's task list length is correct");

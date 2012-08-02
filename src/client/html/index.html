@@ -97,8 +97,19 @@
 
     }
 
+    function getTaskDivSize(priority) {
+        var divSize = 'mid';
+        if (priority == TaskBoard.TaskModel.LOW_PRIORITY) {
+            divSize = 'low';
+        } else if (priority == TaskBoard.TaskModel.HIGH_PRIORITY) {
+            divSize = 'high';
+        }
+        return divSize;
+    }
+
     function populateTasks(categoryId) {
         var index, tasksForToday, task, taskDiv;
+
 
         $("#dailyTaskContainer .task").remove();
 
@@ -106,7 +117,7 @@
 
         for(index=0; index<tasksForToday.length; index++) {
             task = tasksForToday[index];
-            taskDiv = "<div class='item mid task'>{0}</div>".format(task.title);
+            taskDiv = "<div id='{0}' class='item {1} task'>{2}</div>".format(task.id, getTaskDivSize(task.priority),task.title);
             $('#dailyTaskContainer').append(taskDiv);
         }
     }

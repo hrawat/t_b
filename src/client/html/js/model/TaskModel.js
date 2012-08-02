@@ -12,7 +12,11 @@ TaskBoard.TaskModel = {
     TASK_STATUS_ACTIVE : "taskActive",
     TASK_STATUS_COMPLETE : "taskComplete",
 
-    create : function(title, description, categoryId, completeBy) {
+    LOW_PRIORITY : 'lowPriority',
+    MEDIUM_PRIORITY : 'mediumPriority',
+    HIGH_PRIORITY : 'highPriority',
+
+    create : function(title, description, categoryId, priority, completeBy) {
         var taskId, task, allTasks, today;
 
         taskId = createUUID();
@@ -23,6 +27,7 @@ TaskBoard.TaskModel = {
             "title" : title,
             "description" : description,
             "categoryId" : categoryId,
+            "priority" : priority,
             "status" : this.TASK_STATUS_ACTIVE,
             "completeBy" : completeBy,
             "completionDate" : this._getDate(today, completeBy)
@@ -34,7 +39,7 @@ TaskBoard.TaskModel = {
 
     },
 
-    save: function(taskId, title, description, categoryId, completeBy) {
+    save: function(taskId, title, description, categoryId, priority, completeBy) {
         var allTasks, index, today;
         allTasks = this._allTasks();
         index = this._indexOf(taskId);
@@ -43,6 +48,7 @@ TaskBoard.TaskModel = {
             allTasks[index].title = title;
             allTasks[index].description = description;
             allTasks[index].categoryId = categoryId;
+            allTasks[index].priority = priority,
             allTasks[index].completeBy = completeBy;
             allTasks[index].completionDate = this._getDate(today, completeBy);
 
@@ -87,6 +93,16 @@ TaskBoard.TaskModel = {
         }
 
 
+    },
+
+    setPriority : function(taskId, priority) {
+        var allTasks, index;
+        allTasks = this._allTasks();
+        index = this._indexOf(taskId);
+        if (index >= 0) {
+            allTasks[index].priority = this.priority;
+            this._saveAllTasks(allTasks);
+        }
     },
 
     todaysTasks: function(categoryId) {

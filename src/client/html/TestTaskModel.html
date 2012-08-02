@@ -40,6 +40,18 @@
         </tr>
         <tr>
             <td>
+                <label for="taskPriority">Category:</label>
+            </td>
+            <td>
+                <select id="taskPriority">
+                    <option value="lowPriority">Low</option>
+                    <option value="mediumPriority">Medium</option>
+                    <option value="highPriority">High</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <label for="taskCompleteBy" > Complete By:</label>
             </td>
             <td>
@@ -125,12 +137,13 @@
             var description = $("#taskDescription").val();
             var categoryName  = $("#taskCategory").val();
             var categoryId = TaskBoard.CategoryModel.getByName(categoryName).categoryId;
+            var priority = $("#taskPriority").val();
             var completeBy = $("#taskCompleteBy").val();
 
             if ($("#submitTaskForm").attr("value") == "Create Task") {
-                TaskBoard.TaskModel.create(title, description, categoryId, completeBy);
+                TaskBoard.TaskModel.create(title, description, categoryId, priority, completeBy);
             } else {
-                TaskBoard.TaskModel.save(taskId, title, description, categoryId, completeBy);
+                TaskBoard.TaskModel.save(taskId, title, description, categoryId, priority, completeBy);
             }
 
 

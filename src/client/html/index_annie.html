@@ -35,23 +35,23 @@
 	});
 	
 
-$(function(){
-  $('#container').masonry({
-    // options
-    itemSelector : '.item',
-  	isAnimated: true,
-	animationOptions: {
-    duration: 400,
-    easing: 'linear',
-    queue: false
-  },
-    columnWidth : 240
-  });
-});
-
-$('#container').masonry({
-  // options...
-});
+	$(function(){
+		$('#container').masonry({
+		// options
+			itemSelector : '.item',
+			isAnimated: true,
+			animationOptions: {
+			duration: 400,
+			easing: 'linear',
+			queue: false
+		},
+			columnWidth : 240
+		});
+	});
+	
+	$('#container').masonry({
+	  // options...
+	});
 
 </script>
 <style type="text/css">
@@ -68,25 +68,141 @@ $('#container').masonry({
 	
     <div class="leftNav">
     	<ul>
-    		<li>Home</li>
-            <li>Work</li>
+    		<li class="home">Home</li>
+            <li class="work">Work</li>
     
     	</ul>
     </div>
     <div class="rightContent">
     	<div class="dailyHeader">Today</div>
         <div id="container">
+        
           <a class="fancybox fancybox.iframe" href="TestTaskModel.html"><div class="item high addblock">Add New Note</div></a>
-          <div class="item low">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. </div>
-          <div class="item high">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </div>
-          <div class="item mid">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. </div>
-          <div class="item high">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. </div>
-          <div class="item high">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </div>
-          <div class="item high">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. </div>
-          <div class="item high">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. </div>
-          <div class="item high">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </div>
           
-        </div>
+         
+          
+          <script>
+				function showmenu(task) {
+					task.getElementsByTagName("div")[0].style.display = "block";
+				}
+				function hidemenu(task) {
+					task.getElementsByTagName("div")[0].style.display = "none";
+				}
+		  </script>
+          
+          <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+				<p class="high">Deposite my gym check</p>
+                <div class="secondOptions annie">
+                	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                	<a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+                </div>
+                <div class="item_info">
+                	<img src="img/_per1.jpg" width="50" height="50" />
+                    <div class="details">
+                    	<ul>
+                        	<li>Annie Zhao</li>
+                            <li>2 mins ago</li>
+                        </ul>
+                    </div>
+                    <div class="focusStar">Focus</div>
+                </div>
+          </div>
+          
+          <div class="item work" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+				<p class="high">Schedule a meeting tomorrow to demo the IOS prototype</p>
+                <div class="secondOptions annie">
+                	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                	<a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+                </div>
+                <div class="item_info">
+                	<img src="img/_per1.jpg" width="50" height="50" />
+                    <div class="details">
+                    	<ul>
+                        	<li>Annie Zhao</li>
+                            <li>2 mins ago</li>
+                        </ul>
+                    </div>
+                    <div class="focusStar">Focus</div>
+                </div>
+          </div>
+          
+           <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+				<p class="high">Buy Banana from Costco tomorrow</p>
+                <div class="secondOptions annie">
+                	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                	<a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+                </div>
+                <div class="item_info">
+                	<img src="img/_per1.jpg" width="50" height="50" />
+                    <div class="details">
+                    	<ul>
+                        	<li>Annie Zhao</li>
+                            <li>2 mins ago</li>
+                        </ul>
+                    </div>
+                    <div class="focusStar">Focus</div>
+                </div>
+          </div>
+          
+         
+          
+           <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+				<p class="high">Pick up dry clean</p>
+                <div class="secondOptions annie">
+                	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                	<a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+                </div>
+                <div class="item_info">
+                	<img src="img/_per1.jpg" width="50" height="50" />
+                    <div class="details">
+                    	<ul>
+                        	<li>Annie Zhao</li>
+                            <li>2 mins ago</li>
+                        </ul>
+                    </div>
+                    <div class="focusStar">Focus</div>
+                </div>
+          </div>
+          
+          
+           <div class="item work" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+				<p class="high">Finish up the blah blah blah task with Amy, @Coupa cafe.</p>
+                <div class="secondOptions annie">
+                	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                	<a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+                </div>
+                <div class="item_info">
+                	<img src="img/_per1.jpg" width="50" height="50" />
+                    <div class="details">
+                    	<ul>
+                        	<li>Annie Zhao</li>
+                            <li>2 mins ago</li>
+                        </ul>
+                    </div>
+                    <div class="focusStar">Focus</div>
+                </div>
+          </div>
+          
+          <div class="item work" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+				<p class="high">Schedule a meeting tomorrow to demo the IOS prototype</p>
+                <div class="secondOptions annie">
+                	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                	<a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+                </div>
+                <div class="item_info">
+                	<img src="img/_per1.jpg" width="50" height="50" />
+                    <div class="details">
+                    	<ul>
+                        	<li>Annie Zhao</li>
+                            <li>2 mins ago</li>
+                        </ul>
+                    </div>
+                    <div class="focusStar">Focus</div>
+                </div>
+          </div>
+          
+         
+        </div> <!--End of Container-->
         
     </div>
     

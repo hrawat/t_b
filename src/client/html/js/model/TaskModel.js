@@ -136,7 +136,7 @@ TaskBoard.TaskModel = {
         for (index=0; index < allTasks.length; index++) {
             if ( ((prevRefDate == null) || (allTasks[index].completionDate.getTime() >= refDate.getTime())) &&
                             ((refDate == null) || (allTasks[index].completionDate.getTime() <= refDate.getTime()))) {
-                if (categoryId == null) {
+                if (categoryId == 0) {
                     retValue.push(allTasks[index]);
                 } else if (allTasks[index].categoryId == categoryId) {
                     retValue.push(allTasks[index]);

@@ -33,9 +33,8 @@
             </td>
             <td>
                 <select id="taskCategory">
-                    <option value="personal">Personal</option>
-                    <option vakue="work">Task Management</option>
-                    <option vakue="tastMgmt">Task Management</option>
+                    <option value="Home">Home</option>
+                    <option value="Work">Work</option>
                 </select>
             </td>
         </tr>
@@ -80,6 +79,7 @@
 <script type="text/javascript" src="lib/json2.js" > </script>
 <script type="text/javascript" src="js/utils/Utils.js" > </script>
 <script type="text/javascript" src="js/model/TaskModel.js" > </script>
+<script type="text/javascript" src="js/model/CategoryModel.js" > </script>
 <script type="text/javascript">
 
     function resetTaskForm(taskId, task, description, category, completeBy) {
@@ -123,18 +123,21 @@
             var taskId = $("#taskId").val();
             var title = $("#taskTitle").val();
             var description = $("#taskDescription").val();
-            var category  = $("#taskCategory").val();
+            var categoryName  = $("#taskCategory").val();
+            var categoryId = TaskBoard.CategoryModel.getByName(categoryName).categoryId;
             var completeBy = $("#taskCompleteBy").val();
 
             if ($("#submitTaskForm").attr("value") == "Create Task") {
-                TaskBoard.TaskModel.create(title, description, category, completeBy);
+                TaskBoard.TaskModel.create(title, description, categoryId, completeBy);
             } else {
-                TaskBoard.TaskModel.save(taskId, title, description, category, completeBy);
+                TaskBoard.TaskModel.save(taskId, title, description, categoryId, completeBy);
             }
 
 
         });
     };
+
+
 
     $(document).ready(function() {
         setTaskSubmitFormHandler();

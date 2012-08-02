@@ -34,6 +34,17 @@ TaskBoard.CategoryModel = {
         }
     },
 
+    getByName : function(categoryName) {
+        var allCategories, index;
+        allCategories = this._allCategories();
+        for (index=0; index < allCategories.length; index++) {
+            if (allCategories[index].name == categoryName) {
+                return allCategories[index];
+            }
+        }
+        return null;
+    },
+
     save: function(categoryId, name, imageURL, colorHexCode, sharedWith) {
         var allCategories, index;
         if (sharedWith == null) {

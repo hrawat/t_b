@@ -16,6 +16,11 @@ test('testCategoryModel()', function() {
     ok(homeCategory.name == "Home", "name matches");
     ok(homeCategory.imageURL == "home.png", "imageURL matches");
 
+    homeCategory = TaskBoard.CategoryModel.getByName("Home");
+    ok(homeCategory.categoryId == homeCategoryId, "task id matches");
+    ok(homeCategory.name == "Home", "name matches");
+    ok(homeCategory.imageURL == "home.png", "imageURL matches");
+
 
 
     categories = TaskBoard.CategoryModel.list();
@@ -119,20 +124,20 @@ test('testTaskListing()', function() {
     laterTask = TaskBoard.TaskModel.get(TaskBoard.TaskModel.create("Later Task", "Call XXX-XXX-XXXX",
                                                         "homeCategoryId", TaskBoard.TaskModel.LATER));
 
-    todayTaskList = TaskBoard.TaskModel.todaysTasks(null);
+    todayTaskList = TaskBoard.TaskModel.todaysTasks(0);
     ok(todayTaskList.length == 1, "today's task list length is correct");
     ok(todayTaskList[0].title == "Today Task", "today's task list is correct");
 
 
-    tmrwTaskList = TaskBoard.TaskModel.tomorrowsTasks(null);
+    tmrwTaskList = TaskBoard.TaskModel.tomorrowsTasks(0);
     ok(tmrwTaskList.length == 1, "tomorrow's task list length is correct");
     ok(tmrwTaskList[0].title == "Tmrw Task", "tomorrow's task list is correct");
 
-    thisweekTaskList = TaskBoard.TaskModel.thisWeeksTasks(null);
+    thisweekTaskList = TaskBoard.TaskModel.thisWeeksTasks(0);
     ok(thisweekTaskList.length == 1, "this weeks 's task list length is correct");
     ok(thisweekTaskList[0].title == "This Week Task", "this week's task list is correct");
 
-    laterTaskList = TaskBoard.TaskModel.laterTasks(null);
+    laterTaskList = TaskBoard.TaskModel.laterTasks(0);
     ok(laterTaskList.length == 1, "Later task list length is correct");
     ok(laterTaskList[0].title == "Later Task", "later's task list is correct");
 

@@ -1,113 +1,129 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>White Board</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>White Board</title>
 
-<link href="style/main_.css" type="text/css" rel="stylesheet" />
-<script src="lib/jquery-1.7.2.js"></script>
-<script src="lib/jquery.masonry.min.js"></script>
+    <link href="style/main_.css" type="text/css" rel="stylesheet" />
+    <script src="lib/jquery-1.7.2.js"></script>
+    <script src="lib/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="source/jquery.fancybox.js?v=2.0.6"></script>
+    <link rel="stylesheet" type="text/css" href="source/jquery.fancybox.css?v=2.0.6" media="screen" />
+    <link rel="stylesheet" type="text/css" href="source/helpers/jquery.fancybox-buttons.css?v=1.0.2" />
+    <script type="text/javascript" src="source/helpers/jquery.fancybox-buttons.js?v=1.0.2"></script>
+    <link rel="stylesheet" type="text/css" href="source/helpers/jquery.fancybox-thumbs.css?v=1.0.2" />
+    <script type="text/javascript" src="source/helpers/jquery.fancybox-thumbs.js?v=1.0.2"></script>
+    <script type="text/javascript" src="source/helpers/jquery.fancybox-media.js?v=1.0.0"></script>
 
 
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-<script type="text/javascript" src="lib/jquery.mousewheel-3.0.6.pack.js"></script>
+            $('.fancybox').fancybox();
 
-<script type="text/javascript" src="source/jquery.fancybox.js?v=2.0.6"></script>
-<link rel="stylesheet" type="text/css" href="source/jquery.fancybox.css?v=2.0.6" media="screen" />
+        });
 
-<link rel="stylesheet" type="text/css" href="source/helpers/jquery.fancybox-buttons.css?v=1.0.2" />
-<script type="text/javascript" src="source/helpers/jquery.fancybox-buttons.js?v=1.0.2"></script>
 
-<link rel="stylesheet" type="text/css" href="source/helpers/jquery.fancybox-thumbs.css?v=1.0.2" />
-<script type="text/javascript" src="source/helpers/jquery.fancybox-thumbs.js?v=1.0.2"></script>
+        $(function(){
+            $('#container').masonry({
+                // options
+                itemSelector : '.item',
+                isAnimated: true,
+                animationOptions: {
+                    duration: 400,
+                    easing: 'linear',
+                    queue: false
+                },
+                columnWidth : 240
+            });
+        });
 
-<script type="text/javascript" src="source/helpers/jquery.fancybox-media.js?v=1.0.0"></script>
+        $('#container').masonry({
+            // options...
+        });
 
-    
-<script type="text/javascript">
-
-	
-
-	$(document).ready(function() {
-
-		$('.fancybox').fancybox();
-
-	});
-	
-
-$(function(){
-  $('#container').masonry({
-    // options
-    itemSelector : '.item',
-  	isAnimated: true,
-	animationOptions: {
-    duration: 400,
-    easing: 'linear',
-    queue: false
-  },
-    columnWidth : 240
-  });
-});
-
-$('#container').masonry({
-  // options...
-});
-
-</script>
-<style type="text/css">
-	.fancybox-custom .fancybox-skin {
-		box-shadow: 0 0 50px #222;
-	}
-</style>
+    </script>
+    <style type="text/css">
+        .fancybox-custom .fancybox-skin {
+            box-shadow: 0 0 50px #222;
+        }
+    </style>
 
 </head>
 
 <body>
 
-	<div class="banner"></div>
-	
-    <div class="leftNav">
-    	<ul>
-    		<li>Home</li>
-            <li>Work</li>
-    
-    	</ul>
-    </div>
-    <div class="rightContent">
-    	<div class="dailyHeader">Today</div>
-        <div id="dailyTasksContainer">
-          <a class="fancybox fancybox.iframe" href="TestTaskModel.html"><div class="item high">Add New Note</div></a>
-          
-        </div>
-        
+<div class="banner"></div>
+
+<div class="leftNav">
+    <ul id="categoriesList">
+    </ul>
+</div>
+<div class="rightContent">
+    <div class="dailyHeader">Today</div>
+    <div id="dailyTaskContainer">
+        <a class="fancybox fancybox.iframe" href="TestTaskModel.html"><div class="item high addblock">Add New Note</div></a>
+
     </div>
 
+</div>
+
 <script type="text/javascript" src="../../../src/client/html/lib/json2.js"></script>
-<script type="text/javascript" src="../../../src/client/html/lib/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="../../../src/client/html/js/utils/Utils.js"></script>
 
 <script type="text/javascript" src="../../../src/client/html/js/model/CategoryModel.js"></script>
 <script type="text/javascript" src="../../../src/client/html/js/model/TaskModel.js"></script>
 
 <script type="text/javascript">
-    function populateTasks() {
+
+    function appendCategory(categoryId, name) {
+        categoryElt = "<li id='{0}'>{1}</li>".format(categoryId, name);
+        $("#categoriesList").append(categoryElt);
+    }
+    function renderCategories() {
+        var categories = TaskBoard.CategoryModel.list();
+        var index = 0;
+        var categoryElt;
+
+        appendCategory(0, "All");
+        for(index=0; index < categories.length; index++) {
+            appendCategory(categories[index].categoryId, categories[index].name);
+        }
+        $("#categoriesList li").click(function(){
+            var categoryId = $(this).attr("id");
+            populateTasks(categoryId);
+        });
+
+    }
+
+    function populateTasks(categoryId) {
         var index, tasksForToday, task, taskDiv;
 
-        tasksForToday = TaskBoard.TaskModel.todaysTasks(null);
+        $("#dailyTaskContainer .task").remove();
+
+        tasksForToday = TaskBoard.TaskModel.todaysTasks(categoryId);
 
         for(index=0; index<tasksForToday.length; index++) {
             task = tasksForToday[index];
-            taskDiv = "<div class='item mid'>{0}</div>".format(task.title);
-            $('#dailyTasksContainer').append(taskDiv);
+            taskDiv = "<div class='item mid task'>{0}</div>".format(task.title);
+            $('#dailyTaskContainer').append(taskDiv);
         }
     }
 
     $(document).ready(function() {
-        populateTasks();
+        $('.fancybox').fancybox();
+        // Create home and work category
+        createStandardCategories();
+        renderCategories();
+        populateTasks(0);
     });
 </script>
-    
-</body>
-    
 
+
+</body>
+
+
+
+</body>
 </html>

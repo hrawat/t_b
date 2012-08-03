@@ -62,10 +62,11 @@
 </div>
 <div class="rightContent">
     <div class="dailyHeader">Today</div>
-    <div id="dailyTaskContainer">
+    <div id="todayTaskContainer">
         <a class="fancybox fancybox.iframe" href="TestTaskModel.html"><div class="item high addblock">Add New Note</div></a>
 
     </div>
+
 
 </div>
 
@@ -77,23 +78,32 @@
 
 <script type="text/javascript">
 
-    function appendCategory(categoryId, name) {
-        categoryElt = "<li id='{0}'>{1}</li>".format(categoryId, name);
+    function appendCategory(categoryId, name, colorHexCode) {
+        var categoryElt = "<li id='{0}' style='background:#{1}'>{2}</li>".format(categoryId, colorHexCode,  name);
         $("#categoriesList").append(categoryElt);
+        $("#"+categoryId).click(function(){
+            var categoryId = $(this).attr("id");
+            $("#categoriesList li").removeClass("categorySelected");
+            $(this).addClass("categorySelected");
+            populateTasks(categoryId);
+        });
     }
+
+    function renderSelectedCategory() {
+        var categoryId = $(".categorySelected").attr("id");
+        populateTasks(categoryId);
+    }
+
     function renderCategories() {
         var categories = TaskBoard.CategoryModel.list();
         var index = 0;
         var categoryElt;
 
-        appendCategory(0, "All");
+        appendCategory(0, "All", 'FFFFFF');
         for(index=0; index < categories.length; index++) {
-            appendCategory(categories[index].categoryId, categories[index].name);
+            appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode);
         }
-        $("#categoriesList li").click(function(){
-            var categoryId = $(this).attr("id");
-            populateTasks(categoryId);
-        });
+
 
     }
 
@@ -107,24 +117,78 @@
         return divSize;
     }
 
-<<<<<<< HEAD
     function populateTasks(categoryId) {
-        var index, tasksForToday, task, taskDiv;
-=======
-<script type="text/javascript" src="../../../src/client/html/lib/json2.js"></script>
-<script type="text/javascript" src="../../../src/client/html/js/utils/Utils.js"></script>
->>>>>>> Fixed the popup issue
+        var index, tasksForToday, task, taskDiv, category;
 
 
-        $("#dailyTaskContainer .task").remove();
+        $("#todayTaskContainer .task").remove();
 
         tasksForToday = TaskBoard.TaskModel.todaysTasks(categoryId);
 
         for(index=0; index<tasksForToday.length; index++) {
             task = tasksForToday[index];
-            taskDiv = "<div id='{0}' class='item {1} task'>{2}</div>".format(task.id, getTaskDivSize(task.priority),task.title);
-            $('#dailyTaskContainer').append(taskDiv);
+            //taskDiv = "<div id='{0}' class='item {1} task'>{2}</div>".format(task.id, getTaskDivSize(task.priority),task.title);
+
+            category = TaskBoard.CategoryModel.get(task.categoryId);
+            taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
+                            "<br/><p class='{2}' > {3}</p>" +
+                            "<div class='secondOptions'>" +
+                                "<a id='completeTask_{4}' class='Botton menuButtons' href='#' >Complete</a>" +
+                                "<a id='deleteTask_{5}' class='Botton menuButtons' href='#' >Delete</a>" +
+                            "</div>" +
+                      "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, task.taskId, task.taskId );
+
+//                    <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+//                    <p class="high">Deposite my gym check</p>
+//            <div class="secondOptions annie">
+//                    <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+//                    <a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+//                    </div>
+//                    <div class="item_info">
+//                    <img src="img/_per1.jpg" width="50" height="50" />
+//                    <div class="details">
+//                    <ul>
+//                    <li>Annie Zhao</li>
+//                    <li>2 mins ago</li>
+//                    </ul>
+//                    </div>
+//            <div class="focusStar">Focus</div>
+//                    </div>
+//                    </div>
+            
+            
+            $('#todayTaskContainer').append(taskDiv);
+
+            $("#"+task.taskId).mouseover(function() {
+                var taskId = $(this).attr("id");
+                $('#'+taskId + ' div').css("display", "block");
+            });
+
+            $("#"+task.taskId).mouseout(function() {
+                var taskId = $(this).attr("id");
+                $('#'+taskId + ' div').css("display", "none");
+
+            });
+
+            $("#completeTask_"+task.taskId).click(function() {
+                var taskId = $(this).attr("id").substring("completeTask_".length);
+                TaskBoard.TaskModel.complete(taskId);
+                renderSelectedCategory();
+                return false;
+
+            });
+
+            $("#deleteTask_"+task.taskId).click(function() {
+                var taskId = $(this).attr("id").substring("deleteTask_".length);
+                TaskBoard.TaskModel.delete(taskId);
+                renderSelectedCategory();
+                return false;
+
+            });
         }
+
+
+
     }
 
     $(document).ready(function() {

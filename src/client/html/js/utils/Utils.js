@@ -28,9 +28,9 @@ function createStandardCategories() {
     var homeCategory = TaskBoard.CategoryModel.getByName("Home");
     var workCategory = TaskBoard.CategoryModel.getByName("Work");
     if (homeCategory == null) {
-        TaskBoard.CategoryModel.create("Home", "images/home.png", "FF0000", null);
+        TaskBoard.CategoryModel.create("Home", "images/home.png", "CFF", null);
     }
     if (workCategory == null) {
-        TaskBoard.CategoryModel.create("Work", "images/work.png", "00FF00", null);
+        TaskBoard.CategoryModel.create("Work", "images/work.png", "FFECE5", null);
     }
 }

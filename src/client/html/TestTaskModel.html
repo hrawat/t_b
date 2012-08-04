@@ -4,19 +4,37 @@
 <head>
     <title>Task model test page</title>
     <script type="text/javascript" src="lib/jquery-1.7.2.js" > </script>
+
+	<link href="style/main_.css" type="text/css" rel="stylesheet" />
+    
 </head>
 <body>
-<h1> Task model test
-    <page></page></h1>
-<form id="createTaskForm">
+<form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
     <input id="taskId" type="hidden" value="" />
-    <table id="createTaskFormTable">
+    
+    <ul>
+        <li>
+        	<textarea id="taskTitle" rows="6" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>What is your task?</textarea>
+        </li>
+        
+        <li>
+        	<ul class="cat_selector">
+            	<li class=""><a class="selected home">Home</a></li>
+                <li><a class="work">Work</a></li>
+            </ul>
+        </li>
+        
+        <li><input type="text" name="email" onfocus="this.value=''" onblur="if (this.value=='') this.value='More description?'" value="More description?"/></li>
+        <li class="submitbutton"><input type="submit" class="Botton callerToAction buttonMedium" value="Contact Us"/></li>
+    </ul>
+    
+   <!-- <table id="createTaskFormTable">
         <tr>
             <td>
                 <label for="taskTitle" size="100">Title: </label>
             </td>
             <td>
-                <input id="taskTitle" type="text" />
+                <input id="taskTitle" class="title2" type="text" />
             </td>
         </tr>
         <tr style="vertical-align: top">
@@ -73,10 +91,10 @@
         </tr>
 
     </table>
-
+-->
 </form>
 
-<h2> List of Tasks </h2>
+<!--<h2> List of Tasks </h2>
 <table id="listOfTasks" border="2">
     <tr>
         <th></th>
@@ -87,7 +105,7 @@
         <th></th>
     </tr>
 
-</table>
+</table>-->
 <script type="text/javascript" src="lib/json2.js" > </script>
 <script type="text/javascript" src="js/utils/Utils.js" > </script>
 <script type="text/javascript" src="js/model/TaskModel.js" > </script>

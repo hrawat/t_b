@@ -20,19 +20,38 @@ body {
 	float:left;
 	margin: 20px 0 0 10px;
 }
-.leftNav ul{
-	list-style:none;
-	float:left;	
-	margin:0;
-	padding:0;
-}
-.leftNav ul li{
-	padding: 10px;
-	border:solid 1px #999;
-	width: 230px;
-	margin:10px;
-}
-
+	.leftNav ul{
+		list-style:none;
+		float:left;	
+		margin:0;
+		padding:0;
+	}
+		.leftNav ul li {
+			width:250px;
+		}
+		.leftNav ul li a{
+			float:left;
+			line-height: 50px;
+			cursor:pointer;
+			margin:10px;
+			text-align:center;
+			border:solid 1px #999;
+			width:100%;
+		}
+		.leftNav ul li a:hover{
+			border:#F90 3px solid;
+			line-height:46px;
+			width: 246px;
+		}
+		.leftNav ul li a.selected{
+			border:#F90 3px solid;
+			line-height:46px;
+			width: 246px;
+			font-weight:bold;
+			font-size:18px;	
+		}
+		
+		
 /***********************/
 /***** Block Style *****/
 /***********************/
@@ -58,20 +77,34 @@ body {
 			margin:5px;
 			float:left;		
 		}
+		.item .item_info a.focusStar {
+			line-height: 40px;
+			width: 40px;
+			background:#FFC;
+			position:absolute;
+			bottom:0;
+			right:0;
+			text-align:center;
+			cursor:pointer;
+		}
+		.item .item_info a.focusStar:hover {
+			background:#6FF;
+		}
+		
 		.item .item_info .details {
 			padding: 5px;
 			float:right;
 			width: 148px;
 		}
-		.item .item_info .details ul {
-			list-style:none;
-			float:left;	
-			margin:0;
-			padding:0;
-		}
-		.item .item_info .details ul li{
-			padding: 5px 0;
-		}
+			.item .item_info .details ul {
+				list-style:none;
+				float:left;	
+				margin:0;
+				padding:0;
+			}
+			.item .item_info .details ul li{
+				padding: 5px 0;
+			}
 	
 .high{
 	font-size: 20px;
@@ -94,16 +127,7 @@ body {
 	line-height:200px;
 }
 
-.focusStar {
-	line-height: 40px;
-	width: 40px;
-	background:#FFC;
-	position:absolute;
-	bottom:0;
-	right:0;
-	text-align:center;
-	cursor:pointer;
-}
+
 
 .home {
 	background:#CFF;	
@@ -116,7 +140,7 @@ body {
 /***** Button Style *****/
 /***********************/
 
-.Botton {
+.Botton, input[type=submit] {
 	border: 1px solid transparent;
 	background-color:#ccc;
 	-moz-border-radius: .3em;
@@ -129,7 +153,7 @@ body {
 	display: inline-block;
 	font-family: "helvetica neue",arial,sans-serif;
 	font-weight: bold;
-	line-height: 1em;
+	line-height: 2em;
 	margin: 0;
 	padding: .45em .825em .45em;
 	text-align: center;
@@ -151,7 +175,6 @@ body {
 	top: 0;
 	opacity: 0.8;
 	line-height:inherit;
-	height:100%;
 	width:inherit;
 	text-align:center;
 	display:none;
@@ -187,3 +210,83 @@ a {
 	font-weight:bold;
 }
 
+/****************************/
+/******** Input Style *******/
+/****************************/
+
+textarea, input[type=text] {
+   	border: 1px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 1px  rgba(0,0,0,0.2),
+            0 0 4px rgba(0,0,0,0.2); 
+    -moz-box-shadow: 
+      inset 0 0 1px  rgba(0,0,0,0.2),
+            0 0 4px rgba(0,0,0,0.2); 
+    box-shadow: 
+      inset 0 0 1px  rgba(0,0,0,0.2),
+            0 0 4px rgba(0,0,0,0.2); 
+    padding: 5px;
+    background: rgb(255,255,255);
+    margin: 0 0 10px 0;
+	width: 100%;
+	font-size: 16px;
+	color:#999;
+	font-weight:bold;
+}
+
+
+	
+.create_form {
+	width: 600px;
+}
+		
+	.create_form ul{
+		float:left;
+		margin:0;
+		padding:30px 0px;
+		width:100%;
+	}
+		.create_form ul li{
+			list-style:none;
+			padding:0px 10px;
+		}
+			.create_form ul li ul.cat_selector a{
+				float:left;
+				width: 100px;
+				height: 100px;
+				line-height:100px;
+				text-align:center;
+				margin:5px;
+			}
+			.create_form ul li ul.cat_selector a:hover{
+				border:#F90 3px solid;
+				line-height:94px;
+				width: 94px;
+				height: 94px;
+			}
+			.create_form ul li ul.cat_selector a.selected{
+				font-weight:bold;
+				font-size:18px;
+				border:#F90 3px solid;
+				line-height:94px;
+				width: 94px;
+				height: 94px;
+			}
+		.create_form ul li.label{
+			text-align:right;
+			padding-top:8px;
+			font-size:12px;
+		}
+
+
+
+
+.submitbutton {
+	margin-top:12px;	
+}
+	
+	
+	
+	
+	
+	

@@ -147,7 +147,7 @@
     }
 
     function appendCategory(categoryId, name, colorHexCode) {
-        var categoryElt = "<li id='{0}' style='background:#{1}'>{2}</li>".format(categoryId, colorHexCode,  name);
+        var categoryElt = "<li> <a id='{0}' style='background:#{1}'>{2}</a></li>".format(categoryId, colorHexCode,  name);
         $("#categoriesList").append(categoryElt);
         $("#"+categoryId).click(function(){
             var categoryId = $(this).attr("id");

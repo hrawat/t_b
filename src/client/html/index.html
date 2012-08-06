@@ -93,9 +93,7 @@
             </li>
 
             <li>
-                <ul class="cat_selector">
-                    <li class=""><a class="selected home">Home</a></li>
-                    <li><a class="work">Work</a></li>
+                <ul id="createTaskFormCategories" class="cat_selector">
                 </ul>
             </li>
             <li class="submitbutton"><input id="createTaskSubmitAction" type="submit" class="Botton callerToAction buttonMedium" value="Create Task"/></li>
@@ -131,6 +129,18 @@
 
 <script type="text/javascript">
 
+    function appendCategoryInCreateTaskForm(categoryId, name, colorHexCode) {
+
+        var categoryElt = "<li id='category_{0}' > <a style='background:#{1}' >{2}</a></li>".format(categoryId, colorHexCode,  name);
+        $("#createTaskFormCategories").append(categoryElt);
+        $("#category_"+categoryId + " a").click(function(){
+            $("#createTaskFormCategories li a").removeClass("selected");
+            $(this).addClass("selected");
+            return false;
+        })
+
+    }
+
     function appendCategory(categoryId, name, colorHexCode) {
         var categoryElt = "<li id='{0}' style='background:#{1}'>{2}</li>".format(categoryId, colorHexCode,  name);
         $("#categoriesList").append(categoryElt);
@@ -140,6 +150,7 @@
             $(this).addClass("categorySelected");
             populateTasks(categoryId);
         });
+
     }
 
     function renderSelectedCategory() {
@@ -155,6 +166,7 @@
         appendCategory(0, "All", 'FFFFFF');
         for(index=0; index < categories.length; index++) {
             appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode);
+            appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name, categories[index].colorHexCode);
         }
 
 
@@ -271,6 +283,8 @@
         $('#createTaskSubmitAction').click(function() {
             taskContainerDisplay(false);
         });
+
+
     });
 </script>
 

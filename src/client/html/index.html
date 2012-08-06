@@ -129,15 +129,20 @@
 
 <script type="text/javascript">
 
-    function appendCategoryInCreateTaskForm(categoryId, name, colorHexCode) {
+    function appendCategoryInCreateTaskForm(categoryId, name, colorHexCode, selected) {
 
-        var categoryElt = "<li id='category_{0}' > <a style='background:#{1}' >{2}</a></li>".format(categoryId, colorHexCode,  name);
+        var categoryElt = "<li id='category_{0}' > <a id='a_{1}' style='background:#{2}' >{3}</a></li>".format(categoryId, categoryId, colorHexCode,  name);
         $("#createTaskFormCategories").append(categoryElt);
         $("#category_"+categoryId + " a").click(function(){
             $("#createTaskFormCategories li a").removeClass("selected");
             $(this).addClass("selected");
             return false;
-        })
+        });
+
+        if (selected) {
+            $("#a_"+categoryId).addClass("selected");
+        }
+
 
     }
 
@@ -166,7 +171,8 @@
         appendCategory(0, "All", 'FFFFFF');
         for(index=0; index < categories.length; index++) {
             appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode);
-            appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name, categories[index].colorHexCode);
+            appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name,
+                                            categories[index].colorHexCode, (index == 0) ? true: false);
         }
 
 
@@ -282,6 +288,18 @@
 
         $('#createTaskSubmitAction').click(function() {
             taskContainerDisplay(false);
+            var title = $("#taskTitle").val();
+            var description = '';
+
+            var categoryId = $("#createTaskFormCategories li a.selected").attr("id").substr(2);
+            var priority = TaskBoard.TaskModel.MEDIUM_PRIORITY;
+            var completeBy = TaskBoard.TaskModel.TODAY;
+
+
+           // alert("create task form called " + $("#createTaskFormCategories li a.selected").attr("id"));
+            TaskBoard.TaskModel.create(title, description, categoryId, priority, completeBy);
+            populateTasks(categoryId);
+            populateTasks(0);
         });
 
 

@@ -8,8 +8,6 @@
 <script src="lib/jquery-1.7.2.js"></script>
 <script src="lib/jquery.masonry.min.js"></script>
 
-
-
 <script type="text/javascript" src="lib/jquery.mousewheel-3.0.6.pack.js"></script>
 
 <script type="text/javascript" src="source/jquery.fancybox.js?v=2.0.6"></script>
@@ -29,9 +27,7 @@
 	
 
 	$(document).ready(function() {
-
 		$('.fancybox').fancybox();
-
 	});
 	
 
@@ -109,7 +105,8 @@
                 </div>
           </div>
           
-          <div class="item work" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+          <div class="item work done">
+          		<div class="doneOverlay"> <p>DONE </p></div>
 				<p class="high">Schedule a meeting tomorrow to demo the IOS prototype</p>
                 <div class="secondOptions annie">
                 	<a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
@@ -123,7 +120,6 @@
                             <li>2 mins ago</li>
                         </ul>
                     </div>
-                    <a class="focusStar">Focus</a>
                 </div>
           </div>
           

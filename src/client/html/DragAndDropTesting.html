@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <style type="text/css">
+
+        #createTaskFormDiv {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 500px;
+            margin-left: -250px;
+            background: #fff;
+            z-index: 1001;
+            display: none;
+
+        }
+        
+        .taskContainer {
+            position: relative;
+
+        }
+
+        .addTask {
+            border-top: 1px solid;
+            width: 200px;
+        }
+
+        .task {
+            margin: 20px;
+            border-left: 1px solid;
+            border-right: 1px solid;
+            border-bottom: 1px solid;
+            padding-left: 10px;
+            padding-top: 10px;
+            background: white;
+            float: left;
+            line-height:20px;
+            position: relative;
+        }
+
+        .taskLow {
+            font-size: 20px;
+            line-height:20px;
+            width : 200px
+        }
+
+        .taskMedium {
+            font-size: 25px;
+            line-height:20px;
+            width : 250px
+        }
+
+        .taskHigh {
+            font-size: 30px;
+            line-height:20px;
+            width : 300px
+        }
+
+        .createdByText {
+            font-style: italic;
+        }
+
+        .homeCategory {
+            border-top: 8px solid #FF0000;
+
+        }
+        .workCategory {
+            border-top: 8px solid #00FF00;
+
+        }
+        .taskActions {
+            margin: 0px;
+            padding-left: 0px;
+        }
+        #droppable { position: absolute; left: 250px; top: 0; width: 125px; height: 75px; background: gray; color: white; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div id="taskContainer">
+        <div id="addTask" class="task addTask"><p><a id="addTaskHRef" href="#createTaskFormDiv" style="display: block;"> Add Task</a></p></div>
+        <div id="task1" class="task workCategory">
+            <p class="taskLow">Integrate backend with UI</p>
+            <p class="createdByText">Created 2 days ago</p>
+
+
+        </div>
+        <div id="task2" class="task ui-widget-content homeCategory"><p class="taskMedium">Call Vivek Trivedi</p><p class="createdByText">Created 2 hours ago</p></div>
+        <div id="task3" class="task ui-widget-content homeCategory"><p class="taskHigh">Email Reply to Sanjeev</p><p class="createdByText">Created 5 mins ago</p></div>
+        <div id="task4" class="task ui-widget-content homeCategory"><p class="taskHigh">Fill Rajat's passport forms</p><p class="createdByText">Created 7 hours ago</p></div>
+
+    </div>
+
+    <div id="createTaskFormDiv" style="display:none;">
+        <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
+            <input id="taskId" type="hidden" value="" />
+
+            <ul>
+                <li>
+                    <textarea id="taskTitle" rows="6" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>What is your task?</textarea>
+                </li>
+
+                <li>
+                    <ul class="cat_selector">
+                        <li class=""><a class="selected home">Home</a></li>
+                        <li><a class="work">Work</a></li>
+                    </ul>
+                </li>
+
+                <li><input type="text" name="email" onfocus="this.value=''" onblur="if (this.value=='') this.value='More description?'" value="More description?"/></li>
+                <li class="submitbutton"><input type="submit" class="Botton callerToAction buttonMedium" value="Contact Us"/></li>
+            </ul>
+    </div>
+
+</body>
+
+
+<script type="text/javascript" src="lib/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="lib/jquery.masonry.min.js"></script>
+
+<script type="text/javascript" src="jquery_ui/development-bundle/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="jquery_ui/development-bundle/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="jquery_ui/development-bundle/ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="jquery_ui/development-bundle/ui/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="jquery_ui/development-bundle/ui/jquery.ui.droppable.js"></script>
+<script type="text/javascript" src="jquery_ui/development-bundle/ui/jquery.ui.sortable.js"></script>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+//        $('#taskContainer').masonry({
+//            // options
+//            itemSelector : '.task',
+//            columnWidth : 100
+//        });
+//
+//        $( ".task" ).draggable({
+//            stop : function(event, ui) {
+//                console.log("draggable stop");
+//            }
+//        });
+//
+//        $( "#taskContainer" ).sortable();
+//        $( "#taskContainer" ).disableSelection();
+
+        $("#addTaskHRef").click(function(){
+              var lightBoxContainer = $("#createTaskFormDiv");
+//            var lightBoxContainer = $(jQuery("<div id='createTaskFormDiv' style='display:none;'>"));
+//            //lightBoxContainer.append($(jQuery("<form id='createTaskForm'>"))).append($(jQuery("<input id='taskTitle' type='text' />")));
+//            lightBoxContainer.append($(jQuery("<form id='createTaskForm'>"))).append($(jQuery("<input id='taskTitle' type='text' />")));
+
+
+         //   $('body').prepend(lightBoxContainer);
+//            lightBoxContainer.show().css( {'top': Math.round( ($( window ).height() - lightBoxContainer.outerHeight() ) / 2 ) + 'px',
+//                                                'left': Math.round( ($( window ).width() - lightBoxContainer.outerWidth() ) / 2 ) + 'px',
+//                                                'margin-top': 0, 'margin-left': 0} ).hide();
+
+//            lightBoxContainer.show().css( {'top': '0px',
+//                                                'left': '0px',
+//                                                'margin-top': 0, 'margin-left': 0} ).hide();
+//            lightBoxContainer.show().css("display", "block");
+
+            return false;
+        });
+
+    });
+
+
+</script>
+
+</html>

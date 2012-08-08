@@ -151,7 +151,7 @@
         $("#categoriesList").append(categoryElt);
         $("#"+categoryId).click(function(){
             var categoryId = $(this).attr("id");
-            $("#categoriesList li").removeClass("categorySelected");
+            $("#categoriesList li a").removeClass("categorySelected");
             $(this).addClass("categorySelected");
             populateTasks(categoryId);
         });

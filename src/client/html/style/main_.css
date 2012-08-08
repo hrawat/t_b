@@ -50,6 +50,14 @@ body {
 			font-weight:bold;
 			font-size:18px;	
 		}
+
+.leftNav ul li a.categorySelected{
+    border:#F90 3px solid;
+    line-height:46px;
+    width: 246px;
+    font-weight:bold;
+    font-size:18px;
+}
 		
 		
 /***********************/

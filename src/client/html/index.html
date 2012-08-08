@@ -146,8 +146,13 @@
 
     }
 
-    function appendCategory(categoryId, name, colorHexCode) {
-        var categoryElt = "<li> <a id='{0}' style='background:#{1}'>{2}</a></li>".format(categoryId, colorHexCode,  name);
+    function appendCategory(categoryId, name, colorHexCode, categorySelected) {
+        var categoryElt
+        if (categorySelected) {
+            categoryElt = "<li> <a id='{0}' class='categorySelected' style='background:#{1}'>{2}</a></li>".format(categoryId, colorHexCode,  name);
+        } else {
+            categoryElt = "<li> <a id='{0}' style='background:#{1}'>{2}</a></li>".format(categoryId, colorHexCode,  name);
+        }
         $("#categoriesList").append(categoryElt);
         $("#"+categoryId).click(function(){
             var categoryId = $(this).attr("id");
@@ -168,9 +173,9 @@
         var index = 0;
         var categoryElt;
 
-        appendCategory(0, "All", 'FFFFFF');
+        appendCategory(0, "All", 'FFFFFF', true);
         for(index=0; index < categories.length; index++) {
-            appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode);
+            appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode, false);
             appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name,
                                             categories[index].colorHexCode, (index == 0) ? true: false);
         }
@@ -312,8 +317,9 @@
 
            // alert("create task form called " + $("#createTaskFormCategories li a.selected").attr("id"));
             TaskBoard.TaskModel.create(title, description, categoryId, priority, completeBy);
-            populateTasks(categoryId);
-            populateTasks(0);
+//            populateTasks(categoryId);
+//            populateTasks(0);
+            renderSelectedCategory();
         });
 
 

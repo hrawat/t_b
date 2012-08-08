@@ -201,13 +201,25 @@
             //taskDiv = "<div id='{0}' class='item {1} task'>{2}</div>".format(task.id, getTaskDivSize(task.priority),task.title);
 
             category = TaskBoard.CategoryModel.get(task.categoryId);
-            taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
+            if (task.status == TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
+                taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
+                        "<div class='doneOverlay'> <p>DONE </p></div>" +
+                        "<br/><p class='{2}' > {3}</p>" +
+                        "<div class='secondOptions'>" +
+                        "<a id='completeTask_{4}' class='Botton menuButtons' href='#' >Complete</a>" +
+                        "<a id='deleteTask_{5}' class='Botton menuButtons' href='#' >Delete</a>" +
+                        "</div>" +
+                        "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, task.taskId, task.taskId );
+
+            } else {
+                taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
                             "<br/><p class='{2}' > {3}</p>" +
                             "<div class='secondOptions'>" +
                                 "<a id='completeTask_{4}' class='Botton menuButtons' href='#' >Complete</a>" +
                                 "<a id='deleteTask_{5}' class='Botton menuButtons' href='#' >Delete</a>" +
                             "</div>" +
                       "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, task.taskId, task.taskId );
+            }
 
 //                    <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
 //                    <p class="high">Deposite my gym check</p>
@@ -230,32 +242,34 @@
             
             $('#todayTaskContainer').append(taskDiv);
 
-            $("#"+task.taskId).mouseover(function() {
-                var taskId = $(this).attr("id");
-                $('#'+taskId + ' div').css("display", "block");
-            });
+            if (task.status != TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
+                $("#"+task.taskId).mouseover(function() {
+                    var taskId = $(this).attr("id");
+                    $('#'+taskId + ' div').css("display", "block");
+                });
 
-            $("#"+task.taskId).mouseout(function() {
-                var taskId = $(this).attr("id");
-                $('#'+taskId + ' div').css("display", "none");
+                $("#"+task.taskId).mouseout(function() {
+                    var taskId = $(this).attr("id");
+                    $('#'+taskId + ' div').css("display", "none");
 
-            });
+                });
 
-            $("#completeTask_"+task.taskId).click(function() {
-                var taskId = $(this).attr("id").substring("completeTask_".length);
-                TaskBoard.TaskModel.complete(taskId);
-                renderSelectedCategory();
-                return false;
+                $("#completeTask_"+task.taskId).click(function() {
+                    var taskId = $(this).attr("id").substring("completeTask_".length);
+                    TaskBoard.TaskModel.complete(taskId);
+                    renderSelectedCategory();
+                    return false;
 
-            });
+                });
 
-            $("#deleteTask_"+task.taskId).click(function() {
-                var taskId = $(this).attr("id").substring("deleteTask_".length);
-                TaskBoard.TaskModel.delete(taskId);
-                renderSelectedCategory();
-                return false;
+                $("#deleteTask_"+task.taskId).click(function() {
+                    var taskId = $(this).attr("id").substring("deleteTask_".length);
+                    TaskBoard.TaskModel.delete(taskId);
+                    renderSelectedCategory();
+                    return false;
 
-            });
+                });
+            }
         }
     }
 

@@ -49,6 +49,7 @@ TaskBoard.TaskModel = {
             allTasks[index].description = description;
             allTasks[index].categoryId = categoryId;
             allTasks[index].priority = priority,
+            allTasks[index].status =  this.TASK_STATUS_ACTIVE,
             allTasks[index].completeBy = completeBy;
             allTasks[index].completionDate = this._getDate(today, completeBy);
 

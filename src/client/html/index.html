@@ -114,7 +114,7 @@
 <div class="rightContent">
     <div class="dailyHeader">Today</div>
     <div id="todayTaskContainer">
-        <a  id="createTaskAction" href="#"><div class="item high addblock">Add New Note</div></a>
+        <a  id="createTaskAction" href="#"><div class="item mid addblock">Add New Note</div></a>
 
     </div>
 
@@ -128,6 +128,20 @@
 <script type="text/javascript" src="js/model/TaskModel.js"></script>
 
 <script type="text/javascript">
+
+    function getTimeDiffInStr(refDate) {
+        var now = new Date();
+        var secsDiff = (now.getTime() - refDate.getTime())/1000;
+        if (Math.floor(secsDiff/ 86400) > 1)  {
+            return Math.floor(secsDiff/ 86400) + " days ago";
+        } else if (Math.floor(secsDiff/ 3600) > 1)  {
+            return Math.floor(secsDiff/ 3600) + " hours ago";
+        } else if (Math.floor(secsDiff/ 60) > 1)  {
+            return Math.floor(secsDiff/ 60) + " mins ago";
+        } else {
+            return Math.floor(secsDiff) + " secs ago";
+        }
+    }
 
     function appendCategoryInCreateTaskForm(categoryId, name, colorHexCode, selected) {
 
@@ -200,7 +214,7 @@
     }
 
     function populateTasks(categoryId) {
-        var index, tasksForToday, task, taskDiv, category;
+        var index, tasksForToday, task, taskDiv, category, timeDiffInStr;
 
 
         $("#todayTaskContainer .task").remove();
@@ -211,25 +225,28 @@
             task = tasksForToday[index];
             //taskDiv = "<div id='{0}' class='item {1} task'>{2}</div>".format(task.id, getTaskDivSize(task.priority),task.title);
 
+            timeDiffInStr = getTimeDiffInStr(task.creationDate);
             category = TaskBoard.CategoryModel.get(task.categoryId);
             if (task.status == TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
                 taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
                         "<div class='doneOverlay'> <p>DONE </p></div>" +
                         "<br/><p class='{2}' > {3}</p>" +
+                        "<p class='createdByText'>Created {4} ago </p>" +
                         "<div class='secondOptions'>" +
-                        "<a id='completeTask_{4}' class='Botton menuButtons' href='#' >Complete</a>" +
-                        "<a id='deleteTask_{5}' class='Botton menuButtons' href='#' >Delete</a>" +
+                        "<a id='completeTask_{5}' class='Botton menuButtons' href='#' >Complete</a>" +
+                        "<a id='deleteTask_{6}' class='Botton menuButtons' href='#' >Delete</a>" +
                         "</div>" +
-                        "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, task.taskId, task.taskId );
+                        "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.taskId, task.taskId );
 
             } else {
                 taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
                             "<br/><p class='{2}' > {3}</p>" +
+                            "<p class='createdByText'>Created {4} ago </p>" +
                             "<div class='secondOptions'>" +
                                 "<a id='completeTask_{4}' class='Botton menuButtons' href='#' >Complete</a>" +
                                 "<a id='deleteTask_{5}' class='Botton menuButtons' href='#' >Delete</a>" +
                             "</div>" +
-                      "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, task.taskId, task.taskId );
+                      "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.taskId, task.taskId );
             }
 
 //                    <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
@@ -316,6 +333,11 @@
         renderCategories();
         //populateTasks(0);
         renderSelectedCategory();
+
+        window.setInterval(function(){
+            renderSelectedCategory();
+            console.log("rendering selected category");
+        }, 60000);
 
         $("#createTaskContainerShadow").click(function() {
             taskContainerDisplay(false);

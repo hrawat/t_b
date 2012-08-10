@@ -145,18 +145,18 @@ body {
 }
 
 .high{
-	font-size: 20px;
-	line-height:26px;
+	font-size: 25px;
+	/*line-height:26px;*/
 	font-weight:bold;	
 }
 
 .mid{
-	font-size: 15px;
+	font-size: 20px;
 	line-height:22px;	
 }
 
 .low{
-	font-size: 11px;
+	font-size: 15px;
 	line-height:20px;	
 }
 .addblock {
@@ -263,6 +263,9 @@ textarea, input[type=text] {
 }
 
 
+.createdByText {
+    font-style: italic;
+}
 	
 .create_form {
 	width: 600px;

@@ -89,7 +89,7 @@
 
         <ul>
             <li>
-                <textarea id="taskTitle" rows="6" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>What is your task?</textarea>
+                <textarea id="taskTitle" rows="6" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>what is your task?</textarea>
             </li>
 
             <li>
@@ -165,6 +165,7 @@
 
     function renderSelectedCategory() {
         var categoryId = $(".categorySelected").attr("id");
+
         populateTasks(categoryId);
     }
 
@@ -172,10 +173,15 @@
         var categories = TaskBoard.CategoryModel.list();
         var index = 0;
         var categoryElt;
+        var categoryId = $(".categorySelected").attr("id");
+        if (categoryId == undefined) {
+            categoryId = 0;
+        }
 
-        appendCategory(0, "All", 'FFFFFF', true);
+        appendCategory(0, "All", 'FFFFFF', (0 == categoryId));
         for(index=0; index < categories.length; index++) {
-            appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode, false);
+            appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode,
+                                                        (categories[index].categoryId == categoryId));
             appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name,
                                             categories[index].colorHexCode, (index == 0) ? true: false);
         }
@@ -282,6 +288,13 @@
         if (show) {
             $("#createTaskContainer").show().css("display", "block");
             $("#createTaskContainerShadow").show().css("display", "block");
+            $("#taskTitle").val("what is your task?");
+            $('#taskTitle').focus(function() {
+                if ($("#taskTitle").val() == 'what is your task?') {
+                    $("#taskTitle").val("");
+                };
+            });
+
         } else {
             $("#createTaskContainer").show().css("display", "none");
             $("#createTaskContainerShadow").show().css("display", "none");
@@ -293,7 +306,8 @@
         // Create home and work category
         createStandardCategories();
         renderCategories();
-        populateTasks(0);
+        //populateTasks(0);
+        renderSelectedCategory();
 
         $("#createTaskContainerShadow").click(function() {
             taskContainerDisplay(false);
@@ -317,9 +331,13 @@
 
            // alert("create task form called " + $("#createTaskFormCategories li a.selected").attr("id"));
             TaskBoard.TaskModel.create(title, description, categoryId, priority, completeBy);
+
+
 //            populateTasks(categoryId);
 //            populateTasks(0);
             renderSelectedCategory();
+
+            return false;
         });
 
 

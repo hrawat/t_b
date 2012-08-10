@@ -45,30 +45,30 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+//        $(document).ready(function() {
+//
+//            $('.fancybox').fancybox();
+//
+//        });
 
-            $('.fancybox').fancybox();
 
-        });
-
-
-        $(function(){
-            $('#container').masonry({
-                // options
-                itemSelector : '.item',
-                isAnimated: true,
-                animationOptions: {
-                    duration: 400,
-                    easing: 'linear',
-                    queue: false
-                },
-                columnWidth : 240
-            });
-        });
-
-        $('#container').masonry({
-            // options...
-        });
+//        $(function(){
+//            $('#todayTaskContainer').masonry({
+//                // options
+//                itemSelector : '.item',
+////                isAnimated: true,
+////                animationOptions: {
+////                    duration: 400,
+////                    easing: 'linear',
+////                    queue: false
+////                },
+//                columnWidth : 240
+//            });
+//        });
+//
+////        $('#todayTaskContainer').masonry({
+////            // options...
+////        });
 
     </script>
     <style type="text/css">
@@ -368,6 +368,12 @@
             renderSelectedCategory();
 
             return false;
+        });
+
+        $('#taskContainer').masonry({
+            // options
+            itemSelector : '.task',
+            columnWidth : 100
         });
 
 

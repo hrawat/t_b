@@ -144,9 +144,19 @@ TaskBoard.TaskModel = {
         return this._tasksList(categoryId, prevRefDate, refDate);
     },
 
+    _sameDay : function(date1, date2) {
+        if ((date1.getDate() == date2.getDate()) && (date1.getMonth() == date2.getMonth())
+                                                && (date1.getFullYear() == date2.getFullYear())) {
+            return true;
+        } else {
+            return false;
+        }
+
+    },
+
     _tasksList : function(categoryId, prevRefDate, refDate) {
         var today, retValue, allTasks, index;
-
+        var now = new Date();
 
 
         retValue = new Array();
@@ -154,6 +164,12 @@ TaskBoard.TaskModel = {
         for (index=0; index < allTasks.length; index++) {
             if ( ((prevRefDate == null) || (allTasks[index].completionDate.getTime() >= refDate.getTime())) &&
                             ((refDate == null) || (allTasks[index].completionDate.getTime() <= refDate.getTime()))) {
+                if (allTasks[index].status == this.TASK_STATUS_COMPLETE) {
+                    if ((allTasks[index].dateTaskCompleted == undefined) || (this._sameDay(now, allTasks[index].dateTaskCompleted) == false)) {
+                        continue;
+                    }
+
+                }
                 if (categoryId == 0) {
                     retValue.push(allTasks[index]);
                 } else if (allTasks[index].categoryId == categoryId) {

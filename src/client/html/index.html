@@ -243,8 +243,8 @@
                             "<br/><p class='{2}' > {3}</p>" +
                             "<p class='createdByText'>Created {4} ago </p>" +
                             "<div class='secondOptions'>" +
-                                "<a id='completeTask_{4}' class='Botton menuButtons' href='#' >Complete</a>" +
-                                "<a id='deleteTask_{5}' class='Botton menuButtons' href='#' >Delete</a>" +
+                                "<a id='completeTask_{5}' class='Botton menuButtons' href='#' >Complete</a>" +
+                                "<a id='deleteTask_{6}' class='Botton menuButtons' href='#' >Delete</a>" +
                             "</div>" +
                       "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.taskId, task.taskId );
             }
@@ -334,10 +334,10 @@
         //populateTasks(0);
         renderSelectedCategory();
 
-        window.setInterval(function(){
-            renderSelectedCategory();
-            console.log("rendering selected category");
-        }, 60000);
+//        window.setInterval(function(){
+//            renderSelectedCategory();
+//            console.log("rendering selected category");
+//        }, 60000);
 
         $("#createTaskContainerShadow").click(function() {
             taskContainerDisplay(false);

@@ -90,6 +90,7 @@ TaskBoard.TaskModel = {
         index = this._indexOf(taskId);
         if (index >= 0) {
             allTasks[index].status = this.TASK_STATUS_COMPLETE;
+            allTasks[index].dateTaskCompleted = new Date();
             this._saveAllTasks(allTasks);
         }
 
@@ -193,6 +194,9 @@ TaskBoard.TaskModel = {
             for (index=0; index < allTasks.length; index++) {
                 allTasks[index].completionDate = new Date(allTasks[index].completionDate);
                 allTasks[index].creationDate = new Date(allTasks[index].creationDate);
+                if (allTasks[index].dateTaskCompleted != undefined) {
+                    allTasks[index].dateTaskCompleted = new Date(allTasks[index].dateTaskCompleted);
+                }
             }
         }
         return allTasks;

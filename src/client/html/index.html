@@ -132,14 +132,14 @@
     function getTimeDiffInStr(refDate) {
         var now = new Date();
         var secsDiff = (now.getTime() - refDate.getTime())/1000;
-        if (Math.floor(secsDiff/ 86400) > 1)  {
-            return Math.floor(secsDiff/ 86400) + " days ago";
-        } else if (Math.floor(secsDiff/ 3600) > 1)  {
-            return Math.floor(secsDiff/ 3600) + " hours ago";
-        } else if (Math.floor(secsDiff/ 60) > 1)  {
-            return Math.floor(secsDiff/ 60) + " mins ago";
+        if (Math.floor(secsDiff/ 86400) >= 1)  {
+            return Math.floor(secsDiff/ 86400) + " days ";
+        } else if (Math.floor(secsDiff/ 3600) >= 1)  {
+            return Math.floor(secsDiff/ 3600) + " hours ";
+        } else if (Math.floor(secsDiff/ 60) >= 1)  {
+            return Math.floor(secsDiff/ 60) + " mins ";
         } else {
-            return Math.floor(secsDiff) + " secs ago";
+            return Math.floor(secsDiff) + " secs ";
         }
     }
 

@@ -4,7 +4,7 @@ if (typeof(TaskBoard) == "undefined") {
 
 TaskBoard.UserModel = function() {
 
-    var fbUserUid, userLoggedIn, retValue, initialized;
+    var fbUserUid, userLoggedIn, retValue, initialized =false;
     var initCallBacks = new Array();
 
     // Implement singleton pattern : check if an instance already exists
@@ -14,7 +14,7 @@ TaskBoard.UserModel = function() {
 
     function _initialize() {
         if ($("#fb-root").length == 0) {
-            $("body").prepend("<div id='fb-root'");
+            $("body").prepend("<div id='fb-root' />");
         }
 
         // Initialize SDK
@@ -28,22 +28,31 @@ TaskBoard.UserModel = function() {
             });
 
             FB.getLoginStatus( function(response) {
-                TaskBoard.User._fbAPIInitialized = true;
-                TaskBoard.User._fbAPIInitializing = false;
+                TaskBoard.UserModel._fbAPIInitialized = true;
+                TaskBoard.UserModel._fbAPIInitializing = false;
                 if (response.status == 'connected') {
-                    TaskBoard.User._fbAPIInitialized = true;
-                    fbUserUid = response.authResponse.userId;
+                    fbUserUid = response.authResponse.userID;
                     userLoggedIn = true;
                 } else {
                     userLoggedIn = false;
                 }
+                for(var index=0; index < initCallBacks.length; index++) {
+                   initCallBacks[index].apply(retValue);
+                }
+                initialized = true;
             });
 
-            for(var index=0; index < initCallBacks.length; index++) {
-                initCallBacks[index].apply(retValue);
-            }
 
         };
+
+        // Load the SDK Asynchronously
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "http://connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
 
     }
 
@@ -60,7 +69,7 @@ TaskBoard.UserModel = function() {
             }
         }
 
-        this.isUserLoggedIn = function() {
+        this.getUserId = function() {
             return fbUserUid;
         }
 

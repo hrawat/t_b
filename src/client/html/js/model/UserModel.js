@@ -50,9 +50,9 @@ TaskBoard.UserModel = function() {
     _initialize();
 
 
-    retValue = function() {
+    retValue = new (function() {
 
-        function addInitializationCallBack(callBackFunction) {
+        this.addInitializationCallBack = function(callBackFunction) {
             if (initialized) {
                 callBackFunction.apply(this);
             } else {
@@ -60,15 +60,15 @@ TaskBoard.UserModel = function() {
             }
         }
 
-        function isUserLoggedIn() {
+        this.isUserLoggedIn = function() {
             return fbUserUid;
         }
 
-        function isUserLoggedIn() {
+        this.isUserLoggedIn = function() {
             return userLoggedIn;
         }
 
-    }
+    });
 
     TaskBoard.UserModel.singletonInstance = retValue;
     return retValue;

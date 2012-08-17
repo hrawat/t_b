@@ -1,5 +1,7 @@
 <?php
 
+require_once (dirname(__FILE__) . "/../../lib/facebook-php-sdk/facebook.php");
+
 class AuthenticationService {
 
     const UID_KEY = "uid";
@@ -14,14 +16,22 @@ class AuthenticationService {
         if ($uid == NULL) {
             // Get the session from FB
             $facebook = new Facebook(array(
-                'appId'  => 'YOUR_APP_ID',
-                'secret' => 'YOUR_APP_SECRET',
+                'appId'  => '420637114648782',
+                'secret' => '202d56805a3f75acd1a8f2e0e941acfb',
             ));
 
             // See if there is a user from a cookie
-            $user = $facebook->getUser();
+            $facebookUid = $facebook->getUser();
+            if ($facebookUid == 0) {
+                error_log("did not get user from signed cookie");
+                return NULL;
+            } else {
+                error_log("Got user $facebookUid from signed cookie");
+                $userProfile = $facebook->api("/me");
+                print_r($userProfile);
+                // todo: add way to get our user Id
+            }
         }
-
     }
 
 

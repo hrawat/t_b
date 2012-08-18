@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../../utils/DbUtils.php");
+require_once (dirname(__FILE__) . "/../../utils/DBUtils.php");
 require_once (dirname(__FILE__) . "/../../utils/Logger.php");
 
 class UserService {
@@ -37,10 +37,10 @@ class UserService {
         $invitedByDbValue = DBUtils::escapeStrValue($invitedBy);
 
         $sqlStmt = "Insert into User(id, creationDate, lastModificationDate, type, status, fbUid, firstName,
-                                                    lastName, gender, emailAddress, invitedBy)
+                                                    lastName, gender, emailAddress, invitedBy, deleted)
                                                      values($idDbValue, NOW(), NOW(),$type, $status, $fbUidDbValue,
                                                               $firstNameDbValue, $lastNameDbValue, $genderDbValue, $emailAddressDbValue,
-                                                              $invitedByDbValue)";
+                                                              $invitedByDbValue, 0)";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
@@ -75,6 +75,9 @@ class UserService {
             if ($row == FALSE) {
                 return NULL;
             } else {
+                $fbUid = $row['fbUid'];
+                $row['avatarUrl_small'] = "http://graph.facebook.com/$fbUid/picture/type=small";
+                $row['avatarUrl_normal'] = "http://graph.facebook.com/$fbUid/picture/type=normal";
                 return $row;
             }
         }

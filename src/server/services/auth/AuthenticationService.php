@@ -40,6 +40,7 @@ class AuthenticationService {
                 if (isset($uid)) {
                     self::setUidInSession($uid);
                 }
+                return $uid;
             }
         } else {
             return $uid;
@@ -67,8 +68,8 @@ class AuthenticationService {
             $faceBook = self::getFaceBookInstance();
             $userProfile = $faceBook->api("/me");
             if (isset($userProfile)) {
-                $uid = UserService::createFBUser($fbUid, $userProfile['firstName'],
-                                                        $userProfile['lastName'], $userProfile['gender'],
+                $uid = UserService::createFBUser($fbUid, $userProfile['first_name'],
+                                                        $userProfile['last_name'], $userProfile['gender'],
                                                         $userProfile['email'], NULL);
                 return $uid;
             } else {

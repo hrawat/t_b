@@ -144,5 +144,16 @@ test('testTaskListing()', function() {
 
 });
 
+test('testUserModel()', function() {
+
+    TaskBoard.User._initialize();
+    stop(30000);
+    setTimeout(function() {
+        start();
+    }, 200000);
+    ok(TaskBoard.User.isUserLoggedIn());
+
+});
+
 
 

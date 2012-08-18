@@ -21,15 +21,21 @@ class AuthenticationService {
             ));
 
             // See if there is a user from a cookie
-            $facebookUid = $facebook->getUser();
-            if ($facebookUid == 0) {
+            $fbUid = $facebook->getUser();
+            if ($fbUid == 0) {
                 error_log("did not get user from signed cookie");
                 return NULL;
             } else {
-                error_log("Got user $facebookUid from signed cookie");
-                $userProfile = $facebook->api("/me");
-                print_r($userProfile);
-                // todo: add way to get our user Id
+                $user = UserService::lookupUserByFaceBookUid($fbUid);
+                if ($user == NULL) {
+                    $userProfile = $facebook->api("/me");
+                    $uid = UserService::createUser();
+                } else {
+                    $uid = $user['id'];
+                }
+
+
+
             }
         }
     }
@@ -53,7 +59,9 @@ class AuthenticationService {
         return $uid;
     }
 
-    public static function getFBUserDetails() {
+    public static function setUidInSession($uid) {
+        session_start();
+        $_SESSION[self::UID_KEY] = $uid;
 
     }
 

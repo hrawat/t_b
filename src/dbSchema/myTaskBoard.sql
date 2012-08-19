@@ -34,3 +34,19 @@ create table CategoryUser (
 );
 
 create unique index CategoryUser_userId_categoryId on CategoryUser(userId, categoryId);
+
+create table Task (
+    id                        varchar(23),
+    creationDate              datetime,
+    lastModificationDate      datetime,
+    deleted                   tinyint(1) default 0,
+    categoryId                varchar(23),
+    title                     varchar(512),
+    description               varchar(1024),
+    dueDate                   datetime,
+    status                    tinyint(1),
+    completionDate            datetime,
+    createdBy                 varchar(23),
+    completedBy               varchar(23),
+    priority                  tinyint(1)
+);

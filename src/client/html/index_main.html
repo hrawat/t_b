@@ -81,6 +81,8 @@
 
 <body>
 
+<div id="welcomeHeader" style="display: none;">
+</div>
 <div class="banner"></div>
 
 <div id="createTaskContainer" style="display: none;">
@@ -329,6 +331,26 @@
     $(document).ready(function() {
         //$('.fancybox').fancybox();
         // Create home and work category
+
+       // Get the logged in uer details
+        var userInfoReq = $.ajax({
+            url : "userInfo",
+           dataType : "json",
+            type : "GET"
+        });
+        userInfoReq.done(function(userReqResponse) {
+            var name, userAvatarUrl, headerText;
+            if (userReqResponse['success'] == false) {
+               window.location = '/index.html'   
+            } else {
+               name = userReqResponse['payload']['firstName'];
+               userAvatarUrl = userReqResponse['payload']['avatarUrl_normal'];
+               headerText = "<p><h1>Welcome {0}</h1> <img  src='{1}'></p>".format(name, userAvatarUrl);
+               $("#welcomeHeader").append(headerText);
+               $("#welcomeHeader").css("display", "block");
+            }
+        });
+
         createStandardCategories();
         renderCategories();
         //populateTasks(0);

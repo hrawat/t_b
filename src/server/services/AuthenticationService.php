@@ -1,8 +1,8 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../../lib/facebook-php-sdk/facebook.php");
-require_once(dirname(__FILE__) . "/../../services/user/UserService.php");
-require_once(dirname(__FILE__) . "/../../utils/Logger.php");
+require_once (dirname(__FILE__) . "/../lib/facebook-php-sdk/facebook.php");
+require_once(dirname(__FILE__) . "/UserService.php");
+require_once(dirname(__FILE__) . "/../utils/Logger.php");
 
 class AuthenticationService {
 

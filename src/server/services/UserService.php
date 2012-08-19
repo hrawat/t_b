@@ -1,7 +1,7 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../../utils/DBUtils.php");
-require_once (dirname(__FILE__) . "/../../utils/Logger.php");
+require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
+require_once (dirname(__FILE__) . "/../utils/Logger.php");
 
 class UserService {
 

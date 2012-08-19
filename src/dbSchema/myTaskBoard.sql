@@ -13,3 +13,24 @@ create table User (
     dateOfBirth               date,
     invitedBy                 varchar(23)
 );
+
+create table Category (
+    id                        varchar(23) primary key,
+    creationDate              datetime,
+    lastModificationDate      datetime,
+    deleted                   tinyint(1)  default 0,
+    name                      varchar(64),
+    colorCode                 varchar(16),
+    createdBy                 varchar(23)
+);
+
+create table CategoryUser (
+    categoryId                varchar(23),
+    userId                    varchar(23),
+    type                      tinyint(1),
+    creationDate              datetime,
+    primary key(userId, categoryId),
+    foreign key (categoryId) references Category(id) on delete cascade
+);
+
+create unique index CategoryUser_userId_categoryId on CategoryUser(userId, categoryId);

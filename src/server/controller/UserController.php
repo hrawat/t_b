@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../services/auth/AuthenticationService.php");
+require_once (dirname(__FILE__) . "/../services/AuthenticationService.php");
 require_once (dirname(__FILE__) . "/../utils/ErrorCodes.php");
 
 function getLoggedInUserDetails() {

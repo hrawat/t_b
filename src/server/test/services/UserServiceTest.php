@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../../../services/user/UserService.php");
+require_once (dirname(__FILE__) . "/../../services/UserService.php");
 
 class UserServiceTest extends PHPUnit_Framework_TestCase {
 

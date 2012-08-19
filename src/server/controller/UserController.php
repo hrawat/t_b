@@ -1,10 +1,10 @@
 <?php
 
-require_once (dirname(__FILE__) . "../services/auth/AuthenticationService.php");
-require_once (dirname(__FILE__) . "../utils/ErrorCodes.php");
+require_once (dirname(__FILE__) . "/../services/auth/AuthenticationService.php");
+require_once (dirname(__FILE__) . "/../utils/ErrorCodes.php");
 
 function getLoggedInUserDetails() {
-    $user = AuthenticationService::getLoggedInUserId();
+    $user = AuthenticationService::getLoggedInUser();
     $retValue = array();
     if (isset($retValue)) {
         $retValue['success'] = TRUE;

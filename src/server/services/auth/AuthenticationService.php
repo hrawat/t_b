@@ -20,6 +20,15 @@ class AuthenticationService {
         return self::$faceBookInstance;
     }
 
+    public static function getLoggedInUser() {
+       $uid = self::getLoggedInUserId();
+       if (isset($uid)) {
+          return UserService::lookupUser($uid);
+       } else {
+          return NULL;
+       }
+    }
+
     /**
      * @static
      * Return logged in user id. Identify logged in user thru two mechanisms - our session or

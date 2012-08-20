@@ -25,8 +25,20 @@ class TaskServiceTest extends PHPUnit_Framework_TestCase {
         // Complete Task
         TaskService::complete($taskId, $this->userId);
 
+        // Look up the Task
+        $task = TaskService::lookupTask($taskId);
+        $this->assertNotNull($task);
+
+        $this->assertEquals($taskId, $task['id']);
+        $this->assertEquals(TaskService::TASK_STATUS_COMPLETED, $task['status']);
+        $this->assertEquals(TaskService::TASK_PRIORITY_HIGH, $task['priority']);
+
+
+
         // Soft Delete Task
         TaskService::delete($taskId);
+
+
 
         // hard delete
         TaskService::delete($taskId, FALSE);

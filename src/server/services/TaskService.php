@@ -4,12 +4,36 @@ require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 
 class TaskService {
 
+    const TASK_SERVICE = "taskService";
+
     const TASK_STATUS_ACTIVE = 1;
     const TASK_STATUS_COMPLETED = 2;
 
     const TASK_PRIORITY_LOW = 1;
     const TASK_PRIORITY_MEDIUM = 2;
     const TASK_PRIORITY_HIGH = 3;
+
+    public static function lookupTask($taskId) {
+        $taskIdDbValue = DBUtils::escapeStrValue($taskId);
+        $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,
+                                                UNIX_TIMESTAMP(lastModificationDate) as lastModificationDate,
+                                                categoryId, title, description,
+                                                dueDate, status, createdBy, priority
+                                                from Task where id=$taskIdDbValue and deleted=0";
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+        } else {
+            $task = mysql_fetch_assoc($result);
+            if ($task == FALSE) {
+                return NULL;
+            } else {
+                return $task;
+            }
+        }
+
+    }
 
     public static function create($categoryId, $title, $description, $priority, $dueDate, $createdBy) {
         $id = uniqid("", TRUE);
@@ -29,7 +53,7 @@ class TaskService {
                                                         $createdByDbValue, $priority)";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
-            Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
             return $id;
@@ -46,7 +70,7 @@ class TaskService {
 
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
-            Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         }
     }
@@ -60,7 +84,7 @@ class TaskService {
                                         completionDate=NOW(), lastModificationDate=NOW() where id=$taskIdDbValue";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
-            Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         }
 
@@ -72,7 +96,7 @@ class TaskService {
         $sqlStmt = "Update Task set priority=$newPriority, lastModificationDate=NOW() where id=$taskIdDbValue";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
-            Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         }
     }
@@ -88,7 +112,7 @@ class TaskService {
         $sqlStmt = "Update Task set dueDate=FROM_UNIXTIME($newDueDate), lastModificationDate=NOW() where id=$taskIdDbValue";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
-            Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         }
 

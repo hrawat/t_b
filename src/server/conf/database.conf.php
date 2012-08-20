@@ -1,6 +1,6 @@
 <?php
 
-define ("TEST_MODE", FALSE);
+define ("TEST_MODE", TRUE);
 
 define("MYTASKBOARD_TEST_DB_HOST", "192.168.2.4");
 

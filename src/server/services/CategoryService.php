@@ -130,4 +130,15 @@ class CategoryService {
         }
     }
 
+    public static function deleteCategoriesOfUser($userId) {
+        $userIdDbValue = DBUtils::escapeStrValue($userId);
+        $sqlStmt = "Delete from Category where createdBy=$userIdDbValue";
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::CATEGORY_SERVICE, "Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+        }
+
+    }
+
 }

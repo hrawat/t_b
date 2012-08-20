@@ -2,6 +2,7 @@
 
 require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 require_once (dirname(__FILE__) . "/../utils/Logger.php");
+require_once (dirname(__FILE__) . "/../services/CategoryService.php");
 
 class UserService {
 
@@ -46,6 +47,7 @@ class UserService {
             Logger::error(self::USER_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
+            self::createDefaultCategories($id);
             return $id;
         }
 
@@ -81,6 +83,11 @@ class UserService {
                 return $row;
             }
         }
+    }
+
+    private static function createDefaultCategories($userId) {
+        $homeCategoryId = CategoryService::create("Home", "CFF", $userId);
+        $workCategoryId = CategoryService::create("Work", "FFECE5", $userId);
     }
 
 }

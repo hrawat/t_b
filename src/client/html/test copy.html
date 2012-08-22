@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<style>
+body {
+    color:#7B7474;    
+    margin:10px;
+    font-family:Georgia, "Times New Roman", Times, serif;
+}
+div {
+    display:block;    
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, body, center, canvas, caption, cite, code, command, datalist, dd, del, details, dfn, dl, div, dt, em, embed, fieldset, figcaption, figure, font, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, keygen, label, legend, li, meter, nav, object, ol, output, p, pre, progress, q, s, samp, section, small, span, source, strike, strong, sub, sup, table, tbody, tfoot, thead, th, tr, tdvideo, tt, u, ul, var {
+    background: transparent;
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    vertical-align: top;
+}
+img {
+    
+}
+
+
+
+.pro_pad-shadow {
+    padding: 10px 10px;
+    width: 220px;
+    
+}
+
+
+.pro_curved-hz-2 {
+    position: relative;
+    background: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.pro_curved-hz-2:before {
+    top: 0px;
+    bottom: 0px;
+    left: 10px;
+    right: 10px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.6);
+    border-radius: 100px / 10px;
+}
+
+.pro_curved-hz-2::before, .pro_curved-hz-2::after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+}
+
+
+
+.pro_text-shadow {
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.upper_content {
+    background-color:#FFF;
+    padding: 1em;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+   
+
+.background_color {
+    background-color:#FAFAFA;    
+}
+
+.pink {
+    background-color:#F3C;    
+}
+.block_tag {
+    height:5px;
+    margin-top:2px;
+}
+
+.lower_portion {
+    position:relative;
+	padding: 1em;
+	height:45px;
+}
+        .lower_portion img {
+            float:left;
+			border:#fff 3px solid;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); 
+			height: 40px;
+			width:inherit;          
+        }
+        .lower_portion a.focusStar {
+            
+            width: 0px; 
+            border-bottom: 40px solid rgba(200, 200, 200, 0.3);
+            border-left: 40px solid transparent;
+            border-right: 0px solid transparent;
+            position:absolute;
+            bottom:0;
+            right:0;
+            text-align:center;
+            cursor:pointer;
+        }
+        
+        .lower_portion a.focusStar:after {
+            content: '';
+            position: absolute;
+            bottom: -40px; 
+            right: 0;
+            z-index: 4;
+            border-bottom: 42px solid rgba(233, 233, 233, 0.3);
+            border-left: 42px solid transparent;
+            border-right: 0px solid transparent;
+        }
+        .lower_portion a.focusStar:hover {
+            
+            width: 0px;
+            border-bottom: 40px solid rgba(255, 0, 0, 0.3);
+            border-left: 40px solid transparent;
+            border-right: 0px solid transparent;
+        }
+		
+        
+        .lower_portion .details {
+            padding: 0 15px;
+            float:left;
+			font-size:0.8em;
+			color:#999;
+        }
+            .lower_portion .details ul {
+                list-style:none;
+                float:right;    
+                margin:0;
+                padding:0;
+            }
+            .lower_portion .details ul li{
+                padding: 5px 0;
+            }
+           
+/*tooltip stuff*/
+
+.tooltip {
+	border-bottom: 1px dotted #000000; color: #000000; outline: none;
+	cursor:pointer; text-decoration: none;
+	position: relative;
+}
+.tooltip span {
+	margin-left: -999em;
+	position: absolute;
+}
+.tooltip:hover span {
+	border-radius: 5px 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); 
+	-webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); 
+	-moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+	font-family: Calibri, Tahoma, Geneva, sans-serif;
+	position: absolute; 
+	left: 1em; 
+	top: 2em; 
+	z-index: 99;
+	margin-left: 0; 
+	width: 250px;
+}
+
+.classic { padding: 0.8em 1em; background: #FFFFAA; border: 1px solid #FFAD33; }
+
+* html a:hover { background: transparent; }
+
+/*end of tooltip*/
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+	<div class="uppder_portion">
+    	<p></p>
+    </div>
+    
+</div>
+
+
+<div class="pro_pad-shadow">
+	<div class="pro_curved-hz-2">
+    	<div class="pro_text-shadow background_color">
+        	<!--<div class="block_tag pink"></div>-->
+        	<div class="pro_text-shadow upper_content">
+        		Shadow with two horizontal curves
+        	</div>
+            <div class="lower_portion">
+                <img src="img/_per1.jpg" />
+                <div class="details">
+                    <ul>
+                        <li>Annie Zhao</li>
+                        <li>2 mins ago</li>
+                    </ul>
+                </div>
+                <br class="clear:both;" />
+                <a class="focusStar tooltip" href="#"><span class="classic">This is just an example of what you can do using a CSS tooltip, feel free to get creative and produce your own!</span></a>
+            </div>
+        
+        </div>
+	</div>
+</div>
+
+
+</body>
+</html>

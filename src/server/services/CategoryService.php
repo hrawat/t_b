@@ -49,7 +49,7 @@ class CategoryService {
     }
 
     public static function create($name, $colorCode, $createdBy) {
-        $id = uniqid("", TRUE);
+        $id = DBUtils::generateUniqId();
         $idDbValue = DBUtils::escapeStrValue($id);
         $nameDbValue = DBUtils::escapeStrValue($name);
         $colorCodeDbValue = DBUtils::escapeStrValue($colorCode);

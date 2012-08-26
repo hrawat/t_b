@@ -26,7 +26,7 @@ class UserService {
 
 
     public static function createFBUser($fbUid, $firstName, $lastName, $gender, $emailAddress, $invitedBy) {
-        $id = uniqid("", TRUE);
+        $id = DBUtils::generateUniqId();
         $idDbValue = DBUtils::escapeStrValue($id);
         $type = self::USER_TYPE_FACEBOOK;
         $status = self::USER_STATUS_REGISTERED;

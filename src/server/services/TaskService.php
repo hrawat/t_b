@@ -36,7 +36,7 @@ class TaskService {
     }
 
     public static function create($categoryId, $title, $description, $priority, $dueDate, $createdBy) {
-        $id = uniqid("", TRUE);
+        $id = DBUtils::generateUniqId();
         $idDbValue = DBUtils::escapeStrValue($id);
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
         $titleDbValue = DBUtils::escapeStrValue($title);

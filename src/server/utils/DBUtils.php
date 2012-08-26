@@ -4,6 +4,12 @@ require_once (dirname(__FILE__) . "/../conf/database.conf.php");
 
 class DBUtils {
 
+    public static function generateUniqId() {
+        $id = uniqid("", TRUE);
+        $id = str_replace(".", "_", $id);
+        return $id;
+    }
+
     public static function execute($sqlStmt) {
         $dbConn = self::getDbConn();
         $result = mysql_query($sqlStmt, $dbConn);

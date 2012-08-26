@@ -4,6 +4,7 @@ require_once(dirname(__FILE__) . "/../services/TaskService.php");
 require_once(dirname(__FILE__) . "/../services/UserService.php");
 require_once(dirname(__FILE__) . "/../utils/ErrorCodes.php");
 require_once(dirname(__FILE__) . "/../utils/ControllerUtils.php");
+require_once(dirname(__FILE__) . "/../utils/Logger.php");
 
 function handleRequest() {
     $userId = AuthenticationService::getLoggedInUserId();
@@ -15,6 +16,7 @@ function handleRequest() {
         $retValue = handleRequestInternal($userId);
     }
     $retValueInJson = json_encode($retValue);
+     Logger::debug("taskService", "return value $retValueInJson"); 
     echo $retValueInJson;
 }
 

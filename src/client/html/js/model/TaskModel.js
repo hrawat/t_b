@@ -17,13 +17,13 @@ TaskBoard.TaskModel = {
     HIGH_PRIORITY : 'highPriority',
 
     create : function(title, description, categoryId, priority, completeBy) {
-        var taskId, task, allTasks, today;
-
+        var taskId, task, allTasks ;
+        var today = new Date();
         var taskCreationReq = $.ajax({
             url : "task",
             dataType : "json",
             type : "GET",
-            async : false,
+            async :true,
             data : {
                     "reqType" : "createTask",
                     "categoryId" : categoryId,
@@ -44,7 +44,6 @@ TaskBoard.TaskModel = {
         });
 
         taskId = createUUID();
-        today = new Date();
         task = {
             "taskId" : taskId,
             "creationDate" : today,

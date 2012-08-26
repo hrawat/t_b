@@ -19,6 +19,30 @@ TaskBoard.TaskModel = {
     create : function(title, description, categoryId, priority, completeBy) {
         var taskId, task, allTasks, today;
 
+        var taskCreationReq = $.ajax({
+            url : "task",
+            dataType : "json",
+            type : "GET",
+            async : false,
+            data : {
+                    "reqType" : "createTask",
+                    "categoryId" : categoryId,
+                    "title" : title,
+                    "description" : description,
+                    "priority" : priority,
+                    "dueDate" : this._getDate(today, completeBy).getTime()
+            }
+        });
+
+        taskCreateReq.done(function(taskCreationResp) {
+            if (taskCreationResp['success']) {
+                alert("task created!")
+            } else {
+                alert("task creation failed");
+            }
+
+        });
+
         taskId = createUUID();
         today = new Date();
         task = {

@@ -76,9 +76,31 @@ TaskBoard.CategoryModel = {
 
     },
 
-    list: function() {
-        return this._allCategories();
+    list: function(successCallBack, failureCallBack) {
+        var listReq = $.ajax({
+            url : "category",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "listCategories"
+           }
+        });
+
+        listReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, $result['payload']);
+            } else {
+                failureCallBack.call(this, $result['errCode'], $result['errMsg']);
+            }
+        });
+
+
     },
+
+//    list: function() {
+//        return this._allCategories();
+//    },
 
     changePosition: function(categoryId, position) {
         var existingCategories, allCategories;

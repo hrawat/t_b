@@ -186,21 +186,30 @@
     }
 
     function renderCategories() {
-        var categories = TaskBoard.CategoryModel.list();
-        var index = 0;
-        var categoryElt;
-        var categoryId = $(".categorySelected").attr("id");
-        if (categoryId == undefined) {
-            categoryId = 0;
-        }
+        TaskBoard.CategoryModel.list(function(categories) {
+            //var categories = TaskBoard.CategoryModel.list();
+            var index = 0;
+            var categoryElt;
+            var categoryId = $(".categorySelected").attr("id");
+            if (categoryId == undefined) {
+                categoryId = 0;
+            }
 
-        appendCategory(0, "All", 'FFFFFF', (0 == categoryId));
-        for(index=0; index < categories.length; index++) {
-            appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode,
-                                                        (categories[index].categoryId == categoryId));
-            appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name,
-                                            categories[index].colorHexCode, (index == 0) ? true: false);
-        }
+            appendCategory(0, "All", 'FFFFFF', (0 == categoryId));
+            for(index=0; index < categories.length; index++) {
+                appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode,
+                        (categories[index].categoryId == categoryId));
+                appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name,
+                        categories[index].colorHexCode, (index == 0) ? true: false);
+            }
+
+        },
+        function(errCode, errMsg) {
+            alert("gor error from server err code " + errCode + " err msg " + errMsg);
+
+        });
+
+
 
 
     }

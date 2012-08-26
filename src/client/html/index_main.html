@@ -197,10 +197,10 @@
 
             appendCategory(0, "All", 'FFFFFF', (0 == categoryId));
             for(index=0; index < categories.length; index++) {
-                appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorHexCode,
+                appendCategory(categories[index].categoryId, categories[index].name, categories[index].colorCode,
                         (categories[index].categoryId == categoryId));
                 appendCategoryInCreateTaskForm(categories[index].categoryId, categories[index].name,
-                        categories[index].colorHexCode, (index == 0) ? true: false);
+                        categories[index].colorCode, (index == 0) ? true: false);
             }
 
         },

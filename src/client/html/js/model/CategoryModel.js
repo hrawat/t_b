@@ -89,9 +89,9 @@ TaskBoard.CategoryModel = {
 
         listReq.done(function(result) {
             if (result['success']) {
-                successCallBack.call(this, $result['payload']);
+                successCallBack.call(this, result['payload']);
             } else {
-                failureCallBack.call(this, $result['errCode'], $result['errMsg']);
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
             }
         });
 

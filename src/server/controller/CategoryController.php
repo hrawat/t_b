@@ -3,6 +3,7 @@
 require_once (dirname(__FILE__) . "/../services/AuthenticationService.php");
 
 require_once (dirname(__FILE__) . "/../utils/ControllerUtils.php");
+require_once (dirname(__FILE__) . "/../utils/ErrorCodes.php");
 
 
 function handleRequest() {
@@ -23,7 +24,8 @@ function handleRequestInternal($userId) {
     try {
         $reqType = $_GET['reqType'];
         if ($reqType == 'listCategories') {
-            $retValue = handleListCategories($userId);
+            $payload = handleListCategories($userId);
+            $retValue = ControllerUtils::getSuccessResponse($payload);
             return $retValue;
         } else {
             $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_REQUEST, "Request $reqType is not supported");
@@ -41,3 +43,5 @@ function handleListCategories($userId) {
     return $categories;
 
 }
+
+handleRequest();

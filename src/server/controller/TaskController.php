@@ -1,5 +1,6 @@
 <?php
 
+require_once(dirname(__FILE__) . "/../services/AuthenticationService.php");
 require_once(dirname(__FILE__) . "/../services/TaskService.php");
 require_once(dirname(__FILE__) . "/../services/UserService.php");
 require_once(dirname(__FILE__) . "/../utils/ErrorCodes.php");

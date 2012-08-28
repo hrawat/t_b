@@ -394,6 +394,7 @@
                             function(createTaskRes) {
                                 taskContainerDisplay(false);
                                 renderSelectedCategory();
+                                console.log("call back called");
                             },
                             function(errCode, errMsg) {
                                 alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);

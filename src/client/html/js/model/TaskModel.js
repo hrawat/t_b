@@ -30,7 +30,7 @@ TaskBoard.TaskModel = {
                     "title" : taskParams.title,
                     "description" : taskParams.description,
                     "priority" : taskParams.priority,
-                    "dueDate" : this._getDate(today, taskParams.completeBy).getTime()
+                    "dueDate" : (this._getDate(today, taskParams.completeBy).getTime())/1000
             }
         });
 
@@ -42,24 +42,6 @@ TaskBoard.TaskModel = {
             }
 
         });
-
-        taskId = createUUID();
-        task = {
-            "taskId" : taskId,
-            "creationDate" : today,
-            "title" : title,
-            "description" : description,
-            "categoryId" : categoryId,
-            "priority" : priority,
-            "status" : this.TASK_STATUS_ACTIVE,
-            "completeBy" : completeBy,
-            "completionDate" : this._getDate(today, completeBy)
-        };
-        allTasks = this._allTasks();
-        allTasks.push(task);
-        this._saveAllTasks(allTasks);
-        return taskId;
-
     },
 
     save: function(taskId, title, description, categoryId, priority, completeBy) {

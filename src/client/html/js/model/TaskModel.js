@@ -34,7 +34,7 @@ TaskBoard.TaskModel = {
             }
         });
 
-        taskCreateReq.done(function(taskCreationResp) {
+        taskCreationReq.done(function(taskCreationResp) {
             if (taskCreationResp['success']) {
                 alert("task created!")
             } else {

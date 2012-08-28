@@ -86,7 +86,7 @@
 <div class="banner"></div>
 
 <div id="createTaskContainer" style="display: none;">
-    <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
+    <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="get">
         <input id="taskId" type="hidden" value="" />
 
         <ul>
@@ -380,8 +380,8 @@
             return false;
         });
 
-        $('#createTaskSubmitAction').click(function() {
-            taskContainerDisplay(false);
+        $('#createTaskForm').submit(function() {
+            //taskContainerDisplay(false);
             var title = $("#taskTitle").val();
             var description = '';
 
@@ -396,7 +396,8 @@
 
 //            populateTasks(categoryId);
 //            populateTasks(0);
-            renderSelectedCategory();
+//            renderSelectedCategory();
+            console.log("after task model create");
 
             return false;
         });

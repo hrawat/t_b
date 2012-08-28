@@ -352,6 +352,15 @@
             if (userReqResponse['success'] == false) {
                window.location = '/index.html'   
             } else {
+               renderCategories();
+               TaskBoard.TaskModel.loadTasksFromServer(0,
+                                    function(result) {
+                                        renderSelectedCategory();
+                                    },
+                                    function(errCode, errMsg) {
+                                        alert("Error in loading tasks from server err code: " + errCode + " err msg: "+errMsg);
+                                    });
+
                name = userReqResponse['payload']['firstName'];
                userAvatarUrl = userReqResponse['payload']['avatarUrl_normal'];
                headerText = "<p><h1>Welcome {0}</h1> <img  src='{1}'></p>".format(name, userAvatarUrl);
@@ -360,10 +369,10 @@
             }
         });
 
-        createStandardCategories();
-        renderCategories();
+        //createStandardCategories();
+        //renderCategories();
         //populateTasks(0);
-        renderSelectedCategory();
+        //renderSelectedCategory();
 
         window.setInterval(function(){
             renderSelectedCategory();
@@ -399,11 +408,6 @@
                             function(errCode, errMsg) {
                                 alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
                             });
-
-
-//            populateTasks(categoryId);
-//            populateTasks(0);
-//            renderSelectedCategory();
 
 
             return false;

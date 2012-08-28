@@ -24,8 +24,11 @@ function handleRequest() {
 function handleRequestInternal($userId) {
     try {
         $reqType = $_GET['reqType'];
-        if ($reqType == 'createTask') {
-            $retValue = handleCreateTask($userId);
+        if ($reqType == 'create') {
+            $retValue = handleCreate($userId);
+            return $retValue;
+        } else if ($reqType == 'userTasks') {
+            $retValue = handleUserTasks($userId);
             return $retValue;
         } else {
             $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_REQUEST, "Request $reqType is not supported");
@@ -38,7 +41,14 @@ function handleRequestInternal($userId) {
 
 }
 
-function handleCreateTask($createdBy) {
+function handleUserTasks($userId) {
+    $updatedSince = ControllerUtils::getArgValue("updatedSince", 0);
+    $userTasks = TaskService::userTasks($userId, $updatedSince);
+    return ControllerUtils::getSuccessResponse($userTasks);
+
+}
+
+function handleCreate($createdBy) {
     $mandatoryArgsCheckRetValue = ControllerUtils::checkMandatoryArgs(array("categoryId", "title", "dueDate"));
     if ($mandatoryArgsCheckRetValue != NULL) {
         return $mandatoryArgsCheckRetValue;

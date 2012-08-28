@@ -12,7 +12,7 @@ class ControllerUtils {
     }
 
     public static function getArgValue($arg, $defaultValue) {
-        if (isset($_get[$arg])) {
+        if (isset($_GET[$arg])) {
             return $_GET[$arg];
         } else {
             return $defaultValue;

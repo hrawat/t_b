@@ -101,9 +101,26 @@ class TaskService {
         }
     }
 
-    public static function userTasks($userId, $categoryId=NULL, $dueDate=NULL, $updatedSince=0) {
-        $sqlStmt = "select id, creationDate, lastModificationDate, categoryId, title,
-                            description, dueDate, status, completionDate, createdBy, completedBy";
+    public static function userTasks($userId, $updatedSince=0) {
+        $userIdDbValue = DBUtils::escapeStrValue($userId);
+        $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,
+                                                UNIX_TIMESTAMP(lastModificationDate) as lastModificationDate,
+                                                categoryId, title, description,
+                                                dueDate, status, createdBy, priority
+                            from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
+                            and UNIX_TIMESTAMP(lastModificationDate) < $updatedSince and deleted=0";
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+        } else {
+            $tasks = array();
+            while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
+                $tasks[] = $taskRow;
+            }
+            return $tasks;
+
+        }
 
     }
 

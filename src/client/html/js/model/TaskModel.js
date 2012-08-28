@@ -16,6 +16,32 @@ TaskBoard.TaskModel = {
     MEDIUM_PRIORITY : 'mediumPriority',
     HIGH_PRIORITY : 'highPriority',
 
+    loadTasksFromServer : function(modifiedSince, successCallBack, failureCallBack) {
+        var taskId, task, allTasks ;
+        var today = new Date();
+        var taskCreationReq = $.ajax({
+            url : "task",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "userTasks",
+                "modifiedSince" : modifiedSince
+            }
+        });
+
+        taskCreationReq.done(function(result) {
+            if (result['success']) {
+                this._saveAllTasks(result['payload']);
+                successCallBack.call(this, result['payload']);
+            } else {
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
+            }
+
+        });
+
+    },
+
     create : function(taskParams, successCallBack, failureCallBack) {
         var taskId, task, allTasks ;
         var today = new Date();
@@ -25,7 +51,7 @@ TaskBoard.TaskModel = {
             type : "GET",
             async :true,
             data : {
-                    "reqType" : "createTask",
+                    "reqType" : "create",
                     "categoryId" : taskParams.categoryId,
                     "title" : taskParams.title,
                     "description" : taskParams.description,

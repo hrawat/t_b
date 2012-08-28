@@ -16,7 +16,7 @@ TaskBoard.TaskModel = {
     MEDIUM_PRIORITY : 'mediumPriority',
     HIGH_PRIORITY : 'highPriority',
 
-    create : function(title, description, categoryId, priority, completeBy) {
+    create : function(taskParams, successCallBack, failureCallBack) {
         var taskId, task, allTasks ;
         var today = new Date();
         var taskCreationReq = $.ajax({
@@ -26,19 +26,19 @@ TaskBoard.TaskModel = {
             async :true,
             data : {
                     "reqType" : "createTask",
-                    "categoryId" : categoryId,
-                    "title" : title,
-                    "description" : description,
-                    "priority" : priority,
-                    "dueDate" : this._getDate(today, completeBy).getTime()
+                    "categoryId" : taskParams.categoryId,
+                    "title" : taskParams.title,
+                    "description" : taskParams.description,
+                    "priority" : taskParams.priority,
+                    "dueDate" : this._getDate(today, taskParams.completeBy).getTime()
             }
         });
 
-        taskCreationReq.done(function(taskCreationResp) {
-            if (taskCreationResp['success']) {
-                alert("task created!")
+        taskCreationReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, result['payload']);
             } else {
-                alert("task creation failed");
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
             }
 
         });

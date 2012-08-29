@@ -56,7 +56,8 @@ function handleCreate($createdBy) {
         $categoryId = $_GET["categoryId"];
         $title = $_GET["title"];
         $description = ControllerUtils::getArgValue("description", NULL);
-        $priority = ControllerUtils::getArgValue("priority", TaskService::TASK_PRIORITY_MEDIUM);
+        $priorityStr = ControllerUtils::getArgValue("priority", TaskService::TASK_PRIORITY_MEDIUM_STR);
+        $priority = TaskService::taskPriorityIntValue($priorityStr);
         $dueDate = $_GET["dueDate"];
 
         $taskId = TaskService::create($categoryId, $title, $description, $priority, $dueDate, $createdBy);

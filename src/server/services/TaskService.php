@@ -13,6 +13,20 @@ class TaskService {
     const TASK_PRIORITY_MEDIUM = 2;
     const TASK_PRIORITY_HIGH = 3;
 
+    const TASK_PRIORITY_LOW_STR = 'lowPriority';
+    const TASK_PRIORITY_MEDIUM_STR = 'mediumPriority';
+    const TASK_PRIORITY_HIGH_STR = 'highPriority';
+
+    public static function taskPriorityIntValue($strValue) {
+        if ($strValue == self::TASK_PRIORITY_HIGH_STR) {
+            return self::TASK_PRIORITY_HIGH;
+        } else if ($strValue == self::TASK_PRIORITY_MEDIUM_STR) {
+            return self::TASK_PRIORITY_MEDIUM;
+        } else if ($strValue == self::TASK_PRIORITY_LOW_STR) {
+            return self::TASK_PRIORITY_LOW;
+        }
+    }
+
     public static function lookupTask($taskId) {
         $taskIdDbValue = DBUtils::escapeStrValue($taskId);
         $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,

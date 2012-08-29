@@ -152,7 +152,7 @@ TaskBoard.CategoryModel = {
 
     _allCategories: function() {
         var allCategoriesStr, allCategories;
-        allCategoriesStr = localStorage.getItem("TaskBoard.categories");
+        allCategoriesStr = sessionStorage.getItem("TaskBoard.categories");
 
         if ((allCategoriesStr == null) || (allCategoriesStr == "") ) {
             allCategories = Array();
@@ -169,7 +169,7 @@ TaskBoard.CategoryModel = {
             return;
         } else {
             allCategoriesStr = JSON.stringify(allCategories);
-            localStorage.setItem("TaskBoard.categories", allCategoriesStr);
+            sessionStorage.setItem("TaskBoard.categories", allCategoriesStr);
         }
     }
 }

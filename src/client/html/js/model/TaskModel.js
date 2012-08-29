@@ -232,7 +232,7 @@ TaskBoard.TaskModel = {
 
     _allTasks : function() {
         var allTasksStr, allTasks, index;
-        allTasksStr = localStorage.getItem("TaskBoard.tasks");
+        allTasksStr = sessionStorage.getItem("TaskBoard.tasks");
 
         if ((allTasksStr == null) || (allTasksStr == "") ) {
             allTasks = Array();
@@ -257,7 +257,7 @@ TaskBoard.TaskModel = {
             return;
         } else {
             allTasksStr = JSON.stringify(allTasks);
-            localStorage.setItem("TaskBoard.tasks", allTasksStr);
+            sessionStorage.setItem("TaskBoard.tasks", allTasksStr);
         }
     },
 

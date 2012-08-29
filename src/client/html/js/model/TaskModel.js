@@ -19,7 +19,7 @@ TaskBoard.TaskModel = {
     loadTasksFromServer : function(modifiedSince, successCallBack, failureCallBack) {
         var taskId, task, allTasks ;
         var today = new Date();
-        var taskCreationReq = $.ajax({
+        var userTasksReq = $.ajax({
             url : "task",
             dataType : "json",
             type : "GET",
@@ -27,10 +27,11 @@ TaskBoard.TaskModel = {
             data : {
                 "reqType" : "userTasks",
                 "modifiedSince" : modifiedSince
-            }
+            },
+            context : this
         });
 
-        taskCreationReq.done(function(result) {
+        userTasksReq.done(function(result) {
             if (result['success']) {
                 this._saveAllTasks(result['payload']);
                 successCallBack.call(this, result['payload']);
@@ -82,7 +83,7 @@ TaskBoard.TaskModel = {
             allTasks[index].priority = priority,
             allTasks[index].status =  this.TASK_STATUS_ACTIVE,
             allTasks[index].completeBy = completeBy;
-            allTasks[index].completionDate = this._getDate(today, completeBy);
+            allTasks[index].dueDate = this._getDate(today, completeBy);
 
             this._saveAllTasks(allTasks);
         }
@@ -193,8 +194,8 @@ TaskBoard.TaskModel = {
         retValue = new Array();
         allTasks = this._allTasks();
         for (index=0; index < allTasks.length; index++) {
-            if ( ((prevRefDate == null) || (allTasks[index].completionDate.getTime() >= refDate.getTime())) &&
-                            ((refDate == null) || (allTasks[index].completionDate.getTime() <= refDate.getTime()))) {
+            if ( ((prevRefDate == null) || (allTasks[index].dueDate.getTime() >= refDate.getTime())) &&
+                            ((refDate == null) || (allTasks[index].dueDate.getTime() <= refDate.getTime()))) {
                 if (allTasks[index].status == this.TASK_STATUS_COMPLETE) {
                     if ((allTasks[index].dateTaskCompleted == undefined) || (this._sameDay(now, allTasks[index].dateTaskCompleted) == false)) {
                         continue;
@@ -239,10 +240,10 @@ TaskBoard.TaskModel = {
             //allTasks = JSON.parse(allTasksStr);
             allTasks = jQuery.parseJSON(allTasksStr);
             for (index=0; index < allTasks.length; index++) {
-                allTasks[index].completionDate = new Date(allTasks[index].completionDate);
-                allTasks[index].creationDate = new Date(allTasks[index].creationDate);
+                allTasks[index].dueDate = new Date(allTasks[index].dueDate*1000);
+                allTasks[index].creationDate = new Date(allTasks[index].creationDate*1000);
                 if (allTasks[index].dateTaskCompleted != undefined) {
-                    allTasks[index].dateTaskCompleted = new Date(allTasks[index].dateTaskCompleted);
+                    allTasks[index].dateTaskCompleted = new Date(allTasks[index].dateTaskCompleted*1000);
                 }
             }
         }

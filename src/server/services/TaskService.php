@@ -18,7 +18,7 @@ class TaskService {
         $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,
                                                 UNIX_TIMESTAMP(lastModificationDate) as lastModificationDate,
                                                 categoryId, title, description,
-                                                dueDate, status, createdBy, priority
+                                                UNIX_TIMESTAMP(dueDate), status, createdBy, priority
                                                 from Task where id=$taskIdDbValue and deleted=0";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
@@ -106,9 +106,9 @@ class TaskService {
         $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,
                                                 UNIX_TIMESTAMP(lastModificationDate) as lastModificationDate,
                                                 categoryId, title, description,
-                                                dueDate, status, createdBy, priority
+                                                UNIX_TIMESTAMP(dueDate) as dueDate, status, createdBy, priority
                             from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
-                            and UNIX_TIMESTAMP(lastModificationDate) < $updatedSince and deleted=0";
+                            and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince and deleted=0";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());

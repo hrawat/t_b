@@ -68,7 +68,7 @@ TaskBoard.CategoryModel = {
         existingAllCategories = this._allCategories();
         allCategories = new Array();
         for (index=0; index < existingAllCategories.length; index++) {
-            if (existingAllCategories[index].categoryId != categoryId) {
+            if (existingAllCategories[index].id != categoryId) {
                 allCategories.push(existingAllCategories[index]);
             }
         }
@@ -84,11 +84,13 @@ TaskBoard.CategoryModel = {
             async :true,
             data : {
                 "reqType" : "listCategories"
-           }
+           },
+           context : this
         });
 
         listReq.done(function(result) {
             if (result['success']) {
+                this._saveAllCategories(result['payload']);
                 successCallBack.call(this, result['payload']);
             } else {
                 failureCallBack.call(this, result['errCode'], result['errMsg']);
@@ -140,7 +142,7 @@ TaskBoard.CategoryModel = {
         var allCategories, index;
         allCategories = this._allCategories();
         for (index=0; index < allCategories.length; index++) {
-            if (allCategories[index].categoryId == categoryId) {
+            if (allCategories[index].id == categoryId) {
                 return index;
             }
         }

@@ -247,7 +247,7 @@
                         "<a id='completeTask_{5}' class='Botton menuButtons' href='#' >Complete</a>" +
                         "<a id='deleteTask_{6}' class='Botton menuButtons' href='#' >Delete</a>" +
                         "</div>" +
-                        "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.taskId, task.taskId );
+                        "</div>").format(task.id, category.colorCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.id, task.id );
 
             } else {
                 taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
@@ -257,7 +257,7 @@
                                 "<a id='completeTask_{5}' class='Botton menuButtons' href='#' >Complete</a>" +
                                 "<a id='deleteTask_{6}' class='Botton menuButtons' href='#' >Delete</a>" +
                             "</div>" +
-                      "</div>").format(task.taskId, category.colorHexCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.taskId, task.taskId );
+                      "</div>").format(task.id, category.colorCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.id, task.id );
             }
 
 //                    <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
@@ -282,18 +282,18 @@
             $('#todayTaskContainer').append(taskDiv);
 
             if (task.status != TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
-                $("#"+task.taskId).mouseover(function() {
+                $("#"+task.id).mouseover(function() {
                     var taskId = $(this).attr("id");
                     $('#'+taskId + ' div').css("display", "block");
                 });
 
-                $("#"+task.taskId).mouseout(function() {
+                $("#"+task.id).mouseout(function() {
                     var taskId = $(this).attr("id");
                     $('#'+taskId + ' div').css("display", "none");
 
                 });
 
-                $("#completeTask_"+task.taskId).click(function() {
+                $("#completeTask_"+task.id).click(function() {
                     var taskId = $(this).attr("id").substring("completeTask_".length);
                     TaskBoard.TaskModel.complete(taskId);
                     renderSelectedCategory();
@@ -301,7 +301,7 @@
 
                 });
 
-                $("#deleteTask_"+task.taskId).click(function() {
+                $("#deleteTask_"+task.id).click(function() {
                     var taskId = $(this).attr("id").substring("deleteTask_".length);
                     TaskBoard.TaskModel.delete(taskId);
                     renderSelectedCategory();

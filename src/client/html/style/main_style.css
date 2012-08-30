@@ -97,7 +97,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 			cursor:pointer;
 			margin:10px;
 			text-align:center;
-			border:solid 1px #999;
 			width:100%;
 			border-radius:5px;
 			position:relative;
@@ -116,9 +115,9 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	
 			
 			background: #ffffff; /* Old browsers */
-			background: -moz-linear-gradient(top,  #f8f8f8 0%, #f0f0f0 97%); 
-			background: -webkit-linear-gradient(top,  #f8f8f8 0%, #f0f0f0 97%); 
-			background: linear-gradient(to bottom, #f8f8f8 0%, #f0f0f0 97%);
+			background: -moz-linear-gradient(top,  #FFF 0%, #EAEAEA 97%); 
+			background: -webkit-linear-gradient(top,  #FFF 0%, #EAEAEA 97%); 
+			background: linear-gradient(to bottom, #FFF 0%, #EAEAEA 97%);
 		}
 		.leftNav ul li a.selected{
 			line-height:50px;
@@ -152,7 +151,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
     width: 230px;
 	
 	text-align:center;
-	background:#ccc;
 	
 	line-height:50px;
 	border: solid #ccc 1px;
@@ -273,33 +271,29 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
     width: 220px;
     
 }
-
-
-.pro_curved-hz-2 {
-    position: relative;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-.pro_curved-hz-2:before {
-    top: 0px;
-    bottom: 0px;
-    left: 10px;
-    right: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-    border-radius: 100px / 10px;
-}
-
-.pro_curved-hz-2::before, .pro_curved-hz-2::after {
-    content: "";
-    position: absolute;
-    z-index: -2;
-}
-
-
-
-.pro_text-shadow {
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
-}
+	.pro_curved-hz-2 {
+		position: relative;
+		background: white;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	}
+	.pro_curved-hz-2:before {
+		top: 0px;
+		bottom: 0px;
+		left: 10px;
+		right: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+		border-radius: 100px / 10px;
+	}
+	
+	.pro_curved-hz-2::before, .pro_curved-hz-2::after {
+		content: "";
+		position: absolute;
+		z-index: -2;
+	}
+		.pro_text-shadow {
+			box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+			background-color:#FAFAFA;    
+		}
 
 
 
@@ -329,10 +323,6 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	font-weight:bold;	
 }
   
-
-.background_color {
-    background-color:#FAFAFA;    
-}
 
 
 .block_tag {
@@ -412,7 +402,38 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
             .lower_portion .details ul li{
                 padding: 5px 0;
             }
-           
+
+.addblock {
+	padding: 30px 0 30px 80px;
+	cursor:pointer;
+}
+                		
+.add{
+	width: 20px;
+	height: 20px;
+	display:inline-block;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	border-radius: 16px;
+	background:#E2e2e2;
+	text-align:center;
+	line-height:18px;
+	color:#fff;
+	font-weight:bold;
+}
+
+	.add::after {
+		content:"Add";
+		top:42px;
+		left: 115px;
+		color:#ccc;
+	}
+	
+	
+	
+							
+						
+                		
 
 /* icons */
 
@@ -437,6 +458,8 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	top:15px;
 	right:20px;
 }
+
+
 .delete-alt a::before, .delete-alt a::after {
 	left: 6px;
 	width: 5px;
@@ -450,12 +473,13 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	transform: rotate(45deg);
 }
 
-.delete-alt a::after {
-	left: 1px;
-	width: 15px;
-	height: 5px;
-	margin-top: -2px;
-}
+	.delete-alt a::after {
+		left: 1px;
+		width: 15px;
+		height: 5px;
+		margin-top: -2px;
+	}
+
 
 div::before, div::after, div a::before, div a::after {
 	content: "";

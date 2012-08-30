@@ -85,38 +85,55 @@
     <div class="rightContent">
     	<div class="dailyHeader">Today</div>
         
+        <script>
+			function showmenu(task) {
+				task.getElementsByTagName("div")[0].style.display = "block";
+			}
+			function hidemenu(task) {
+				task.getElementsByTagName("div")[0].style.display = "none";
+			}
+	  </script>
+        
         <div id="container">
         
             <div class="pro_pad-shadow item">
                 <div class="pro_curved-hz-2">
+                    <div class="pro_text-shadow background_color" >
+                        <div class="block_tag pink"></div>
+                        <div class="pro_text-shadow upper_content important" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+                            Book flight to Isreal 
+                            <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                                <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
+                            </div>
+                        </div>
+                        <div class="lower_portion">
+                            <img src="img/_per1.jpg" />
+                            <div class="details">
+                                <ul>
+                                    <li>Susan & me</li>
+                                    <li>2 mins ago</li>
+                                </ul>
+                            </div>
+                            <br class="clear:both;" />
+                            <a class="focused tooltip" href="#"><span class="classic">This task is important</span></a>
+                        </div>
+                    	
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="pro_pad-shadow item">
+                <div class="pro_curved-hz-2">
                     <div class="pro_text-shadow background_color">
                         <div class="block_tag blue"></div>
-                        <div class="pro_text-shadow upper_content">
-                            lores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsu
-                        </div>
-                        <div class="lower_portion">
-                            <img src="img/_per1.jpg" />
-                            <div class="details">
-                                <ul>
-                                    <li>Annie Zhao</li>
-                                    <li>2 mins ago</li>
-                                </ul>
+                        <div class="pro_text-shadow upper_content" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+                            Get the stupid Seam release finished!
+                            <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                                <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
                             </div>
-                            <br class="clear:both;" />
-                            <a class="focusStar tooltip" href="#"><span class="classic">Make this task important</span></a>
-                        </div>
-                    
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div class="pro_pad-shadow item">
-                <div class="pro_curved-hz-2">
-                    <div class="pro_text-shadow background_color">
-                        <div class="block_tag pink"></div>
-                        <div class="pro_text-shadow upper_content">
-                            ore et dolore magna aliquyam erat, sed diam voluptu
                         </div>
                         <div class="lower_portion">
                             <img src="img/_per1.jpg" />
@@ -137,15 +154,46 @@
             <div class="pro_pad-shadow item">
                 <div class="pro_curved-hz-2">
                     <div class="pro_text-shadow background_color">
-                        <div class="block_tag pink"></div>
-                        <div class="pro_text-shadow upper_content">
-                            Stet clita kasd gubergren
+                        <div class="block_tag blue"></div>
+                        <div class="pro_text-shadow upper_content important" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+                            Review Hibernate in Action second edition
+                            <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                                <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
+                            </div>
                         </div>
                         <div class="lower_portion">
                             <img src="img/_per1.jpg" />
                             <div class="details">
                                 <ul>
-                                    <li>Annie Zhao</li>
+                                    <li>Jenny & me</li>
+                                    <li>2 mins ago</li>
+                                </ul>
+                            </div>
+                            <br class="clear:both;" />
+                            <a class="focused tooltip" href="#"><span class="classic">This task is important</span></a>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pro_pad-shadow item">
+                <div class="pro_curved-hz-2">
+                    <div class="pro_text-shadow background_color">
+                        <div class="block_tag pink"></div>
+                        <div class="pro_text-shadow upper_content" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+                            Haircut
+                            <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                                <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
+                            </div>
+                        </div>
+                        <div class="lower_portion">
+                            <img src="img/_per1.jpg" />
+                            <div class="details">
+                                <ul>
+                                    <li>Jenny & me</li>
                                     <li>2 mins ago</li>
                                 </ul>
                             </div>
@@ -156,6 +204,29 @@
                     </div>
                 </div>
             </div>
+            
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
      </div>   

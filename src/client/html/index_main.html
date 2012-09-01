@@ -356,7 +356,7 @@
                window.location = '/index.html'   
             } else {
                renderCategories();
-               TaskBoard.TaskModel.loadTasksFromServer(0,
+               TaskBoard.TaskModel.loadTasksFromServer(
                                     function(result) {
                                         renderSelectedCategory();
                                     },
@@ -378,8 +378,13 @@
         //renderSelectedCategory();
 
         window.setInterval(function(){
-            renderSelectedCategory();
-            console.log("rendering selected category");
+               TaskBoard.TaskModel.loadTasksFromServer(
+                                    function(result) {
+                                        renderSelectedCategory();
+                                    },
+                                    function(errCode, errMsg) {
+                                        alert("Error in loading tasks from server err code: " + errCode + " err msg: "+errMsg);
+                                    });
         }, 60000);
 
         $("#createTaskContainerShadow").click(function() {

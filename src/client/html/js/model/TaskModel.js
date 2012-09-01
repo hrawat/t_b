@@ -16,9 +16,14 @@ TaskBoard.TaskModel = {
     MEDIUM_PRIORITY : 'mediumPriority',
     HIGH_PRIORITY : 'highPriority',
 
-    loadTasksFromServer : function(modifiedSince, successCallBack, failureCallBack) {
+    loadTasksFromServer : function(successCallBack, failureCallBack) {
         var taskId, task, allTasks ;
         var today = new Date();
+//        var modifiedSince = sessionStorage.getItem("TaskBoard.tasks.lastModificationTimestamp");
+ //       if (modifiedSince == undefined) {
+  //         modifiedSince = 0;
+   //     }
+        var modifiedSince = 0;
         var userTasksReq = $.ajax({
             url : "task",
             dataType : "json",
@@ -33,7 +38,7 @@ TaskBoard.TaskModel = {
 
         userTasksReq.done(function(result) {
             if (result['success']) {
-                this._saveAllTasks(result['payload']);
+                this._saveAllTasks(result['payload'], result['currTimestamp']);
                 successCallBack.call(this, result['payload']);
             } else {
                 failureCallBack.call(this, result['errCode'], result['errMsg']);
@@ -85,7 +90,7 @@ TaskBoard.TaskModel = {
             allTasks[index].completeBy = completeBy;
             allTasks[index].dueDate = this._getDate(today, completeBy);
 
-            this._saveAllTasks(allTasks);
+            this._saveAllTasks(allTasks, 0);
         }
     },
 
@@ -111,7 +116,7 @@ TaskBoard.TaskModel = {
                 allTasks.push(prevAllTasks[index]);
             }
         }
-        this._saveAllTasks(allTasks);
+        this._saveAllTasks(allTasks, 0);
 
 
     },
@@ -123,7 +128,7 @@ TaskBoard.TaskModel = {
         if (index >= 0) {
             allTasks[index].status = this.TASK_STATUS_COMPLETE;
             allTasks[index].dateTaskCompleted = new Date();
-            this._saveAllTasks(allTasks);
+            this._saveAllTasks(allTasks, 0);
         }
 
 
@@ -135,7 +140,7 @@ TaskBoard.TaskModel = {
         index = this._indexOf(taskId);
         if (index >= 0) {
             allTasks[index].priority = this.priority;
-            this._saveAllTasks(allTasks);
+            this._saveAllTasks(allTasks, 0);
         }
     },
 
@@ -251,8 +256,9 @@ TaskBoard.TaskModel = {
 
     },
 
-    _saveAllTasks : function(allTasks) {
+    _saveAllTasks : function(allTasks, lastModificationTimestamp) {
         var allTasksStr;
+        sessionStorage.setItem("TaskBoard.tasks.lastModificationTimestamp", lastModificationTimestamp);
         if (allTasks == null) {
             return;
         } else {

@@ -31,6 +31,7 @@ class ControllerUtils {
         $retValue = array();
         $retValue['success'] = TRUE;
         $retValue['payload'] = $payload;
+        $retValue['currTimestamp'] = time();
         return $retValue;
     }
 

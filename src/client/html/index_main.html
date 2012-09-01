@@ -308,16 +308,26 @@
 
                 $("#completeTask_"+task.id).click(function() {
                     var taskId = $(this).attr("id").substring("completeTask_".length);
-                    TaskBoard.TaskModel.complete(taskId);
-                    renderSelectedCategory();
+                    TaskBoard.TaskModel.complete(taskId,
+                            function(result) {
+                                loadTasksAndRenderSelectedCategory();
+                            },
+                            function(errCode, errMsg) {
+                                alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
+                            });
                     return false;
 
                 });
 
                 $("#deleteTask_"+task.id).click(function() {
                     var taskId = $(this).attr("id").substring("deleteTask_".length);
-                    TaskBoard.TaskModel.delete(taskId);
-                    renderSelectedCategory();
+                    TaskBoard.TaskModel.delete(taskId,
+                            function(result) {
+                                loadTasksAndRenderSelectedCategory();
+                            },
+                            function(errCode, errMsg) {
+                                alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
+                            });
                     return false;
 
                 });

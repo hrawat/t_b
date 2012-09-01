@@ -106,30 +106,47 @@ TaskBoard.TaskModel = {
 
     },
 
-    delete: function(taskId) {
-        var prevAllTasks, allTasks, index;
+    delete: function(taskId, successCallBack, failureCallBack) {
 
-        allTasks = new Array();
-        prevAllTasks = this._allTasks();
-        for (index=0; index < prevAllTasks.length; index++) {
-            if (prevAllTasks[index].taskId != taskId) {
-                allTasks.push(prevAllTasks[index]);
+        var taskDeleteReq = $.ajax({
+            url : "task",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "delete",
+                "taskId" : taskId
             }
-        }
-        this._saveAllTasks(allTasks, 0);
+        });
+        taskDeleteReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, result['payload']);
+            } else {
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
+            }
 
-
+        });
     },
 
-    complete: function(taskId) {
-        var allTasks, index;
-        allTasks = this._allTasks();
-        index = this._indexOf(taskId);
-        if (index >= 0) {
-            allTasks[index].status = this.TASK_STATUS_COMPLETE;
-            allTasks[index].dateTaskCompleted = new Date();
-            this._saveAllTasks(allTasks, 0);
-        }
+    complete: function(taskId, successCallBack, failureCallBack) {
+        var taskCompleteReq = $.ajax({
+            url : "task",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "complete",
+                "taskId" : taskId
+            }
+        });
+        taskCompleteReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, result['payload']);
+            } else {
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
+            }
+
+        });
 
 
     },

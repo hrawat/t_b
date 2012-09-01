@@ -30,7 +30,13 @@ function handleRequestInternal($userId) {
         } else if ($reqType == 'userTasks') {
             $retValue = handleUserTasks($userId);
             return $retValue;
-        } else {
+        } else if ($reqType == 'complete') {
+            $retValue = handleComplete($userId);
+            return $retValue;
+        } else if ($reqType == 'delete') {
+            $retValue = handleDelete($userId);
+            return $retValue;
+        }else {
             $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_REQUEST, "Request $reqType is not supported");
             return $retValue;
         }
@@ -39,6 +45,30 @@ function handleRequestInternal($userId) {
         return $retValue;
     }
 
+}
+
+function handleComplete($userId) {
+    $mandatoryArgsCheckRetValue = ControllerUtils::checkMandatoryArgs(array("taskId"));
+    if ($mandatoryArgsCheckRetValue != NULL) {
+        return $mandatoryArgsCheckRetValue;
+    } else {
+        $taskId = ControllerUtils::getArgValue("taskId", NULL);
+        //todo: add check that the logged in user owns the task
+        TaskService::complete($taskId, $userId);
+        return ControllerUtils::getSuccessResponse(TRUE);
+    }
+}
+
+function handleDelete($userId) {
+    $mandatoryArgsCheckRetValue = ControllerUtils::checkMandatoryArgs(array("taskId"));
+    if ($mandatoryArgsCheckRetValue != NULL) {
+        return $mandatoryArgsCheckRetValue;
+    } else {
+        $taskId = ControllerUtils::getArgValue("taskId", NULL);
+        //todo: add check that the logged in user owns the task
+        TaskService::delete($taskId);
+        return ControllerUtils::getSuccessResponse(TRUE);
+    }
 }
 
 function handleUserTasks($userId) {

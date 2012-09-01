@@ -74,6 +74,7 @@ class TaskService {
         }
     }
 
+    // todo: keep track of who deleted the task
     public static function delete($taskId, $softDelete=TRUE) {
         $taskIdDbValue = DBUtils::escapeStrValue($taskId);
         if ($softDelete) {

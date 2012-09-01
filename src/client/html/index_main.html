@@ -179,6 +179,16 @@
 
     }
 
+    function loadTasksAndRenderSelectedCategory() {
+        TaskBoard.TaskModel.loadTasksFromServer(
+                function(result) {
+                    renderSelectedCategory();
+                },
+                function(errCode, errMsg) {
+                    alert("Error in loading tasks from server err code: " + errCode + " err msg: "+errMsg);
+                });
+    }
+
     function renderSelectedCategory() {
         var categoryId = $(".categorySelected").attr("id");
 
@@ -356,13 +366,8 @@
                window.location = '/index.html'   
             } else {
                renderCategories();
-               TaskBoard.TaskModel.loadTasksFromServer(
-                                    function(result) {
-                                        renderSelectedCategory();
-                                    },
-                                    function(errCode, errMsg) {
-                                        alert("Error in loading tasks from server err code: " + errCode + " err msg: "+errMsg);
-                                    });
+               loadTasksAndRenderSelectedCategory();
+
 
                name = userReqResponse['payload']['firstName'];
                userAvatarUrl = userReqResponse['payload']['avatarUrl_normal'];
@@ -378,13 +383,7 @@
         //renderSelectedCategory();
 
         window.setInterval(function(){
-               TaskBoard.TaskModel.loadTasksFromServer(
-                                    function(result) {
-                                        renderSelectedCategory();
-                                    },
-                                    function(errCode, errMsg) {
-                                        alert("Error in loading tasks from server err code: " + errCode + " err msg: "+errMsg);
-                                    });
+               loadTasksAndRenderSelectedCategory();
         }, 60000);
 
         $("#createTaskContainerShadow").click(function() {

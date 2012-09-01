@@ -9,6 +9,9 @@ class TaskService {
     const TASK_STATUS_ACTIVE = 1;
     const TASK_STATUS_COMPLETED = 2;
 
+    const TASK_STATUS_ACTIVE_STR = "taskActive";
+    const TASK_STATUS_COMPLETE_STR = "taskComplete";
+
     const TASK_PRIORITY_LOW = 1;
     const TASK_PRIORITY_MEDIUM = 2;
     const TASK_PRIORITY_HIGH = 3;
@@ -24,6 +27,41 @@ class TaskService {
             return self::TASK_PRIORITY_MEDIUM;
         } else if ($strValue == self::TASK_PRIORITY_LOW_STR) {
             return self::TASK_PRIORITY_LOW;
+        } else {
+            throw new Exception("Invalid task priority value $strValue");
+        }
+    }
+
+    public static function taskPriorityStrValue($intValue) {
+        if ($intValue == self::TASK_PRIORITY_HIGH) {
+            return self::TASK_PRIORITY_HIGH_STR;
+        } else if ($intValue == self::TASK_PRIORITY_MEDIUM) {
+            return self::TASK_PRIORITY_MEDIUM_STR;
+        } else if ($intValue == self::TASK_PRIORITY_LOW) {
+            return self::TASK_PRIORITY_LOW_STR;
+        } else {
+            throw new Exception("Invalid task priority value $intValue");
+        }
+    }
+
+
+    public static function taskStatusIntValue($strValue) {
+        if ($strValue == self::TASK_STATUS_ACTIVE_STR) {
+            return self::TASK_STATUS_ACTIVE;
+        } else if ($strValue == self::TASK_STATUS_COMPLETE_STR) {
+            return self::TASK_STATUS_COMPLETED;
+        } else {
+            throw new Exception("Invalid status value $strValue");
+        }
+    }
+
+    public static function taskStatusStrValue($intValue) {
+        if ($intValue == self::TASK_STATUS_ACTIVE) {
+            return self::TASK_STATUS_ACTIVE_STR;
+        } else if ($intValue == self::TASK_STATUS_COMPLETE) {
+            return self::TASK_STATUS_COMPLETED_STR;
+        } else {
+            throw new Exception("Invalid status value $intValue");
         }
     }
 
@@ -49,7 +87,7 @@ class TaskService {
 
     }
 
-    public static function create($categoryId, $title, $description, $priority, $dueDate, $createdBy) {
+    public static function create($categoryId, $title, $description, $priorityStr, $dueDate, $createdBy) {
         $id = DBUtils::generateUniqId();
         $idDbValue = DBUtils::escapeStrValue($id);
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
@@ -57,6 +95,8 @@ class TaskService {
         $descriptionDbValue = DBUtils::escapeStrValue($description);
 
         $status = self::TASK_STATUS_ACTIVE;
+
+        $priority = TaskService::taskPriorityIntValue($priorityStr);
 
         $createdByDbValue = DBUtils::escapeStrValue($createdBy);
 
@@ -131,6 +171,8 @@ class TaskService {
         } else {
             $tasks = array();
             while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
+                $taskRow['status'] = self::taskStatusStrValue($taskRow['status'] );
+                $taskRow['priority'] = self::taskPriorityStrValue($taskRow['priority'] );
                 $tasks[] = $taskRow;
             }
             return $tasks;

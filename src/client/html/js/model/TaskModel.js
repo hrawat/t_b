@@ -219,7 +219,7 @@ TaskBoard.TaskModel = {
             if ( ((prevRefDate == null) || (allTasks[index].dueDate.getTime() >= refDate.getTime())) &&
                             ((refDate == null) || (allTasks[index].dueDate.getTime() <= refDate.getTime()))) {
                 if (allTasks[index].status == this.TASK_STATUS_COMPLETE) {
-                    if ((allTasks[index].dateTaskCompleted == undefined) || (this._sameDay(now, allTasks[index].dateTaskCompleted) == false)) {
+                    if ((allTasks[index].completionDate == undefined) || (this._sameDay(now, allTasks[index].completionDate) == false)) {
                         continue;
                     }
 
@@ -264,8 +264,8 @@ TaskBoard.TaskModel = {
             for (index=0; index < allTasks.length; index++) {
                 allTasks[index].dueDate = new Date(allTasks[index].dueDate*1000);
                 allTasks[index].creationDate = new Date(allTasks[index].creationDate*1000);
-                if (allTasks[index].dateTaskCompleted != undefined) {
-                    allTasks[index].dateTaskCompleted = new Date(allTasks[index].dateTaskCompleted*1000);
+                if (allTasks[index].completionDate != undefined) {
+                    allTasks[index].completionDate = new Date(allTasks[index].completionDate*1000);
                 }
             }
         }

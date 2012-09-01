@@ -58,8 +58,8 @@ class TaskService {
     public static function taskStatusStrValue($intValue) {
         if ($intValue == self::TASK_STATUS_ACTIVE) {
             return self::TASK_STATUS_ACTIVE_STR;
-        } else if ($intValue == self::TASK_STATUS_COMPLETE) {
-            return self::TASK_STATUS_COMPLETED_STR;
+        } else if ($intValue == self::TASK_STATUS_COMPLETED) {
+            return self::TASK_STATUS_COMPLETE_STR;
         } else {
             throw new Exception("Invalid status value $intValue");
         }
@@ -161,7 +161,9 @@ class TaskService {
         $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,
                                                 UNIX_TIMESTAMP(lastModificationDate) as lastModificationDate,
                                                 categoryId, title, description,
-                                                UNIX_TIMESTAMP(dueDate) as dueDate, status, createdBy, priority
+                                                UNIX_TIMESTAMP(dueDate) as dueDate, 
+                                                UNIX_TIMESTAMP(completionDate) as completionDate,
+                                                status, createdBy, priority
                             from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
                             and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince and deleted=0";
         $result = DBUtils::execute($sqlStmt);

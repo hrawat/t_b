@@ -78,8 +78,10 @@ class UserService {
                 return NULL;
             } else {
                 $fbUid = $row['fbUid'];
-                $row['avatarUrl_small'] = "http://graph.facebook.com/$fbUid/picture/type=small";
-                $row['avatarUrl_normal'] = "http://graph.facebook.com/$fbUid/picture/type=normal";
+                $row['userSmallAvatarUrl'] = "http://graph.facebook.com/$fbUid/picture/type=small";
+                $row['userNormalAvatarUrl'] = "http://graph.facebook.com/$fbUid/picture/type=normal";
+                $row['existingTasksCount'] = 17;
+                $row['tasksDoneInWeekCount'] = 24;
                 return $row;
             }
         }

@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>White Board</title>
+
+    <link href="style/main_.css" type="text/css" rel="stylesheet" />
+    <script src="lib/jquery-1.7.2.js"></script>
+    <script src="lib/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="source/jquery.fancybox.js?v=2.0.6"></script>
+    <link rel="stylesheet" type="text/css" href="source/jquery.fancybox.css?v=2.0.6" media="screen" />
+    <link rel="stylesheet" type="text/css" href="source/helpers/jquery.fancybox-buttons.css?v=1.0.2" />
+    <script type="text/javascript" src="source/helpers/jquery.fancybox-buttons.js?v=1.0.2"></script>
+    <link rel="stylesheet" type="text/css" href="source/helpers/jquery.fancybox-thumbs.css?v=1.0.2" />
+    <script type="text/javascript" src="source/helpers/jquery.fancybox-thumbs.js?v=1.0.2"></script>
+    <script type="text/javascript" src="source/helpers/jquery.fancybox-media.js?v=1.0.0"></script>
+
+    <style type="text/css">
+        #createTaskContainer {
+            position: absolute;
+            top: 20%;
+            left: 40%;
+           // width: 500px;
+            margin-left: -250px;
+            background: #fff;
+            z-index: 3001;
+            display: none;
+        }
+        #createTaskContainerShadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            filter: alpha(opacity=75);
+            -moz-opacity: 0.75;
+            -khtml-opacity: 0.75;
+            opacity: 0.75;
+            z-index: 3000;
+            display: none;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+//        $(document).ready(function() {
+//
+//            $('.fancybox').fancybox();
+//
+//        });
+
+
+//        $(function(){
+//            $('#todayTaskContainer').masonry({
+//                // options
+//                itemSelector : '.item',
+////                isAnimated: true,
+////                animationOptions: {
+////                    duration: 400,
+////                    easing: 'linear',
+////                    queue: false
+////                },
+//                columnWidth : 240
+//            });
+//        });
+//
+////        $('#todayTaskContainer').masonry({
+////            // options...
+////        });
+
+    </script>
+    <style type="text/css">
+        .fancybox-custom .fancybox-skin {
+            box-shadow: 0 0 50px #222;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div id="welcomeHeader" style="display: none;">
+</div>
+<div class="banner"></div>
+
+<div id="createTaskContainer" style="display: none;">
+    <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="get">
+        <input id="taskId" type="hidden" value="" />
+
+        <ul>
+            <li>
+                <textarea id="taskTitle" rows="6" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>what is your task?</textarea>
+            </li>
+
+            <li>
+                <ul id="createTaskFormCategories" class="cat_selector">
+                </ul>
+            </li>
+            <li class="submitbutton"><input id="createTaskSubmitAction" type="submit" class="Botton callerToAction buttonMedium" value="Create Task"/></li>
+        </ul>
+     </form>
+
+</div>
+
+<div id="createTaskContainerShadow" style="display: none;" ></div>
+
+
+
+
+<div class="leftNav">
+    <ul id="categoriesList">
+    </ul>
+</div>
+<div class="rightContent">
+    <div class="dailyHeader">Today</div>
+    <div id="todayTaskContainer">
+        <a  id="createTaskAction" href="#"><div class="item mid addblock">Add New Note</div></a>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="lib/json2.js"></script>
+<script type="text/javascript" src="js/utils/Utils.js"></script>
+
+<script type="text/javascript" src="js/model/CategoryModel.js"></script>
+<script type="text/javascript" src="js/model/TaskModel.js"></script>
+
+<script type="text/javascript">
+
+    function getTimeDiffInStr(refDate) {
+        var now = new Date();
+        var secsDiff = (now.getTime() - refDate.getTime())/1000;
+        if (Math.floor(secsDiff/ 86400) >= 1)  {
+            return Math.floor(secsDiff/ 86400) + " days ";
+        } else if (Math.floor(secsDiff/ 3600) >= 1)  {
+            return Math.floor(secsDiff/ 3600) + " hours ";
+        } else if (Math.floor(secsDiff/ 60) >= 1)  {
+            return Math.floor(secsDiff/ 60) + " mins ";
+        } else {
+            return Math.floor(secsDiff) + " secs ";
+        }
+    }
+
+    function appendCategoryInCreateTaskForm(categoryId, name, colorHexCode, selected) {
+
+        var categoryElt = "<li id='category_{0}' > <a id='a_{1}' style='background:#{2}' >{3}</a></li>".format(categoryId, categoryId, colorHexCode,  name);
+        $("#createTaskFormCategories").append(categoryElt);
+        $("#category_"+categoryId + " a").click(function(){
+            $("#createTaskFormCategories li a").removeClass("selected");
+            $(this).addClass("selected");
+            return false;
+        });
+
+        if (selected) {
+            $("#a_"+categoryId).addClass("selected");
+        }
+
+
+    }
+
+    function appendCategory(categoryId, name, colorHexCode, categorySelected) {
+        var categoryElt
+        if (categorySelected) {
+            categoryElt = "<li> <a id='{0}' class='categorySelected' style='background:#{1}'>{2}</a></li>".format(categoryId, colorHexCode,  name);
+        } else {
+            categoryElt = "<li> <a id='{0}' style='background:#{1}'>{2}</a></li>".format(categoryId, colorHexCode,  name);
+        }
+        $("#categoriesList").append(categoryElt);
+        $("#"+categoryId).click(function(){
+            var categoryId = $(this).attr("id");
+            $("#categoriesList li a").removeClass("categorySelected");
+            $(this).addClass("categorySelected");
+            populateTasks(categoryId);
+        });
+
+    }
+
+    function loadTasksAndRenderSelectedCategory() {
+        TaskBoard.TaskModel.loadTasksFromServer(
+                function(result) {
+                    renderSelectedCategory();
+                },
+                function(errCode, errMsg) {
+                    alert("Error in loading tasks from server err code: " + errCode + " err msg: "+errMsg);
+                });
+    }
+
+    function renderSelectedCategory() {
+        var categoryId = $(".categorySelected").attr("id");
+
+        populateTasks(categoryId);
+    }
+
+    function renderCategories() {
+        TaskBoard.CategoryModel.list(function(categories) {
+            //var categories = TaskBoard.CategoryModel.list();
+            var index = 0;
+            var categoryElt;
+            var categoryId = $(".categorySelected").attr("id");
+            if (categoryId == undefined) {
+                categoryId = 0;
+            }
+
+            appendCategory(0, "All", 'FFFFFF', (0 == categoryId));
+            for(index=0; index < categories.length; index++) {
+                appendCategory(categories[index].id, categories[index].name, categories[index].colorCode,
+                        (categories[index].id == categoryId));
+                appendCategoryInCreateTaskForm(categories[index].id, categories[index].name,
+                        categories[index].colorCode, (index == 0) ? true: false);
+            }
+            renderSelectedCategory();
+
+
+
+        },
+        function(errCode, errMsg) {
+            alert("gor error from server err code " + errCode + " err msg " + errMsg);
+
+        });
+
+
+
+
+    }
+
+    function getTaskDivSize(priority) {
+        var divSize = 'mid';
+        if (priority == TaskBoard.TaskModel.LOW_PRIORITY) {
+            divSize = 'low';
+        } else if (priority == TaskBoard.TaskModel.HIGH_PRIORITY) {
+            divSize = 'high';
+        }
+        return divSize;
+    }
+
+    function populateTasks(categoryId) {
+        var index, tasksForToday, task, taskDiv, category, timeDiffInStr;
+
+
+        $("#todayTaskContainer .task").remove();
+
+        tasksForToday = TaskBoard.TaskModel.todaysTasks(categoryId);
+
+        for(index=0; index<tasksForToday.length; index++) {
+            task = tasksForToday[index];
+            //taskDiv = "<div id='{0}' class='item {1} task'>{2}</div>".format(task.id, getTaskDivSize(task.priority),task.title);
+
+            timeDiffInStr = getTimeDiffInStr(task.creationDate);
+            category = TaskBoard.CategoryModel.get(task.categoryId);
+            if (task.status == TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
+                taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
+                        "<div class='doneOverlay'> <p>DONE </p></div>" +
+                        "<br/><p class='{2}' > {3}</p>" +
+                        "<p class='createdByText'>Created {4} ago </p>" +
+                        "<div class='secondOptions'>" +
+                        "<a id='completeTask_{5}' class='Botton menuButtons' href='#' >Complete</a>" +
+                        "<a id='deleteTask_{6}' class='Botton menuButtons' href='#' >Delete</a>" +
+                        "</div>" +
+                        "</div>").format(task.id, category.colorCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.id, task.id );
+
+            } else {
+                taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
+                            "<br/><p class='{2}' > {3}</p>" +
+                            "<p class='createdByText'>Created {4} ago </p>" +
+                            "<div class='secondOptions'>" +
+                                "<a id='completeTask_{5}' class='Botton menuButtons' href='#' >Complete</a>" +
+                                "<a id='deleteTask_{6}' class='Botton menuButtons' href='#' >Delete</a>" +
+                            "</div>" +
+                      "</div>").format(task.id, category.colorCode, getTaskDivSize(task.priority), task.title, timeDiffInStr, task.id, task.id );
+            }
+
+//                    <div class="item home" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
+//                    <p class="high">Deposite my gym check</p>
+//            <div class="secondOptions annie">
+//                    <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+//                    <a class="Botton menuButtons" href="#" onclick="alert('Delete');">Delete</a>
+//                    </div>
+//                    <div class="item_info">
+//                    <img src="img/_per1.jpg" width="50" height="50" />
+//                    <div class="details">
+//                    <ul>
+//                    <li>Annie Zhao</li>
+//                    <li>2 mins ago</li>
+//                    </ul>
+//                    </div>
+//            <div class="focusStar">Focus</div>
+//                    </div>
+//                    </div>
+            
+            
+            $('#todayTaskContainer').append(taskDiv);
+
+            if (task.status != TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
+                $("#"+task.id).mouseover(function() {
+                    var taskId = $(this).attr("id");
+                    $('#'+taskId + ' div').css("display", "block");
+                });
+
+                $("#"+task.id).mouseout(function() {
+                    var taskId = $(this).attr("id");
+                    $('#'+taskId + ' div').css("display", "none");
+
+                });
+
+                $("#completeTask_"+task.id).click(function() {
+                    var taskId = $(this).attr("id").substring("completeTask_".length);
+                    TaskBoard.TaskModel.complete(taskId,
+                            function(result) {
+                                loadTasksAndRenderSelectedCategory();
+                            },
+                            function(errCode, errMsg) {
+                                alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
+                            });
+                    return false;
+
+                });
+
+                $("#deleteTask_"+task.id).click(function() {
+                    var taskId = $(this).attr("id").substring("deleteTask_".length);
+                    TaskBoard.TaskModel.delete(taskId,
+                            function(result) {
+                                loadTasksAndRenderSelectedCategory();
+                            },
+                            function(errCode, errMsg) {
+                                alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
+                            });
+                    return false;
+
+                });
+            }
+        }
+    }
+
+    function taskContainerDisplay(show) {
+        var categoryId = $(".categorySelected").attr("id");
+        if (show) {
+            $("#createTaskContainer").show().css("display", "block");
+            $("#createTaskContainerShadow").show().css("display", "block");
+            $("#taskTitle").val("what is your task?");
+            $('#taskTitle').focus(function() {
+                if ($("#taskTitle").val() == 'what is your task?') {
+                    $("#taskTitle").val("");
+                };
+            });
+            if ( (categoryId != undefined) && (categoryId != 0)) {
+                $("#createTaskFormCategories li a").removeClass("selected");
+                $("#a_"+categoryId).addClass("selected");
+            }
+
+
+
+
+        } else {
+            $("#createTaskContainer").show().css("display", "none");
+            $("#createTaskContainerShadow").show().css("display", "none");
+        }
+    }
+
+    $(document).ready(function() {
+        //$('.fancybox').fancybox();
+        // Create home and work category
+
+       // Get the logged in uer details
+        var userInfoReq = $.ajax({
+            url : "userInfo",
+           dataType : "json",
+            type : "GET"
+        });
+        userInfoReq.done(function(userReqResponse) {
+            var name, userAvatarUrl, headerText;
+            if (userReqResponse['success'] == false) {
+               window.location = '/index.html'   
+            } else {
+               renderCategories();
+               loadTasksAndRenderSelectedCategory();
+
+
+               name = userReqResponse['payload']['firstName'];
+               userAvatarUrl = userReqResponse['payload']['avatarUrl_normal'];
+               headerText = "<p><h1>Welcome {0}</h1> <img  src='{1}'></p>".format(name, userAvatarUrl);
+               $("#welcomeHeader").append(headerText);
+               $("#welcomeHeader").css("display", "block");
+            }
+        });
+
+        //createStandardCategories();
+        //renderCategories();
+        //populateTasks(0);
+        //renderSelectedCategory();
+
+        window.setInterval(function(){
+               loadTasksAndRenderSelectedCategory();
+        }, 60000);
+
+        $("#createTaskContainerShadow").click(function() {
+            taskContainerDisplay(false);
+            return false;
+        })
+
+        $("#createTaskAction").click(function(){
+            taskContainerDisplay(true);
+            return false;
+        });
+
+        $('#createTaskForm').submit(function() {
+            //taskContainerDisplay(false);
+            var taskReq = {};
+            taskReq.title = $("#taskTitle").val();
+            taskReq.description = '';
+
+            taskReq.categoryId = $("#createTaskFormCategories li a.selected").attr("id").substr(2);
+            taskReq.priority = TaskBoard.TaskModel.MEDIUM_PRIORITY;
+            taskReq.completeBy = TaskBoard.TaskModel.TODAY;
+
+            TaskBoard.TaskModel.create(taskReq,
+                            function(createTaskRes) {
+                                taskContainerDisplay(false);
+                                loadTasksAndRenderSelectedCategory();
+                            },
+                            function(errCode, errMsg) {
+                                alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
+                            });
+
+
+            return false;
+        });
+
+        $('#taskContainer').masonry({
+            // options
+            itemSelector : '.task',
+            columnWidth : 100
+        });
+
+
+    });
+</script>
+
+
+</body>
+
+
+
+</body>
+</html>

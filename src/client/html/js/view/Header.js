@@ -5,6 +5,7 @@
 if (typeof(TaskBoard) == "undefined") {
     TaskBoard = {};
     TaskBoard.view = {};
+    TaskBoard.controller = {};
 }
 
 TaskBoard.view.Header = {

@@ -25,8 +25,16 @@
 
     <script type="text/javascript" src="source/helpers/jquery.fancybox-media.js?v=1.0.0"></script>
 
-    // Initialization
+    // views
     <script type="text/javascript" src="js/view/Header.js"></script>
+
+    // models
+    <script type="text/javascript" src="js/model/CategoryModel.js"></script>
+    <script type="text/javascript" src="js/model/TaskModel.js"></script>
+    <script type="text/javascript" src="js/model/UserModel.js"></script>
+
+    // controller
+    <script type="text/javascript" src="js/controller/MainController.js"></script>
 
 
 
@@ -46,11 +54,7 @@
                 columnWidth : 240
             });
 
-            TaskBoard.view.Header.render({
-                existingTasksCount : 17,
-                tasksDoneInWeekCount: 24,
-                userSmallAvatarUrl : "http://graph.facebook.com/554447898/picture/type=small"
-            });
+            TaskBoard.controller.MainController.initialize();
         });
 
         $('#container').masonry({

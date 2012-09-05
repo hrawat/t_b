@@ -11,11 +11,11 @@ TaskBoard.UserModel = {
             dataType : "json",
             type : "GET"
         });
-        userTasksReq.done(function(result) {
+        userInfoReq.done(function(result) {
             if (result['success']) {
-                successCallBack.call(this, result['payload']);
+                successCallback.call(this, result['payload']);
             } else {
-                failureCallBack.call(this, result['errCode'], result['errMsg']);
+                failureCallback.call(this, result['errCode'], result['errMsg']);
             }
 
         });

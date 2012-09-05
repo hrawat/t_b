@@ -11,7 +11,7 @@ if (typeof(TaskBoard) == "undefined") {
 TaskBoard.controller.MainController = {
     initialize : function() {
         // Get the user info from server
-        UserModel.getUserInfo(
+        TaskBoard.UserModel.getUserInfo(
             function(payload) {
                 TaskBoard.view.Header.render(payload);
             },

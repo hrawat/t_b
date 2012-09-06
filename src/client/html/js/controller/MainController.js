@@ -15,6 +15,7 @@ TaskBoard.controller.MainController = {
         var renderFunction = function() {
             if ( (userInfo != undefined) && (categories != undefined)) {
                 TaskBoard.view.Header.render(userInfo);
+                categories["localDay"] = getLocalDay();
                 categories["localDate"] = getLocalDateSting();
                 TaskBoard.view.LeftNavigation.render(categories);
             }

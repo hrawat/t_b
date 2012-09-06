@@ -11,6 +11,7 @@ if (typeof(TaskBoard) == "undefined") {
 TaskBoard.view.LeftNavigation = {
     render : function(data) {
         $("#localDateId").text(data.localDate);
+        $("#localDayId").text(data.localDay);
     }
 }
 

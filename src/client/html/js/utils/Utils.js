@@ -24,26 +24,41 @@ function createUUID() {
     return uuid;
 }
 
+function getLocalDay() {
+   var weekDayToStr = {
+      0 : 'Sunday',
+      1 : 'Monday',
+      2 : 'Tuesday',
+      3 : 'Wednesday',
+      4 : 'Thursday',
+      5 : 'Friday',
+      6 : 'Saturday',
+   };
+   var nowDate = new Date();
+   return weekDayToStr[nowDate.getDay()];
+
+}
+
 function getLocalDateSting() {
-    var monthDayToString = {
-        0 : 'January',
-        1 : 'February',
-        2 : 'March',
-        3 : 'April',
+    var monthToString = {
+        0 : 'Jan',
+        1 : 'Feb',
+        2 : 'Mar',
+        3 : 'Apr',
         4 : 'May',
-        5 : 'June',
-        6 : 'July',
-        7 : 'August',
-        8 : 'September',
-        9 : 'October',
-        10 : 'November',
-        11 : 'December'
+        5 : 'Jun',
+        6 : 'Jul',
+        7 : 'Aug',
+        8 : 'Sep',
+        9 : 'Oct',
+        10 : 'Nov',
+        11 : 'Dec'
     };
     var nowDate = new Date();
-    var localDate = nowDate.getDate();
-    var monthDayStr = monthDayToString[nowDate.getMonth()];
+    var localDay = nowDate.getDate();
+    var monthDayStr = monthToString[nowDate.getMonth()];
     var year = nowDate.getFullYear();
-    var nowDateStr = "{0} {1}, {2}".format(monthDayStr, nowDate, year);
+    var nowDateStr = "{0} {1}, {2}".format(monthDayStr, localDay, year);
     return nowDateStr;
 }
 

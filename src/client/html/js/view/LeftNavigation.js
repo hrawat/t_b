@@ -17,9 +17,7 @@ TaskBoard.view.LeftNavigation = {
         $("#localDayId").text(data.localDay);
 
         for(index=0; index < categories.length; index++) {
-            var categoryElt = "<li>" +
-                                    "<a id='category_'{0} class='calendar'>{1}<div style='background:#{2}'></div></a>" +
-                              "</li>".format(categories[index].id, categories[index].name, categories[index].colorCode);
+            var categoryElt = "<li><a id='category_{0}' class='calendar'>{1}<div style='background:#{2}'></div></a></li>".format(categories[index].id, categories[index].name, categories[index].colorCode);
             $("#addCategoryId").before(categoryElt);
         }
 

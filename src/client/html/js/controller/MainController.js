@@ -13,13 +13,13 @@ TaskBoard.controller.MainController = {
         var userInfo, categories;
 
         var renderFunction = function() {
-            var leftNavData;
+            var leftNavData = {};
             if ( (userInfo != undefined) && (categories != undefined)) {
                 TaskBoard.view.Header.render(userInfo);
                 leftNavData["localDay"] = getLocalDay();
                 leftNavData["localDate"] = getLocalDateSting();
                 leftNavData['categories'] = categories;
-                TaskBoard.view.LeftNavigation.render(categories);
+                TaskBoard.view.LeftNavigation.render(leftNavData);
             }
         }
 

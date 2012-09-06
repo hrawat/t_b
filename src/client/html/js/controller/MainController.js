@@ -14,7 +14,7 @@ TaskBoard.controller.MainController = {
 
         var renderFunction = function() {
             if (userInfo != undefined) {
-                TaskBoard.view.Header.render(payload);
+                TaskBoard.view.Header.render(userInfo);
             }
         }
 

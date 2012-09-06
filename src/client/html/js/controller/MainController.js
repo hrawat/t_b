@@ -10,13 +10,24 @@ if (typeof(TaskBoard) == "undefined") {
 
 TaskBoard.controller.MainController = {
     initialize : function() {
+        var userInfo;
+
+        var renderFunction = function() {
+            if (userInfo != undefined) {
+                TaskBoard.view.Header.render(payload);
+            }
+        }
+
         // Get the user info from server
         TaskBoard.UserModel.getUserInfo(
             function(payload) {
-                TaskBoard.view.Header.render(payload);
+                userInfo = payload;
+                renderFunction();
             },
             function(errCode, ErrMsg) {
                 alert("Internal error, err code "+errCode+ " errMsg "+errMsg);
             });
     }
+
+
 }

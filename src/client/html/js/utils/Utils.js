@@ -24,6 +24,29 @@ function createUUID() {
     return uuid;
 }
 
+function getLocalDateSting() {
+    var monthDayToString = {
+        0 : 'January',
+        1 : 'February',
+        2 : 'March',
+        3 : 'April',
+        4 : 'May',
+        5 : 'June',
+        6 : 'July',
+        7 : 'August',
+        8 : 'September',
+        9 : 'October',
+        10 : 'November',
+        11 : 'December'
+    };
+    var nowDate = new Date();
+    var localDate = nowDate.getDate();
+    var monthDayStr = monthDayToString[nowDate.getMonth()];
+    var year = nowDate.getFullYear();
+    var nowDateStr = "{0} {1}, {2}".format(monthDayStr, nowDate, year);
+    return nowDateStr;
+}
+
 function createStandardCategories() {
     var homeCategory = TaskBoard.CategoryModel.getByName("Home");
     var workCategory = TaskBoard.CategoryModel.getByName("Work");

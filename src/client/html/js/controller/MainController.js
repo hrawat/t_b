@@ -10,16 +10,17 @@ if (typeof(TaskBoard) == "undefined") {
 
 TaskBoard.controller.MainController = {
     initialize : function() {
-        var userInfo, categories;
+        var userInfo, categories, tasks;
 
         var renderFunction = function() {
             var leftNavData = {};
-            if ( (userInfo != undefined) && (categories != undefined)) {
+            if ( (userInfo != undefined) && (categories != undefined) && (tasks != undefined)) {
                 TaskBoard.view.Header.render(userInfo);
                 leftNavData["localDay"] = getLocalDay();
                 leftNavData["localDate"] = getLocalDateSting();
                 leftNavData['categories'] = categories;
                 TaskBoard.view.LeftNavigation.render(leftNavData);
+                TaskBoard.view.rightContent.render(tasks);
             }
         }
 
@@ -42,6 +43,17 @@ TaskBoard.controller.MainController = {
                 alert("gor error from server err code " + errCode + " err msg " + errMsg);
 
             });
+
+        // Get user tasks
+        TaskBoard.TaskModel.loadTasksFromServer(function(payload) {
+                tasks = payload ;
+                renderFunction();
+            },
+            function(errCode, errMsg) {
+                alert("gor error from server err code " + errCode + " err msg " + errMsg);
+
+            });
+
     }
 
 

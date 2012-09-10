@@ -14,13 +14,16 @@ TaskBoard.controller.MainController = {
 
         var renderFunction = function() {
             var leftNavData = {};
+            var rightContentData = {};
             if ( (userInfo != undefined) && (categories != undefined) && (tasks != undefined)) {
                 TaskBoard.view.Header.render(userInfo);
                 leftNavData["localDay"] = getLocalDay();
                 leftNavData["localDate"] = getLocalDateSting();
                 leftNavData['categories'] = categories;
                 TaskBoard.view.LeftNavigation.render(leftNavData);
-                TaskBoard.view.rightContent.render(tasks);
+
+                rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(0);
+                TaskBoard.view.rightContent.render(rightContentData);
             }
         }
 

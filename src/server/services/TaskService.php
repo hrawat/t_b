@@ -175,6 +175,8 @@ class TaskService {
             while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
                 $taskRow['status'] = self::taskStatusStrValue($taskRow['status'] );
                 $taskRow['priority'] = self::taskPriorityStrValue($taskRow['priority'] );
+                // todo: fix this, unoptimal implementation
+                $taskRow['createdBy'] = UserService::lookupUser($taskRow['createdBy']);
                 $tasks[] = $taskRow;
             }
             return $tasks;

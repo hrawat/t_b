@@ -43,10 +43,12 @@ TaskBoard.view.rightContent = {
                                                 task['title'],
                                                 task['createdBy']['userSmallAvatarUrl'],
                                                 category['name']);
+            console.log(taskElt);
             $("#container").append(taskElt);
 
 
         });
+          $('#container').masonry( 'reload' );
 
     }
 }

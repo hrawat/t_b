@@ -29,7 +29,7 @@ TaskBoard.view.rightContent = {
                                             <img src='{3}' /> \
                                             <div class='details'> \
                                                 <ul> \
-                                                    <li>{4}/li>  \
+                                                    <li>{4}</li>  \
                                                     <li>2 mins ago</li>  \
                                                 </ul>                    \
                                             </div> \
@@ -41,12 +41,14 @@ TaskBoard.view.rightContent = {
                             </div>".format(category.colorCode,
                                                 importantClassValue,
                                                 task['title'],
-                                                task['createdBy']['userSmallAvatarUrl'].
+                                                task['createdBy']['userSmallAvatarUrl'],
                                                 category['name']);
+            console.log(taskElt);
             $("#container").append(taskElt);
 
-        });
 
+        });
+          $('#container').masonry( 'reload' );
 
     }
 }

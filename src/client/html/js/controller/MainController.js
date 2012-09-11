@@ -21,6 +21,11 @@ TaskBoard.controller.MainController = {
                 leftNavData['categories'] = categories;
                 TaskBoard.view.LeftNavigation.render(leftNavData);
                 TaskBoard.view.rightContent.render(tasks);
+
+                window.setTimeout(function() {
+                    console.log("calling initialize from timer")
+                    this.initialize();
+                }, 60*1000);
             }
         }
 
@@ -55,6 +60,8 @@ TaskBoard.controller.MainController = {
             });
 
     }
+
+
 
 
 }

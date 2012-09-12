@@ -32,7 +32,7 @@ function getLocalDay() {
       3 : 'Wednesday',
       4 : 'Thursday',
       5 : 'Friday',
-      6 : 'Saturday',
+      6 : 'Saturday'
    };
    var nowDate = new Date();
    return weekDayToStr[nowDate.getDay()];
@@ -70,5 +70,20 @@ function createStandardCategories() {
     }
     if (workCategory == null) {
         TaskBoard.CategoryModel.create("Work", "images/work.png", "FFECE5", null);
+    }
+}
+
+
+function getTimeDiffInStr(refDate) {
+    var now = new Date();
+    var secsDiff = (now.getTime() - refDate.getTime())/1000;
+    if (Math.floor(secsDiff/ 86400) >= 1)  {
+        return Math.floor(secsDiff/ 86400) + " days ";
+    } else if (Math.floor(secsDiff/ 3600) >= 1)  {
+        return Math.floor(secsDiff/ 3600) + " hours ";
+    } else if (Math.floor(secsDiff/ 60) >= 1)  {
+        return Math.floor(secsDiff/ 60) + " mins ";
+    } else {
+        return Math.floor(secsDiff) + " secs ";
     }
 }

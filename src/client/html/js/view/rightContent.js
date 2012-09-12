@@ -15,6 +15,7 @@ TaskBoard.view.rightContent = {
         todayTasks.forEach(function(task, index) {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
+            var createdTimeAgo = getTimeDiffInStr(task.creationDate);
             var taskElt = "<div class='pro_pad-shadow item task'> \
                                 <div class='pro_curved-hz-2'> \
                                     <div class='pro_text-shadow' > \
@@ -31,7 +32,7 @@ TaskBoard.view.rightContent = {
                                             <div class='details'> \
                                                 <ul> \
                                                     <li>{4}</li>  \
-                                                    <li>2 mins ago</li>  \
+                                                    <li>{5} ago</li>  \
                                                 </ul>                    \
                                             </div> \
                                             <br class='clear:both;' /> \
@@ -43,7 +44,8 @@ TaskBoard.view.rightContent = {
                                                 importantClassValue,
                                                 task['title'],
                                                 task['createdBy']['userSmallAvatarUrl'],
-                                                category['name']);
+                                                category['name'],
+                                                createdTimeAgo);
             $("#container").append(taskElt);
 
 

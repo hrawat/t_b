@@ -11,6 +11,7 @@ if (typeof(TaskBoard) == "undefined") {
 TaskBoard.controller.MainController = {
     initialize : function() {
         var userInfo, categories, tasks;
+        var initializeFn = arguments.callee;
 
         var renderFunction = function() {
             var leftNavData = {};
@@ -27,7 +28,7 @@ TaskBoard.controller.MainController = {
 
                 window.setTimeout(function() {
                     console.log("calling initialize from timer");
-                    this.initialize();
+                    initializeFn();
                 }, 60*1000);
             }
         }

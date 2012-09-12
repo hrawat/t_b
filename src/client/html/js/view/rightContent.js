@@ -11,10 +11,11 @@ if (typeof(TaskBoard) == "undefined") {
 TaskBoard.view.rightContent = {
     render : function(data) {
         var todayTasks = data['todayTasks'];
+        $('#container .task').remove();
         todayTasks.forEach(function(task, index) {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
-            var taskElt = "<div class='pro_pad-shadow item'> \
+            var taskElt = "<div class='pro_pad-shadow item task'> \
                                 <div class='pro_curved-hz-2'> \
                                     <div class='pro_text-shadow' > \
                                         <div class='block_tag' style='background:#{0}'></div> \
@@ -43,7 +44,6 @@ TaskBoard.view.rightContent = {
                                                 task['title'],
                                                 task['createdBy']['userSmallAvatarUrl'],
                                                 category['name']);
-            console.log(taskElt);
             $("#container").append(taskElt);
 
 

@@ -16,7 +16,7 @@ TaskBoard.view.rightContent = {
         todayTasks.forEach(function(task, index) {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
-            var focussedClassValue =  task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "";
+            var focussedClassValue =  task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "focusStar";
             var createdTimeAgo = getTimeDiffInStr(task.creationDate);
             var taskElt = "<div id='task_{0}' class='pro_pad-shadow item task'> \
                                 <div class='pro_curved-hz-2'> \
@@ -81,8 +81,10 @@ TaskBoard.view.rightContent = {
             var important = $(this).hasClass('focused');
             if (important == true) {
                 $(this).removeClass('focused');
+                $(this).addClass('focusStar');
             } else {
                 $(this).addClass('focused');
+                $(this).removeClass('focusStar');
             }
             makeImportantCallBack(taskId, !important);
             return false;

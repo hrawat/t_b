@@ -57,11 +57,11 @@ TaskBoard.view.rightContent = {
 
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
         $("#container .upper_content").mouseover(function(){
-            $(this).("div:first-child").css("display", "block");
+            $(this).children().css("display", "block")
         });
 
         $("#container .upper_content").mouseout(function() {
-            $(this).("div:first-child").css("display", "block");
+            $(this).children().css("display", "none")
         });
 
     }

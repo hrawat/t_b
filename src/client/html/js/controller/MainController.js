@@ -12,8 +12,16 @@ TaskBoard.controller.MainController = {
     initialize : function() {
         var userInfo, categories, tasks;
         var initializeFn = arguments.callee;
+        var renderRightContentFn = function() {
+            selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
+            rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(selectedCategoryId);
+            rightContentData['selectedCategoryId'] = selectedCategoryId;
+            TaskBoard.view.rightContent.render(rightContentData);
+
+        }
 
         var renderFunction = function() {
+            var selectedCategoryId;
             var leftNavData = {};
             var rightContentData = {};
             if ( (userInfo != undefined) && (categories != undefined) && (tasks != undefined)) {
@@ -23,8 +31,16 @@ TaskBoard.controller.MainController = {
                 leftNavData['categories'] = categories;
                 TaskBoard.view.LeftNavigation.render(leftNavData);
 
-                rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(0);
-                TaskBoard.view.rightContent.render(rightContentData);
+                renderRightContentFn();
+
+
+                // Set event handlers
+                TaskBoard.view.LeftNavigation.setCategoryClickFnHandler(function() {
+                    var idStr = this.attr("id");
+                    var selectedCategoryId =  idStr.substring("category_".length);
+                    TaskBoard.view.LeftNavigation.setSelectedCategoryId(selectedCategoryId);
+                    renderRightContentFn();
+                });
 
                 window.setTimeout(function() {
                     console.log("calling initialize from timer");

@@ -11,6 +11,7 @@ if (typeof(TaskBoard) == "undefined") {
 TaskBoard.view.rightContent = {
     render : function(data) {
         var todayTasks = data['todayTasks'];
+        var selectedCategoryId = data['selectedCategoryId'];
         $('#container .task').remove();
         todayTasks.forEach(function(task, index) {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);

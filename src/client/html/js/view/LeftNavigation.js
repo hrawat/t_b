@@ -21,7 +21,21 @@ TaskBoard.view.LeftNavigation = {
             var categoryElt = "<li class='category' ><a id='category_{0}' class='calendar'>{1}<div style='background:#{2}'></div></a></li>".format(categories[index].id, categories[index].name, categories[index].colorCode);
             $("#addCategoryId").before(categoryElt);
         }
+    },
 
+    getSelectedCategoryId : function() {
+        var idStr = $('#categoriesList .selected').attr("id");
+        return idStr.substring("category_".length);
+    },
+
+    setSelectedCategoryId : function(categoryId) {
+        $('#categoriesList .selected').removeClass('selected');
+        $('#category_'+categoryId).addClass('selected');
+
+    },
+
+    setCategoryClickFnHandler : function(callBackFn) {
+        $('#categoriesList li a').click(callBackFn);
     }
 }
 

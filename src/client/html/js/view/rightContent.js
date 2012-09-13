@@ -53,6 +53,17 @@ TaskBoard.view.rightContent = {
         });
           $('#container').masonry( 'reload' );
 
+    },
+
+    setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
+        $("#container .upper_content").mouseover(function(){
+            $(this).("div:first-child").css("display", "block");
+        });
+
+        $("#container .upper_content").mouseout(function() {
+            $(this).("div:first-child").css("display", "block");
+        });
+
     }
 }
 

@@ -18,6 +18,16 @@ TaskBoard.controller.MainController = {
             rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(selectedCategoryId);
             rightContentData['selectedCategoryId'] = selectedCategoryId;
             TaskBoard.view.rightContent.render(rightContentData);
+            TaskBoard.view.rightContent.setTaskActionHandlers(
+                                    function() {
+
+                                    },
+                                    function() {
+
+                                    },
+                                    function() {
+
+                                    });
 
         }
 

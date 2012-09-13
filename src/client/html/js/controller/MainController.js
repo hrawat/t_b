@@ -14,17 +14,26 @@ TaskBoard.controller.MainController = {
         var initializeFn = arguments.callee;
         var renderRightContentFn = function() {
             var rightContentData = {};
+            var errorFn = function(errCode, errMsg) {
+              alert("Error in communicating with server err code: " + errCode + " err msg: "+errMsg);
+            };
+            var renderFn = arguments.callee;
+            var successFn = function() {
+               TaskBoard.TaskModel.loadTasksFromServer(function() {
+                                                         renderFn();
+                                                      }, errorFn);
+            };
             selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
             rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(selectedCategoryId);
             rightContentData['selectedCategoryId'] = selectedCategoryId;
             TaskBoard.view.rightContent.render(rightContentData);
             TaskBoard.view.rightContent.setTaskActionHandlers(
                                     function(taskId) {
-                                        TaskBoard.TaskModel.complete(taskId);
+                                        TaskBoard.TaskModel.complete(taskId, successFn, errorFn);
 
                                     },
                                     function(taskId) {
-                                        TaskBoard.TaskModel.delete(taskId);
+                                        TaskBoard.TaskModel.delete(taskId, successFn, errorFn);
                                     },
                                     function(taskId) {
 

@@ -66,14 +66,14 @@ TaskBoard.view.rightContent = {
         });
 
         $(".taskDone").click(function() {
-            var idStr = $(this).parents().(".task").attr("id");
+            var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
             doneCallBack(taskId);
             return false;
         });
 
         $(".deleteme").click(function() {
-            var idStr = $(this).parents().(".task").attr("id");
+            var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
             deleteCallBack(taskId);
             return false;

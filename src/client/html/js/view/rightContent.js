@@ -17,23 +17,23 @@ TaskBoard.view.rightContent = {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
             var createdTimeAgo = getTimeDiffInStr(task.creationDate);
-            var taskElt = "<div class='pro_pad-shadow item task'> \
+            var taskElt = "<div id='task_{0}' class='pro_pad-shadow item task'> \
                                 <div class='pro_curved-hz-2'> \
                                     <div class='pro_text-shadow' > \
-                                        <div class='block_tag' style='background:#{0}'></div> \
-                                            <div class='pro_text-shadow upper_content {1}'> \
-                                                {2}   \
-                                            <div class='secondOptions annie'> \
-                                                <a class='Botton menuButtons' href='#'>Done</a>  \
+                                        <div class='block_tag' style='background:#{1}'></div> \
+                                            <div class='pro_text-shadow upper_content {2}'> \
+                                                {3}   \
+                                            <div class='secondOptions'> \
+                                                <a class='Botton menuButtons taskDone' href='#'>Done</a>  \
                                                 <div class='delete-alt deleteme'><a href=''#'></a></div> \
                                             </div> \
                                         </div> \
                                         <div class='lower_portion'> \
-                                            <img src='{3}' /> \
+                                            <img src='{4}' /> \
                                             <div class='details'> \
                                                 <ul> \
-                                                    <li>{4}</li>  \
-                                                    <li>{5} ago</li>  \
+                                                    <li>{5}</li>  \
+                                                    <li>{6} ago</li>  \
                                                 </ul>                    \
                                             </div> \
                                             <br class='clear:both;' /> \
@@ -41,7 +41,8 @@ TaskBoard.view.rightContent = {
                                         </div> \
                                     </div> \
                                 </div> \
-                            </div>".format(category.colorCode,
+                            </div>".format(task['id'],
+                                                category.colorCode,
                                                 importantClassValue,
                                                 task['title'],
                                                 task['createdBy']['userSmallAvatarUrl'],
@@ -62,6 +63,20 @@ TaskBoard.view.rightContent = {
 
         $("#container .upper_content").mouseout(function() {
             $(this).children().css("display", "none")
+        });
+
+        $(".taskDone").click(function() {
+            var idStr = $(this).parents().(".task").attr("id");
+            var taskId = idStr.substring("task_".length);
+            doneCallBack(taskId);
+            return false;
+        });
+
+        $(".deleteme").click(function() {
+            var idStr = $(this).parents().(".task").attr("id");
+            var taskId = idStr.substring("task_".length);
+            deleteCallBack(taskId);
+            return false;
         });
 
     }

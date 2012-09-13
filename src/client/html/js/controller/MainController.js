@@ -19,13 +19,14 @@ TaskBoard.controller.MainController = {
             rightContentData['selectedCategoryId'] = selectedCategoryId;
             TaskBoard.view.rightContent.render(rightContentData);
             TaskBoard.view.rightContent.setTaskActionHandlers(
-                                    function() {
+                                    function(taskId) {
+                                        TaskBoard.TaskModel.complete(taskId);
 
                                     },
-                                    function() {
-
+                                    function(taskId) {
+                                        TaskBoard.TaskModel.delete(taskId);
                                     },
-                                    function() {
+                                    function(taskId) {
 
                                     });
 

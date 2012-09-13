@@ -35,8 +35,9 @@ TaskBoard.controller.MainController = {
                                     function(taskId) {
                                         TaskBoard.TaskModel.delete(taskId, successFn, errorFn);
                                     },
-                                    function(taskId) {
-
+                                    function(taskId, important) {
+                                        //todo: hook to server
+                                        console.log("changing priority of task "+taskId+" to "+important);
                                     });
 
         }

@@ -16,6 +16,7 @@ TaskBoard.view.rightContent = {
         todayTasks.forEach(function(task, index) {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
+            var focussedClassValue =  task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "";
             var createdTimeAgo = getTimeDiffInStr(task.creationDate);
             var taskElt = "<div id='task_{0}' class='pro_pad-shadow item task'> \
                                 <div class='pro_curved-hz-2'> \
@@ -37,7 +38,8 @@ TaskBoard.view.rightContent = {
                                                 </ul>                    \
                                             </div> \
                                             <br class='clear:both;' /> \
-                                            <a class='focused tooltip' href='#'><span class='classic'>This task is important</span></a> \
+                                            <a class='{7} tooltip makeImportant' href='#'><span class='classic'>This task is important</span></a> \
+                                            \
                                         </div> \
                                     </div> \
                                 </div> \
@@ -47,7 +49,8 @@ TaskBoard.view.rightContent = {
                                                 task['title'],
                                                 task['createdBy']['userSmallAvatarUrl'],
                                                 category['name'],
-                                                createdTimeAgo);
+                                                createdTimeAgo,
+                                                focussedClassValue);
             $("#container").append(taskElt);
 
 
@@ -69,6 +72,19 @@ TaskBoard.view.rightContent = {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
             doneCallBack(taskId);
+            return false;
+        });
+
+        $(".makeImportant").click(function() {
+            var idStr = $(this).parents(".task").attr("id");
+            var taskId = idStr.substring("task_".length);
+            var important = $(this).hasClass('focused');
+            if (important == true) {
+                $(this).removeClass('focused');
+            } else {
+                $(this).addClass('focused');
+            }
+            makeImportantCallBack(taskId, !important);
             return false;
         });
 

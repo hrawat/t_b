@@ -13,6 +13,7 @@ TaskBoard.controller.MainController = {
         var userInfo, categories, tasks;
         var initializeFn = arguments.callee;
         var renderRightContentFn = function() {
+            var rightContentData = {};
             selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
             rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(selectedCategoryId);
             rightContentData['selectedCategoryId'] = selectedCategoryId;
@@ -23,7 +24,6 @@ TaskBoard.controller.MainController = {
         var renderFunction = function() {
             var selectedCategoryId;
             var leftNavData = {};
-            var rightContentData = {};
             if ( (userInfo != undefined) && (categories != undefined) && (tasks != undefined)) {
                 TaskBoard.view.Header.render(userInfo);
                 leftNavData["localDay"] = getLocalDay();
@@ -36,7 +36,7 @@ TaskBoard.controller.MainController = {
 
                 // Set event handlers
                 TaskBoard.view.LeftNavigation.setCategoryClickFnHandler(function() {
-                    var idStr = this.attr("id");
+                    var idStr = $(this).attr("id");
                     var selectedCategoryId =  idStr.substring("category_".length);
                     TaskBoard.view.LeftNavigation.setSelectedCategoryId(selectedCategoryId);
                     renderRightContentFn();

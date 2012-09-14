@@ -71,6 +71,8 @@ TaskBoard.view.rightContent = {
         $(".taskDone").click(function() {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
+            $(this).removeClass('task');
+            $(this).addClass('.taskDone');
             doneCallBack(taskId);
             return false;
         });

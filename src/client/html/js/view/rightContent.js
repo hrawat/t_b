@@ -13,37 +13,40 @@ TaskBoard.view.rightContent = {
         var todayTasks = data['todayTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
         $('#container .task').remove();
+        $('#container .completedTask').remove();
         todayTasks.forEach(function(task, index) {
             var category = TaskBoard.CategoryModel.get(task['categoryId']);
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
             var focussedClassValue =  task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "focusStar";
             var createdTimeAgo = getTimeDiffInStr(task.creationDate);
-            var taskElt = "<div id='task_{0}' class='pro_pad-shadow item task'> \
+            var taskStatusClass = task['status'] == TaskBoard.TaskModel.TASK_STATUS_COMPLETE ? "completedTask" : "task"
+            var taskElt = "<div id='task_{0}' class='pro_pad-shadow item {1}'> \
                                 <div class='pro_curved-hz-2'> \
                                     <div class='pro_text-shadow' > \
-                                        <div class='block_tag' style='background:#{1}'></div> \
-                                            <div class='pro_text-shadow upper_content {2}'> \
-                                                {3}   \
+                                        <div class='block_tag' style='background:#{2}'></div> \
+                                            <div class='pro_text-shadow upper_content {3}'> \
+                                                {4}   \
                                             <div class='secondOptions'> \
                                                 <a class='Botton menuButtons taskDone' href='#'>Done</a>  \
                                                 <div class='delete-alt deleteme'><a href=''#'></a></div> \
                                             </div> \
                                         </div> \
                                         <div class='lower_portion'> \
-                                            <img src='{4}' /> \
+                                            <img src='{5}' /> \
                                             <div class='details'> \
                                                 <ul> \
-                                                    <li>{5}</li>  \
-                                                    <li>{6} ago</li>  \
+                                                    <li>{6}</li>  \
+                                                    <li>{7} ago</li>  \
                                                 </ul>                    \
                                             </div> \
                                             <br class='clear:both;' /> \
-                                            <a class='{7} tooltip makeImportant' href='#'><span class='classic'>This task is important</span></a> \
+                                            <a class='{8} tooltip makeImportant' href='#'><span class='classic'>This task is important</span></a> \
                                             \
                                         </div> \
                                     </div> \
                                 </div> \
                             </div>".format(task['id'],
+                                                taskStatusClass,
                                                 category.colorCode,
                                                 importantClassValue,
                                                 task['title'],
@@ -60,19 +63,17 @@ TaskBoard.view.rightContent = {
     },
 
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
-        $("#container .upper_content").mouseover(function(){
+        $("#container .task .upper_content").mouseover(function(){
             $(this).children().css("display", "block")
         });
 
-        $("#container .upper_content").mouseout(function() {
+        $("#container .task .upper_content").mouseout(function() {
             $(this).children().css("display", "none")
         });
 
         $(".taskDone").click(function() {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
-            $(this).removeClass('task');
-            $(this).addClass('.taskDone');
             doneCallBack(taskId);
             return false;
         });

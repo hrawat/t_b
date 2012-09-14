@@ -12,6 +12,15 @@ TaskBoard.controller.MainController = {
     initialize : function() {
         var userInfo, categories, tasks;
         var initializeFn = arguments.callee;
+
+        var renderHeaderFn = function () {
+           var headerData = {};
+           headerData['userInfo'] = userInfo;
+           headerData['taskStats'] = TaskBoard.TaskModel.stats();
+           TaskBoard.view.Header.render(headerData);
+
+        };
+ 
         var renderRightContentFn = function() {
             var rightContentData = {};
             var errorFn = function(errCode, errMsg) {
@@ -20,6 +29,7 @@ TaskBoard.controller.MainController = {
             var renderFn = arguments.callee;
             var successFn = function() {
                TaskBoard.TaskModel.loadTasksFromServer(function() {
+                                                         renderHeaderFn();
                                                          renderFn();
                                                       }, errorFn);
             };
@@ -45,12 +55,9 @@ TaskBoard.controller.MainController = {
         var renderFunction = function() {
             var selectedCategoryId;
             var leftNavData = {};
-            var headerData = {};
             if ( (userInfo != undefined) && (categories != undefined) && (tasks != undefined)) {
 
-                headerData['userInfo'] = userInfo;
-                headerData['taskStats'] = TaskBoard.TaskModel.stats();
-                TaskBoard.view.Header.render(headerData);
+                renderHeaderFn();
 
                 leftNavData["localDay"] = getLocalDay();
                 leftNavData["localDate"] = getLocalDateSting();

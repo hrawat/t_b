@@ -76,14 +76,19 @@ function createStandardCategories() {
 
 function getTimeDiffInStr(refDate) {
     var now = new Date();
+    var value;
     var secsDiff = (now.getTime() - refDate.getTime())/1000;
     if (Math.floor(secsDiff/ 86400) >= 1)  {
-        return Math.floor(secsDiff/ 86400) + " days ";
+        value =  Math.floor(secsDiff/ 86400);
+        return value + (value > 1 ? " days " : " day ");
     } else if (Math.floor(secsDiff/ 3600) >= 1)  {
-        return Math.floor(secsDiff/ 3600) + " hours ";
+        value = Math.floor(secsDiff/ 3600);
+        return value + (value > 1 ? " hours " : " hour ");
     } else if (Math.floor(secsDiff/ 60) >= 1)  {
-        return Math.floor(secsDiff/ 60) + " mins ";
+        value = Math.floor(secsDiff/ 60);
+        return value + (value > 1 ?  " mins " : " min ");
     } else {
-        return Math.floor(secsDiff) + " secs ";
+        value = Math.floor(secsDiff);
+        return value + (value > 1 ? " secs " : " sec ");
     }
 }

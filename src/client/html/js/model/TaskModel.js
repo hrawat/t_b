@@ -258,7 +258,7 @@ TaskBoard.TaskModel = {
         retValue['tasksCompletedInWeek'] = 0;
         retValue['remainingTasksOfWeek'] = 0;
         for (index=0; index < allTasks.length; index++) {
-            var task = alltasks[index];
+            var task = allTasks[index];
             if (task['status'] == this.TASK_STATUS_COMPLETE) {
                 if ( (task['completionDate'] >= startOfWeekDate) && (task['completionDate'] <= endOfWeekDate)) {
                     retValue['tasksCompletedInWeek']++;

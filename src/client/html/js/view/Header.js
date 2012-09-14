@@ -10,9 +10,9 @@ if (typeof(TaskBoard) == "undefined") {
 
 TaskBoard.view.Header = {
     render : function(data) {
-        $("#existingTasksCountId").text(data.existingTasksCount);
-        $("#tasksDoneInWeekCountId").text(data.tasksDoneInWeekCount);
-        $("#userSmallAvatarUrlId").attr("src", data.userSmallAvatarUrl)
+        $("#existingTasksCountId").text(data.taskStats.existingTasks);
+        $("#tasksDoneInWeekCountId").text(data.taskStats.tasksCompletedInWeek);
+        $("#userSmallAvatarUrlId").attr("src", data.userInfo.userSmallAvatarUrl)
     }
 }
 

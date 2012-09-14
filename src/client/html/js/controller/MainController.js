@@ -45,8 +45,13 @@ TaskBoard.controller.MainController = {
         var renderFunction = function() {
             var selectedCategoryId;
             var leftNavData = {};
+            var headerData = {};
             if ( (userInfo != undefined) && (categories != undefined) && (tasks != undefined)) {
-                TaskBoard.view.Header.render(userInfo);
+
+                headerData['userInfo'] = userInfo;
+                headerData['taskStats'] = TaskBoard.TaskModel.stats();
+                TaskBoard.view.Header.render(headerData);
+
                 leftNavData["localDay"] = getLocalDay();
                 leftNavData["localDate"] = getLocalDateSting();
                 leftNavData['categories'] = categories;

@@ -242,6 +242,37 @@ TaskBoard.TaskModel = {
 
     },
 
+    stats : function() {
+
+        var currDate = new Date();
+        var first = currDate.getDate() - currDate.getDay(); // First day is the day of the month - the day of the week
+        var startOfWeekDate = (new Date()).setDate(first);
+        var endOfWeekDate = (new Date()).setDate(first+6);
+
+        var allTasks = this._allTasks();
+
+        var index = 0;
+
+        var retValue = {};
+        retValue['existingTasks'] = 0;
+        retValue['tasksCompletedInWeek'] = 0;
+        retValue['remainingTasksOfWeek'] = 0;
+        for (index=0; index < allTasks.length; index++) {
+            var task = alltasks[index];
+            if (task['status'] == this.TASK_STATUS_COMPLETE) {
+                if ( (task['completionDate'] >= startOfWeekDate) && (task['completionDate'] <= endOfWeekDate)) {
+                    retValue['tasksCompletedInWeek']++;
+                }
+            } else {
+                retValue['existingTasks']++;
+                if (task['dueDate'] <= endOfWeekDate) {
+                    retValue['remainingTasksOfWeek']++;
+                }
+            }
+        }
+        return retValue;
+    },
+
     _indexOf : function(taskId) {
         var allTasks, index;
         allTasks = this._allTasks();

@@ -7,6 +7,8 @@
 
 	<link href="style/main_.css" type="text/css" rel="stylesheet" />
     
+<link href="style/main_style.css" type="text/css" rel="stylesheet" />
+    
 </head>
 <body>
 <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
@@ -14,98 +16,56 @@
     
     <ul>
         <li>
-        	<textarea id="taskTitle" rows="6" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>What is your task?</textarea>
+        	<textarea id="taskTitle" rows="3" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>What is your task?</textarea>
         </li>
         
         <li>
+        	<p>Pick a category</p>
         	<ul class="cat_selector">
-            	<li class=""><a class="selected home">Home</a></li>
-                <li><a class="work">Work</a></li>
+            	<li class=""><a class="selected">Cat11<div class="pink"></div></a></li>
+                <li><a>Work<div class="blue"></div></a></li>
+                <li><a>Work<div class="lime"></div></a></a></li>
+                <li><a class="addcat" onclick="addcategory()">Add</a></li>
             </ul>
+            <br style="clear:both;" />
         </li>
         
-        <li><input type="text" name="email" onfocus="this.value=''" onblur="if (this.value=='') this.value='More description?'" value="More description?"/></li>
-        <li class="submitbutton"><input type="submit" class="Botton callerToAction buttonMedium" value="Contact Us"/></li>
+       
+        
+       	 <li class="sharebox" id="catName">
+        	<p>Category Name</p>
+            <input type="text" class="sub" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'" />
+            
+        </li>
+        
+         <script>
+			function addcategory() {
+				var status = document.getElementById("catName").style.display;	
+				if (status == '' || status == 'none'){
+					document.getElementById("catName").style.display = "block";
+				}
+				else {
+					document.getElementById("catName").style.display = "none";
+				}
+			}
+			
+		</script>
+        
+        <li class="sharebox">
+        	<p>Share (Optional)</p>
+            <textarea class="sub" rows="2" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>Share task with friends or family by input their emails: user@email.com, user2@email.com</textarea>
+            
+        </li>
+        <li class="submitbutton">
+        	<input type="submit" class="Botton  buttonMedium" value="Cancel"/>
+            <input type="submit" class=" blueb " value="Create"/>
+        </li>
     </ul>
     
-   <!-- <table id="createTaskFormTable">
-        <tr>
-            <td>
-                <label for="taskTitle" size="100">Title: </label>
-            </td>
-            <td>
-                <input id="taskTitle" class="title2" type="text" />
-            </td>
-        </tr>
-        <tr style="vertical-align: top">
-            <td>
-                <label for="taskDescription" >Description:</label>
-            </td>
-            <td>
-                <textarea id="taskDescription" rows="4" size="100">  </textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="taskCategory">Category:</label>
-            </td>
-            <td>
-                <select id="taskCategory">
-                    <option value="Home">Home</option>
-                    <option value="Work">Work</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="taskPriority">Category:</label>
-            </td>
-            <td>
-                <select id="taskPriority">
-                    <option value="lowPriority">Low</option>
-                    <option value="mediumPriority">Medium</option>
-                    <option value="highPriority">High</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="taskCompleteBy" > Complete By:</label>
-            </td>
-            <td>
-                <select id="taskCompleteBy">
-                    <option value="today">Today</option>
-                    <option value="tomorrow">Tomorrow</option>
-                    <option vakue="thisWeek">This Week</option>
-                    <option value="later">Later</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr><td><br /></td></tr>
-        <tr>
-            <td></td>
-            <td>
-                <input id="submitTaskForm" type="submit" value="Create Task"/>
-            </td>
-        </tr>
-
-    </table>
--->
+<br style="clear:both" />
 </form>
 
-<!--<h2> List of Tasks </h2>
-<table id="listOfTasks" border="2">
-    <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Complete By</th>
-        <th></th>
-    </tr>
 
-</table>-->
 <script type="text/javascript" src="lib/json2.js" > </script>
 <script type="text/javascript" src="js/utils/Utils.js" > </script>
 <script type="text/javascript" src="js/model/TaskModel.js" > </script>

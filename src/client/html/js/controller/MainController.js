@@ -54,7 +54,28 @@ TaskBoard.controller.MainController = {
                 var createTaskFormData = {};
                 createTaskFormData.categories = categories;
                 createTaskFormData.selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
-                TaskBoard.view.CreateTaskForm(createTaskFormData);
+                TaskBoard.view.CreateTaskForm.render(createTaskFormData);
+                TaskBoard.view.CreateTaskForm.setSubmitHandler(function(taskTitle, categoryId) {
+                   var taskReq = {};
+                   taskReq.title = taskTitle;
+                   taskReq.description = '';
+
+                   taskReq.categoryId = categoryId;
+                   taskReq.priority = TaskBoard.TaskModel.MEDIUM_PRIORITY;
+                   taskReq.completeBy = TaskBoard.TaskModel.TODAY;
+
+                   TaskBoard.TaskModel.create(taskReq,
+                            function(createTaskRes) {
+                               TaskBoard.view.CreateTaskForm.display(false);
+                            },
+                            function(errCode, errMsg) {
+                                alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);
+                            });
+
+
+            return false;
+
+                });
 
             });
 

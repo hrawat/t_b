@@ -66,7 +66,9 @@ TaskBoard.controller.MainController = {
 
                    TaskBoard.TaskModel.create(taskReq,
                             function(createTaskRes) {
-                               TaskBoard.view.CreateTaskForm.display(false);
+                                TaskBoard.view.CreateTaskForm.display(false);
+                                renderHeaderFn();
+                                renderFn();
                             },
                             function(errCode, errMsg) {
                                 alert("error in creating task, err code "+errCode+ " errMsg "+errMsg);

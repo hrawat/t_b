@@ -50,3 +50,19 @@ create table Task (
     completedBy               varchar(23),
     priority                  tinyint(1)
 );
+
+create table CategorySharingInvitation (
+    id                      int primary key auto_increment,
+    fromUserId              varchar(23),
+    toUserId                varchar(23),
+    categoryId              varchar(23),
+    emailAddress            varchar(256),
+    emailKey                varchar(32),
+    status                  tinyint(1),
+    acceptedDate            datetime
+
+);
+
+create table Notification (
+  identity
+);

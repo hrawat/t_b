@@ -49,6 +49,14 @@ TaskBoard.controller.MainController = {
                                         //todo: hook to server
                                         console.log("changing priority of task "+taskId+" to "+important);
                                     });
+            TaskBoard.view.rightContent.setAddTaskHandler(function() {
+                // launch create task
+                var createTaskFormData = {};
+                createTaskFormData.categories = categories;
+                createTaskFormData.selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
+                TaskBoard.view.CreateTaskForm(createTaskFormData);
+
+            });
 
         }
 

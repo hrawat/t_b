@@ -100,6 +100,10 @@ TaskBoard.view.rightContent = {
             return false;
         });
 
+    },
+
+    setAddTaskHandler : function(callBack) {
+        $("#addTaskId").click(callBack);
     }
 }
 

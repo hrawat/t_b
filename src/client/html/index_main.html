@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>White Board</title>
 
+    <link href="style/main_.css" type="text/css" rel="stylesheet" />
     <link href="style/main_style.css" type="text/css" rel="stylesheet" />
     <link href="style/tooltip.css" type="text/css" rel="stylesheet" />
 
@@ -77,6 +78,66 @@
 
 </style>
 
+<div id="createTaskContainer" style="display: none;">
+    <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
+        <input id="taskId" type="hidden" value="" />
+
+        <ul>
+            <li>
+                <textarea id="taskTitle" rows="3" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>What is your task?</textarea>
+            </li>
+
+            <li>
+                <p>Pick a category</p>
+                <ul class="cat_selector">
+                    <li class=""><a class="selected">Cat11<div class="pink"></div></a></li>
+                    <li><a>Work<div class="blue"></div></a></li>
+                    <li><a>Work<div class="lime"></div></a></a></li>
+                    <li id="addCategoryInTaskForm"><a class="addcat" onclick="addcategory()">Add</a></li>
+                </ul>
+                <br style="clear:both;" />
+            </li>
+
+
+
+            <li class="sharebox" id="catName">
+                <p>Category Name</p>
+                <input type="text" class="sub" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'" />
+
+            </li>
+
+            <script>
+                function addcategory() {
+                    var status = document.getElementById("catName").style.display;
+                    if (status == '' || status == 'none'){
+                        document.getElementById("catName").style.display = "block";
+                    }
+                    else {
+                        document.getElementById("catName").style.display = "none";
+                    }
+                }
+
+            </script>
+
+            <li class="sharebox">
+                <p>Share (Optional)</p>
+                <textarea class="sub" rows="2" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>Share task with friends or family by input their emails: user@email.com, user2@email.com</textarea>
+
+            </li>
+            <li class="submitbutton">
+                <input type="submit" class="Botton  buttonMedium" value="Cancel"/>
+                <input type="submit" class=" blueb " value="Create"/>
+            </li>
+        </ul>
+
+        <br style="clear:both" />
+    </form>
+
+</div>
+
+<div id="createTaskContainerShadow" style="display: none;" ></div>
+
+
 <div class="banner">
     <img src="img/logo.png" height="53" width="208" />
     <div class="user_status">
@@ -142,7 +203,7 @@
             <div class="pro_text-shadow background_color addblock item" >
 
 
-                <a class="add">+</a>
+                <a id="addTaskId" class="add">+</a>
 
 
 

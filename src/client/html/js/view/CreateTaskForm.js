@@ -31,6 +31,18 @@ TaskBoard.view.CreateTaskForm = {
             }
         }
         displayFn(true);
+        
+
+        // Set the click handler for selecting a category
+        $("#createTaskForm li a").click(function() {
+           $("#createTaskForm .selected").removeClass("selected");
+           $(this).addClass("selected");
+        });
+
+        if (this.initialized) {
+           return ;
+        }
+
         // Set click handler for shadow
         $("#createTaskContainerShadow").click(function() {
             displayFn(false);
@@ -51,6 +63,7 @@ TaskBoard.view.CreateTaskForm = {
             }
             return false;
         });
+        this.initialized = true;
     },
 
     setSubmitHandler : function(submitHandler) {
@@ -61,6 +74,12 @@ TaskBoard.view.CreateTaskForm = {
        if (show) {
             $("#createTaskContainer").show().css("display", "block");
             $("#createTaskContainerShadow").show().css("display", "block");
+            $("#taskTitle").val("What is your task?");
+            $('#taskTitle').focus(function() {
+                if ($("#taskTitle").val() == 'What is your task?') {
+                    $("#taskTitle").val("");
+                };
+            });
        } else {
             $("#createTaskContainer").show().css("display", "none");
             $("#createTaskContainerShadow").show().css("display", "none");

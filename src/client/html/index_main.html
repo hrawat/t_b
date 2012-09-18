@@ -32,6 +32,7 @@
     <script type="text/javascript" src="js/view/LeftNavigation.js"></script>
     <script type="text/javascript" src="js/view/rightContent.js"></script>
     <script type="text/javascript" src="js/view/CreateTaskForm.js"></script>
+    <script type="text/javascript" src="js/view/CreateCategoryForm.js"></script>
 
     <script type="text/javascript" src="js/model/CategoryModel.js"></script>
     <script type="text/javascript" src="js/model/TaskModel.js"></script>
@@ -102,6 +103,31 @@
 
 
 </style>
+
+<div id="createCategoryContainer" style="display: none;">
+    <form id="createCategoryForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
+        <ul>
+            <li class="sharebox" id="categoryName">
+                <p>Category Name</p>
+                <input type="text" class="sub" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'" />
+
+            </li>
+            <li class="sharebox">
+                <p>Share (Optional)</p>
+                <textarea class="sub" rows="2" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>Share task with friends or family by input their emails: user@email.com, user2@email.com</textarea>
+
+            </li>
+            <li class="submitbutton">
+                <input id="cancelCreateCategory" type="submit" class="Botton  buttonMedium" value="Cancel"/>
+                <input id="submitCreateCategory" type="submit" class=" blueb " value="Create"/>
+            </li>
+
+
+        </ul>
+
+    </form>
+
+</div>
 
 <div id="createTaskContainer" style="display: none;">
     <form id="createTaskForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">

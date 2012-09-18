@@ -36,6 +36,10 @@ TaskBoard.view.LeftNavigation = {
 
     setCategoryClickFnHandler : function(callBackFn) {
         $('#categoriesList li a').click(callBackFn);
+    },
+
+    setAddCategoryHandler : function(callBack) {
+        $("#addCategoryId").click(callBack);
     }
 }
 

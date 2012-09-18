@@ -108,6 +108,11 @@ TaskBoard.controller.MainController = {
                     renderRightContentFn();
                 });
 
+                TaskBoard.view.LeftNavigation.setAddCategoryHandler(function() {
+                    var createCategoryFormData = {};
+                    TaskBoard.view.CreateCategoryForm.render(createCategoryFormData);
+                });
+
                 window.setTimeout(function() {
                     console.log("calling initialize from timer");
                     initializeFn();

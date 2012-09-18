@@ -111,6 +111,11 @@ TaskBoard.controller.MainController = {
                 TaskBoard.view.LeftNavigation.setAddCategoryHandler(function() {
                     var createCategoryFormData = {};
                     TaskBoard.view.CreateCategoryForm.render(createCategoryFormData);
+                    TaskBoard.view.CreateCategoryForm.setSubmitHandler(
+                               function(categoryName, sharedUsersEmail) {
+                                  // Call model
+                                  TaskBoard.view.CreateCategoryForm.display(false);
+                               });
                 });
 
                 window.setTimeout(function() {

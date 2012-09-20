@@ -28,26 +28,6 @@ TaskBoard.CategoryModel = {
                 failureCallBack.call(this, result['errCode'], result['errMsg']);
             }
         });
-
-
-
-
-        var categoryId, category, allCategories;
-        if (sharedWith == null) {
-            sharedWith = new Array();
-        }
-        categoryId = createUUID();
-        category = {
-            "categoryId" : categoryId,
-            "name" : name,
-            "imageURL" : imageURL,
-            "colorHexCode" : colorHexCode,
-            "sharedWith" : sharedWith
-        };
-        allCategories = this._allCategories();
-        allCategories.push(category);
-        this._saveAllCategories(allCategories);
-        return categoryId;
     },
 
     get : function(categoryId) {

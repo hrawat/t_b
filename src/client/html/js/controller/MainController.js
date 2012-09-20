@@ -119,10 +119,11 @@ TaskBoard.controller.MainController = {
 
                                    TaskBoard.CategoryModel.create(categoryReq,
                                        function(createCategoryRes) {
-                                           TaskBoard.view.CreateCategoryForm.display(false);
                                            TaskBoard.CategoryModel.list(
-                                                function() {
+                                                function(payload) {
+                                                    categories = payload;
                                                     renderFunction();
+                                                    TaskBoard.view.CreateCategoryForm.display(false);
                                                 },
                                                function(errCode, errMsg) {
                                                    alert("error in getting list of categories, err code "+errCode+ " errMsg "+errMsg);

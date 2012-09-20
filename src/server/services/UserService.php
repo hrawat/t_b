@@ -23,6 +23,11 @@ class UserService {
         return self::lookupUserInternal("id=$idDbValue");
     }
 
+    public static function lookupUserByEmailAddress($emailAddress) {
+        $emailAddressDbValue = DBUtils::escapeStrValue($emailAddress);
+        return self::lookupUserInternal("emailAddress=$emailAddressDbValue");
+    }
+
 
 
     public static function createFBUser($fbUid, $firstName, $lastName, $gender, $emailAddress, $invitedBy) {

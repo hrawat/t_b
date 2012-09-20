@@ -27,6 +27,8 @@ function handleRequestInternal($userId) {
             $payload = handleListCategories($userId);
             $retValue = ControllerUtils::getSuccessResponse($payload);
             return $retValue;
+        } else if ($reqType == 'createCategory') {
+            return handleCreateCategory($userId);
         } else {
             $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_REQUEST, "Request $reqType is not supported");
             return $retValue;
@@ -41,6 +43,30 @@ function handleRequestInternal($userId) {
 function handleListCategories($userId) {
     $categories = CategoryService::userCategories($userId);
     return $categories;
+
+}
+
+function handleCreateCategory($userId) {
+    $mandatoryArgsRetValue = ControllerUtils::checkMandatoryArgs(array("name"));
+    if ($mandatoryArgsRetValue != NULL) {
+        return $mandatoryArgsRetValue;
+    }
+
+    $name = ControllerUtils::getArgValue("name", "");
+    $colorCode = ControllerUtils::getArgValue("colorCode", "ff0000");
+    $sharedWithUsers = ControllerUtils::getArgValue("sharedWithUsersEmail", "");
+
+    $categoryId = CategoryService::create($name, $colorCode, $userId);
+    $category = CategoryService::lookup($categoryId);
+
+    if (isset($category)) {
+        $retValue = ControllerUtils::getSuccessResponse($category);
+    } else {
+        $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INTERNAL_ERROR, "Internal Error: cannot fetch category from DB");
+    }
+    return $retValue;
+
+
 
 }
 

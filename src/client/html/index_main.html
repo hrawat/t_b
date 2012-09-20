@@ -75,6 +75,16 @@
 <body>
 
 <style>
+        #createCategoryContainer {
+            position: absolute;
+            top: 10%;
+            left: 40%;
+           // width: 500px;
+            margin-left: -250px;
+            background: #fff;
+            z-index: 3001;
+            display: none;
+        }
         #createTaskContainer {
             position: absolute;
             top: 10%;
@@ -107,14 +117,13 @@
 <div id="createCategoryContainer" style="display: none;">
     <form id="createCategoryForm"  style="overflow-x: visible; overflow-y: visible; " class="form create_form" method="post">
         <ul>
-            <li class="sharebox" id="categoryName">
+            <li class="sharebox" >
                 <p>Category Name</p>
-                <input type="text" class="sub" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'" />
-
+                <input id="categoryNameId" type="text" class="sub" " />
             </li>
             <li class="sharebox">
                 <p>Share (Optional)</p>
-                <textarea class="sub" rows="2" onfocus="this.innerHTML=''" onblur="if (this.innerHTML=='') this.innerHTML='What is your task?'"/>Share task with friends or family by input their emails: user@email.com, user2@email.com</textarea>
+                <textarea id="sharedUsersEmail" class="sub" rows="2" /></textarea>
 
             </li>
             <li class="submitbutton">

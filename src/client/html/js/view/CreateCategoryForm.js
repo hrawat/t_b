@@ -31,7 +31,12 @@ TaskBoard.view.CreateCategoryForm = {
         });
 
         $("#submitCreateCategory").click(function() {
-            alert("submit called");
+            var submitHandler = TaskBoard.view.CreateCategoryForm.submitHandler;
+            var categoryName = $("#categoryNameId").val();
+            var sharedUsersEmail = $("#sharedUsersEmail").val().split(",");
+            if (submitHandler) {
+               submitHandler(categoryName, sharedUsersEmail);
+            }
             return false;
         });
         this.initialized = true;
@@ -42,9 +47,17 @@ TaskBoard.view.CreateCategoryForm = {
     },
 
     display : function(show) {
+        var sharedUsersEmailDT = "Share task with friends or family by input their emails: user@email.com, user2@email.com";
         if (show) {
             $("#createCategoryContainer").show().css("display", "block");
             $("#createTaskContainerShadow").show().css("display", "block");
+            $("#sharedUsersEmail").val(sharedUsersEmailDT);
+            $('#sharedUsersEmail').focus(function() {
+                if ($("#sharedUsersEmail").val() == sharedUsersEmailDT) {
+                    $("#sharedUsersEmail").val("");
+                };
+            });
+           $('#categoryNameId').val("");
         } else {
             $("#createCategoryContainer").show().css("display", "none");
             $("#createTaskContainerShadow").show().css("display", "none");

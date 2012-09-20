@@ -1,6 +1,8 @@
 <?php
 
 require_once (dirname(__FILE__) . "/../services/AuthenticationService.php");
+require_once (dirname(__FILE__) . "/../services/CategoryService.php");
+require_once (dirname(__FILE__) . "/../services/UserService.php");
 
 require_once (dirname(__FILE__) . "/../utils/ControllerUtils.php");
 require_once (dirname(__FILE__) . "/../utils/ErrorCodes.php");
@@ -54,9 +56,21 @@ function handleCreateCategory($userId) {
 
     $name = ControllerUtils::getArgValue("name", "");
     $colorCode = ControllerUtils::getArgValue("colorCode", "ff0000");
-    $sharedWithUsers = ControllerUtils::getArgValue("sharedWithUsersEmail", "");
-
     $categoryId = CategoryService::create($name, $colorCode, $userId);
+    $sharedWithUsersStr = ControllerUtils::getArgValue("sharedWithUsersEmail", "");
+    $sharedUserEmails = explode(",", $sharedWithUsersStr);
+    foreach($sharedUserEmails as $emailAddress) {
+        $emailAddress = trim($emailAddress);
+        $user = UserService::lookupUserByEmailAddress($emailAddress);
+        if ($user == NULL) {
+            // Handle this case
+            Logger::debug("email address $emailAddress doesn't exist");
+        } else {
+            CategoryService::addUser($categoryId, $user['id']);
+        }
+    }
+
+
     $category = CategoryService::lookup($categoryId);
 
     if (isset($category)) {

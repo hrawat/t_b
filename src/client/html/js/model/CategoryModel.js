@@ -6,7 +6,32 @@ if (typeof(TaskBoard) == "undefined") {
 }
 
 TaskBoard.CategoryModel = {
-    create: function(name, imageURL, colorHexCode, sharedWith) {
+    create: function(categoryParams, successCallBack, failureCallBack) {
+
+        var createReq = $.ajax({
+            url : "category",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "createCategory",
+                name : categoryParams.name,
+                sharedWithUsersEmail : categoryParams.sharedWithUsersEmail
+            },
+            context : this
+        });
+
+        createReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, result['payload']);
+            } else {
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
+            }
+        });
+
+
+
+
         var categoryId, category, allCategories;
         if (sharedWith == null) {
             sharedWith = new Array();

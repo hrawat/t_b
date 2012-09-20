@@ -112,9 +112,28 @@ TaskBoard.controller.MainController = {
                     var createCategoryFormData = {};
                     TaskBoard.view.CreateCategoryForm.render(createCategoryFormData);
                     TaskBoard.view.CreateCategoryForm.setSubmitHandler(
-                               function(categoryName, sharedUsersEmail) {
+                               function(categoryName, sharedWithUsersEmail) {
+                                   var categoryReq = {};
+                                   categoryReq.name = categoryName;
+                                   categoryReq.sharedWithUsersEmail = sharedWithUsersEmail;
+
+                                   TaskBoard.CategoryModel.create(categoryReq,
+                                       function(createCategoryRes) {
+                                           TaskBoard.view.CreateCategoryForm.display(false);
+                                           TaskBoard.CategoryModel.list(
+                                                function() {
+                                                    renderFunction();
+                                                },
+                                               function(errCode, errMsg) {
+                                                   alert("error in getting list of categories, err code "+errCode+ " errMsg "+errMsg);
+                                               });
+                                       },
+                                       function(errCode, errMsg) {
+                                           alert("error in creating category, err code "+errCode+ " errMsg "+errMsg);
+                                       });
+
                                   // Call model
-                                  TaskBoard.view.CreateCategoryForm.display(false);
+
                                });
                 });
 

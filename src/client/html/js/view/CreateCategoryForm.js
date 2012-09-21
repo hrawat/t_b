@@ -34,7 +34,7 @@ TaskBoard.view.CreateCategoryForm = {
             var submitHandler = TaskBoard.view.CreateCategoryForm.submitHandler;
             var categoryName = $("#categoryNameId").val();
             var sharedUsersEmail = $("#sharedUsersEmail").val();
-            if (sharedUsersEmail.index('Share task with friends')) {
+            if (sharedUsersEmail.indexOf('Share task with friends') == 0) {
                 sharedUsersEmail = '';
             }
             if (submitHandler) {

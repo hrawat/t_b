@@ -15,8 +15,8 @@ TaskBoard.CategoryModel = {
             async :true,
             data : {
                 "reqType" : "createCategory",
-                name : categoryParams.name,
-                sharedWithUsersEmail : categoryParams.sharedWithUsersEmail
+                "name" : categoryParams.name,
+                "sharedWithUsersEmail" : categoryParams.sharedWithUsersEmail
             },
             context : this
         });

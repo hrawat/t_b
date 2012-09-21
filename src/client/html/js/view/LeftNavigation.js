@@ -15,17 +15,24 @@ TaskBoard.view.LeftNavigation = {
 
         $("#localDateId").text(data.localDate);
         $("#localDayId").text(data.localDay);
+        
+        $selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
 
         $('#categoriesList .category').remove();
         for(index=0; index < categories.length; index++) {
             var categoryElt = "<li class='category' ><a id='category_{0}' class='calendar'>{1}<div style='background:#{2}'></div></a></li>".format(categories[index].id, categories[index].name, categories[index].colorCode);
             $("#addCategoryId").before(categoryElt);
         }
+        TaskBoard.view.LeftNavigation.setSelectedCategoryId($selectedCategoryId);
     },
 
     getSelectedCategoryId : function() {
         var idStr = $('#categoriesList .selected').attr("id");
-        return idStr.substring("category_".length);
+        if ((idStr == undefined) || (idStr == null)) {
+           return "0";
+        } else {
+           return idStr.substring("category_".length);
+        }
     },
 
     setSelectedCategoryId : function(categoryId) {

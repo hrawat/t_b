@@ -63,14 +63,17 @@ TaskBoard.view.rightContent = {
     },
 
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
+        $("#container .task .upper_content").unbind("mouseover");
         $("#container .task .upper_content").mouseover(function(){
             $(this).children().css("display", "block")
         });
 
+        $("#container .task .upper_content").unbind("mouseout");
         $("#container .task .upper_content").mouseout(function() {
             $(this).children().css("display", "none")
         });
 
+        $(".taskDone").unbind("click");
         $(".taskDone").click(function() {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
@@ -78,6 +81,7 @@ TaskBoard.view.rightContent = {
             return false;
         });
 
+        $(".makeImportant").unbind("click");
         $(".makeImportant").click(function() {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
@@ -93,6 +97,7 @@ TaskBoard.view.rightContent = {
             return false;
         });
 
+        $(".deleteme").unbind("click");
         $(".deleteme").click(function() {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
@@ -103,6 +108,7 @@ TaskBoard.view.rightContent = {
     },
 
     setAddTaskHandler : function(callBack) {
+        $("#addTaskId").unbind("click");
         $("#addTaskId").click(callBack);
     }
 }

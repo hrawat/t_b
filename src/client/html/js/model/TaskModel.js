@@ -108,6 +108,29 @@ TaskBoard.TaskModel = {
 
     },
 
+    changePriority: function(taskParams, successCallBack, failureCallBack) {
+
+        var taskChangePriorityReq = $.ajax({
+            url : "task",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "changePriority",
+                "taskId" : taskParams.taskId,
+                "priority" : taskParams.priority
+            }
+        });
+        taskChangePriorityReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, result['payload']);
+            } else {
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
+            }
+
+        });
+    },
+
     delete: function(taskId, successCallBack, failureCallBack) {
 
         var taskDeleteReq = $.ajax({

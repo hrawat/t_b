@@ -46,8 +46,10 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.delete(taskId, successFn, errorFn);
                                     },
                                     function(taskId, important) {
-                                        //todo: hook to server
-                                        console.log("changing priority of task "+taskId+" to "+important);
+                                        changePriorityReq = {}  ;
+                                        changePriorityReq.taskId = taskId;
+                                        changePriorityReq.priority = important ? "highPriority" : "mediumPriority";
+                                        TaskBoard.TaskModel.changePriority(changePriorityReq, successFn, errorFn);
                                     });
             TaskBoard.view.rightContent.setAddTaskHandler(function() {
                 // launch create task

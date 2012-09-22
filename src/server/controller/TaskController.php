@@ -36,13 +36,30 @@ function handleRequestInternal($userId) {
         } else if ($reqType == 'delete') {
             $retValue = handleDelete($userId);
             return $retValue;
-        }else {
+        } else if ($reqType == 'changePriority') {
+            $retValue = handleChangePriority($userId);
+            return $retValue;
+        } else {
             $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_REQUEST, "Request $reqType is not supported");
             return $retValue;
         }
     } catch (Exception $ex) {
         $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INTERNAL_ERROR, $ex->getMessage());
         return $retValue;
+    }
+
+}
+
+function handleChangePriority($userId) {
+    $mandatoryArgsCheckRetValue = ControllerUtils::checkMandatoryArgs(array("taskId", "priority"));
+    if ($mandatoryArgsCheckRetValue != NULL) {
+        return $mandatoryArgsCheckRetValue;
+    } else {
+        $taskId = ControllerUtils::getArgValue("taskId", NULL);
+        $priorityStr = ControllerUtils::getArgValue("priority", TaskService::TASK_PRIORITY_MEDIUM_STR);
+        $priorityIntValue = TaskService::taskPriorityIntValue($priorityStr);
+        TaskService::changePriority($taskId, $priorityIntValue);
+        return ControllerUtils::getSuccessResponse(TRUE);
     }
 
 }

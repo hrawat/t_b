@@ -16,7 +16,7 @@ TaskBoard.controller.MainController = {
         var renderHeaderFn = function () {
            var headerData = {};
            headerData['userInfo'] = userInfo;
-           headerData['taskStats'] = TaskBoard.TaskModel.stats();
+           headerData['taskStats'] = TaskBoard.TaskModel.stats(userInfo['id']);
            TaskBoard.view.Header.render(headerData);
 
         };

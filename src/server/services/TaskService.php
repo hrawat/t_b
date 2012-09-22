@@ -163,7 +163,7 @@ class TaskService {
                                                 categoryId, title, description,
                                                 UNIX_TIMESTAMP(dueDate) as dueDate, 
                                                 UNIX_TIMESTAMP(completionDate) as completionDate,
-                                                status, createdBy, priority
+                                                status, createdBy, priority, completedBy
                             from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
                             and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince and deleted=0";
         $result = DBUtils::execute($sqlStmt);

@@ -27,7 +27,7 @@ TaskBoard.view.rightContent = {
                                             <div class='pro_text-shadow upper_content {3}'> \
                                                 {4}   \
                                             <div class='secondOptions'> \
-                                                <a class='Botton menuButtons taskDone' href='#'>Done</a>  \
+                                                <div><a class='Botton menuButtons taskDone' href='#'>Done</a></div>  \
                                                 <div class='delete-alt deleteme'><a href=''#'></a></div> \
                                             </div> \
                                         </div> \
@@ -70,6 +70,16 @@ TaskBoard.view.rightContent = {
 
         $("#container .task .upper_content").unbind("mouseout");
         $("#container .task .upper_content").mouseout(function() {
+            $(this).children().css("display", "none")
+        });
+
+        $("#container .completedTask .deleteme").unbind("mouseover");
+        $("#container .completedTask .deleteme").mouseover(function(){
+            $(this).children().css("display", "block")
+        });
+
+        $("#container .completedTask .deleteme").unbind("mouseout");
+        $("#container .completedTask .deleteme").mouseout(function() {
             $(this).children().css("display", "none")
         });
 

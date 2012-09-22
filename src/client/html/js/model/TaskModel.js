@@ -242,7 +242,7 @@ TaskBoard.TaskModel = {
 
     },
 
-    stats : function() {
+    stats : function(userId) {
 
         var currDate = new Date();
         var first = currDate.getDate() - currDate.getDay(); // First day is the day of the month - the day of the week
@@ -261,7 +261,9 @@ TaskBoard.TaskModel = {
             var task = allTasks[index];
             if (task['status'] == this.TASK_STATUS_COMPLETE) {
                 if ( (task['completionDate'] >= startOfWeekDate) && (task['completionDate'] <= endOfWeekDate)) {
-                    retValue['tasksCompletedInWeek']++;
+                    if (task['completedBy'] == userId) {
+                       retValue['tasksCompletedInWeek']++;
+                    }
                 }
             } else {
                 retValue['existingTasks']++;

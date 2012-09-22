@@ -14,7 +14,7 @@ class EmailUtils {
         $refUserIdDbValue = DBUtils::escapeStrValue($refUserId);
 
 
-        $sqlStmt = "Insert into Notification(eventDate, eventName, userId, categoryId, taskId, refUserId, $processAfterSecs)
+        $sqlStmt = "Insert into Notification(eventDate, eventName, userId, categoryId, taskId, refUserId, emailProcessingTime)
                                     values(NOW(), $eventNameDbValue, $userIdDbValue,
                                               $categoryIdDbValue, $taskIdDbValue, $refUserIdDbValue, ADDDATE(NOW(), INTERVAL $processAfterSecs SECOND))";
         $result = DBUtils::execute($sqlStmt);

@@ -2,7 +2,7 @@
 
 require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 
-require_once (dirname(__FILE__) . "/../email/NotificationEvents .php");
+require_once (dirname(__FILE__) . "/../email/NotificationEvents.php");
 require_once (dirname(__FILE__) . "/../email/EmailUtils.php");
 
 class TaskService {

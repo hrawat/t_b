@@ -2,7 +2,12 @@
 
 require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 
+require_once (dirname(__FILE__) . "/../email/NotificationEvents .php");
+require_once (dirname(__FILE__) . "/../email/EmailUtils.php");
+
 class TaskService {
+
+    const TASK_EMAIL_DELAY = 3600;
 
     const TASK_SERVICE = "taskService";
 
@@ -110,6 +115,7 @@ class TaskService {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
+            EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $createdBy, $categoryId, $id, NULL, self::TASK_EMAIL_DELAY);
             return $id;
         }
     }

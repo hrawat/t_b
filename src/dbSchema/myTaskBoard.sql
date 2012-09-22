@@ -64,5 +64,15 @@ create table CategorySharingInvitation (
 );
 
 create table Notification (
-  identity
+  id                      int primary key auto_increment,
+  eventDate               datetime,
+  eventName               varchar(32),
+  userId                  varchar(23),
+  categoryId              varchar(23),
+  taskId                  varchar(23),
+  refUserId               varchar(23),
+  emailProcessingTime     datetime,
+  status                  tinyint(1) default 0,
+  agentName               varchar(32) default NULL,
+  emailSentDate           datetime
 );

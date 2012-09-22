@@ -49,13 +49,16 @@ function handleListCategories($userId) {
 }
 
 function handleCreateCategory($userId) {
+    $categoryColorCodes = array("FF0000", "00FFFF", "0000FF", "0000A0", 
+						"ADD8E6", "800080", "FFFF00", "00FF00" , "FF00FF");
     $mandatoryArgsRetValue = ControllerUtils::checkMandatoryArgs(array("name"));
     if ($mandatoryArgsRetValue != NULL) {
         return $mandatoryArgsRetValue;
     }
 
     $name = ControllerUtils::getArgValue("name", "");
-    $colorCode = ControllerUtils::getArgValue("colorCode", "ff0000");
+    $colorCode = ControllerUtils::getArgValue("colorCode", 
+                              $categoryColorCodes[rand(0, count($categoryColorCodes)-1)]);
     $categoryId = CategoryService::create($name, $colorCode, $userId);
     $sharedWithUsersStr = ControllerUtils::getArgValue("sharedWithUsersEmail", "");
     $sharedUserEmails = explode(",", $sharedWithUsersStr);

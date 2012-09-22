@@ -49,7 +49,7 @@ function handleListCategories($userId) {
 }
 
 function handleCreateCategory($userId) {
-    $categoryColorCodes = array("FF0000", "00FFFF", "0000FF", "0000A0", 
+    $categoryColorCodes = array("00FFFF", "0000FF", "0000A0", 
 						"ADD8E6", "800080", "FFFF00", "00FF00" , "FF00FF");
     $mandatoryArgsRetValue = ControllerUtils::checkMandatoryArgs(array("name"));
     if ($mandatoryArgsRetValue != NULL) {

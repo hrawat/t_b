@@ -27,7 +27,7 @@ TaskBoard.view.rightContent = {
                                             <div class='pro_text-shadow upper_content {3}'> \
                                                 {4}   \
                                             <div class='secondOptions'> \
-                                                <div><a class='Botton menuButtons taskDone' href='#'>Done</a></div>  \
+                                                <div class='doneAction' ><a class='Botton menuButtons taskDone' href='#'>Done</a></div>  \
                                                 <div class='delete-alt deleteme'><a href=''#'></a></div> \
                                             </div> \
                                         </div> \
@@ -73,13 +73,14 @@ TaskBoard.view.rightContent = {
             $(this).children().css("display", "none")
         });
 
-        $("#container .completedTask .deleteme").unbind("mouseover");
-        $("#container .completedTask .deleteme").mouseover(function(){
+        $("#container .completedTask .upper_content").unbind("mouseover");
+        $("#container .completedTask .upper_content").mouseover(function(){
             $(this).children().css("display", "block")
+            $(this).children().children(".doneAction").css("display", "none")
         });
 
-        $("#container .completedTask .deleteme").unbind("mouseout");
-        $("#container .completedTask .deleteme").mouseout(function() {
+        $("#container .completedTask .upper_content").unbind("mouseout");
+        $("#container .completedTask .upper_content").mouseout(function() {
             $(this).children().css("display", "none")
         });
 
@@ -110,6 +111,9 @@ TaskBoard.view.rightContent = {
         $(".deleteme").unbind("click");
         $(".deleteme").click(function() {
             var idStr = $(this).parents(".task").attr("id");
+            if (idStr == undefined) {
+               idStr = $(this).parents(".completedTask").attr("id");
+            }
             var taskId = idStr.substring("task_".length);
             deleteCallBack(taskId);
             return false;

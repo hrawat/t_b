@@ -2,6 +2,7 @@
 
 require_once (dirname(__FILE__) . "/../services/UserService.php");
 require_once (dirname(__FILE__) . "/../services/CategoryService.php");
+require_once (dirname(__FILE__) . "/../services/TaskService.php");
 require_once (dirname(__FILE__) . "/NotificationEvents.php");
 
 class EmailMsgGenerator {
@@ -27,7 +28,7 @@ class EmailMsgGenerator {
             $taskTitle = $params['taskTitle'];
 
             $subject = "$userFullName created a task in $categoryName category";
-            $body = "$userFullName created '$taskTitle' $categoryName category";
+            $body = "$userFullName created '$taskTitle' task in $categoryName category";
             return array($subject, $body);
 
         } else if ($eventName == NotificationEvents::TASK_COMPLETED) {
@@ -38,7 +39,7 @@ class EmailMsgGenerator {
             $taskTitle = $params['taskTitle'];
 
             $subject = "$userFullName completed a task in $categoryName category";
-            $body = "$userFullName completed '$taskTitle' $categoryName category";
+            $body = "$userFullName completed '$taskTitle' in $categoryName category";
             return array($subject, $body);
 
         } else {
@@ -64,7 +65,8 @@ class EmailMsgGenerator {
         $retValue['categoryName'] = $categoryName;
         $retValue['userFullName'] = $userFullName;
         $retValue['taskTitle'] = $taskTitle;
-
+        
+        return $retValue;
 
 
     }

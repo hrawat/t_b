@@ -9,7 +9,7 @@ require_once (dirname(__FILE__) . "/CategoryService.php");
 
 class TaskService {
 
-    const TASK_EMAIL_DELAY = 3600;
+    const TASK_EMAIL_DELAY = 3;
 
     const TASK_SERVICE = "taskService";
 

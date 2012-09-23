@@ -34,8 +34,8 @@ class EmailMsgGenerator {
         $userFullName = $categoryCreator['firstName'];
 
         $retValue = array();
-        $retValue['userFullName'] = '';
-        $categoryName['categoryName'] = '';
+        $retValue['userFullName'] = $userFullName;
+        $retValue['categoryName'] = $categoryName;
 
         return $retValue;
     }

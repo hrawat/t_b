@@ -48,8 +48,11 @@ class EmailProcessor {
     private function process() {
         list($success, $eventsOrErrMsg) = EmailUtils::getUnProcessedEvents($this->agentName, self::BATCH_SIZE);
         if ($success == FALSE) {
+           Logger::error(self::EMAIL_SERVICE, 
+                         "Error in fetching un-processed events, errMsg : $eventsOrErrMsg");
             sleep(self::SLEEP_INTERVAL);
         } else if (count($eventsOrErrMsg) == 0){
+            Logger::debug(self::EMAIL_SERVICE, "No un-processed events fetched");
             sleep(self::SLEEP_INTERVAL);
         } else {
             for($i=0; $i < count($eventsOrErrMsg); $i++) {
@@ -59,9 +62,9 @@ class EmailProcessor {
                     $emailSent = $this->processEvent($event);
                 }
                 if ($emailSent) {
-                    EmailUtils::markEventAsProcessed($event['eventId'], time());
+                    EmailUtils::markEventAsProcessed($event['id'], time());
                 } else {
-                    EmailUtils::markEventAsProcessed($event['eventId'], NULL);
+                    EmailUtils::markEventAsProcessed($event['id'], NULL);
                 }
 
             }
@@ -90,6 +93,7 @@ class EmailProcessor {
 
     private function processEvent($event) {
         try {
+            Logger::debug(self::EMAIL_SERVICE, "Processing event " . $event['id']);
             $userId = $event['userId'];
             $eventName = $event['eventName'];
 

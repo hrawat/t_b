@@ -1,6 +1,7 @@
 <?php
 
 require_once (dirname(__FILE__) . "/../conf/database.conf.php");
+require_once (dirname(__FILE__) . "/Logger.php");
 
 class DBUtils {
 
@@ -12,6 +13,7 @@ class DBUtils {
 
     public static function execute($sqlStmt) {
         $dbConn = self::getDbConn();
+        //Logger::debug("database", "Executing sql stmt [$sqlStmt]");
         $result = mysql_query($sqlStmt, $dbConn);
         return $result;
     }

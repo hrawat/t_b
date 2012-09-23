@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../utils/DbUtils.php");
+require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 require_once (dirname(__FILE__) . "/../utils/Logger.php");
 
 class EmailUtils {
@@ -33,8 +33,8 @@ class EmailUtils {
         $sqlStmt = "update Notification set emailStatus=$processingState, agentName=$agentNameDbValue
                                     where (agentName is null or agentName=$agentNameDbValue) and
                                                 (emailStatus=0 or emailStatus=1) and
-                                                 (emailProcessingTime > NOW())
-                                                order by emailPriority desc, eventId asc limit $count";
+                                                 (emailProcessingTime < NOW())
+                                                order by id asc limit $count";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::EMAIL_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());

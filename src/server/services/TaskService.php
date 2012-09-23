@@ -5,6 +5,8 @@ require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 require_once (dirname(__FILE__) . "/../email/NotificationEvents.php");
 require_once (dirname(__FILE__) . "/../email/EmailUtils.php");
 
+require_once (dirname(__FILE__) . "/CategoryService.php");
+
 class TaskService {
 
     const TASK_EMAIL_DELAY = 3600;
@@ -93,6 +95,9 @@ class TaskService {
     }
 
     public static function create($categoryId, $title, $description, $priorityStr, $dueDate, $createdBy) {
+
+        $category = CategoryService::lookup($categoryId);
+
         $id = DBUtils::generateUniqId();
         $idDbValue = DBUtils::escapeStrValue($id);
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
@@ -115,7 +120,14 @@ class TaskService {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
-            EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $createdBy, $categoryId, $id, NULL, self::TASK_EMAIL_DELAY);
+            foreach($category['users'] as $categoryUser) {
+                if ($categoryUser['userId'] != $createdBy) {
+                    EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $categoryUser['userId'],
+                                                            $categoryId, $id, $createdBy, self::TASK_EMAIL_DELAY);
+                }
+
+            }
+
             return $id;
         }
     }
@@ -147,6 +159,16 @@ class TaskService {
         if ($result == FALSE) {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+        } else if (mysql_affected_rows() > 0) {
+            $task = TaskService::lookupTask($taskId);
+            $category = CategoryService::lookup($task['categoryId']);
+            foreach($category['users'] as $categoryUser) {
+                if ($categoryUser['userId'] != $completedBy) {
+                    EmailUtils::logEvent(NotificationEvents::TASK_COMPLETED, $categoryUser['userId'],
+                                                $task['categoryId'], $taskId, $completedBy, self::TASK_EMAIL_DELAY);
+                }
+
+            }
         }
 
     }

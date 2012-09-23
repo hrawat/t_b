@@ -30,7 +30,28 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	.banner .user_status {
 		float:right;
 		padding: 0 40px 0 0;
+		position:relative;
 	}
+	
+	.banner .user_status #setting {
+		width: 100px; 
+		background:#fff; 
+		position: absolute; 
+		right:0px; top: 45px; 
+		z-index:5000;
+		box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3); 
+		padding: 10px;
+		display:none;
+	}
+
+	.banner .user_status #setting a {
+		color:#666;
+		text-decoration:none;
+	}
+	.banner .user_status #setting a:hover {
+		color:#09F;	
+	}
+	
 		.banner .user_status img {
 			float:left;
 			border:#fff 3px solid;

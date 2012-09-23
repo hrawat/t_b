@@ -72,7 +72,7 @@ create table Notification (
   taskId                  varchar(23),
   refUserId               varchar(23),
   emailProcessingTime     datetime,
-  status                  tinyint(1) default 0,
+  emailStatus             tinyint(1) default 0,
   agentName               varchar(32) default NULL,
   emailSentDate           datetime
 );

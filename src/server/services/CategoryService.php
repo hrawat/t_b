@@ -3,6 +3,9 @@
 require_once (dirname(__FILE__) . "/../utils/DBUtils.php");
 require_once (dirname(__FILE__) . "/../utils/Logger.php");
 
+require_once (dirname(__FILE__) . "/../email/EmailUtils.php");
+require_once (dirname(__FILE__) . "/../email/NotificationEvents.php");
+
 // todo: the code is just functional - it doesn't check if the user modifying a category is indeed the owner of the category
 class CategoryService {
 
@@ -68,7 +71,8 @@ class CategoryService {
     }
 
     public static function addUser($categoryId, $userId) {
-        return self::addUserInternal($categoryId, $userId, self::CATEGORY_USER_TYPE_COLLABORATOR);
+        self::addUserInternal($categoryId, $userId, self::CATEGORY_USER_TYPE_COLLABORATOR);
+        EmailUtils::logEvent(NotificationEvents::CATEGORY_SHARED, $userId, $categoryId, NULL, NULL, 0);
     }
 
     private static function addUserInternal($categoryId, $userId, $type) {

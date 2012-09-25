@@ -77,10 +77,10 @@ class CategoryService {
     public static function getCategorySharingRequests($emailAddress, $toUserId, $requestStatus) {
         if (!empty($emailAddress)) {
             $emailAddressDbValue = DBUtils::escapeStrValue($emailAddress);
-            $sqlStmt = "select * from CategorySharingRequest where emailAddress=$emailAddressDbValue and status=$requestStatus";
+            $sqlStmt = "select * from CategorySharingRequest where toEmailAddress=$emailAddressDbValue and status=$requestStatus";
         } else {
             $toUserIdDbValue = DBUtils::escapeStrValue($toUserId);
-            $sqlStmt = "select * from CategorySharingRequest where $toUserId=$toUserIdDbValue and status=$requestStatus";
+            $sqlStmt = "select * from CategorySharingRequest where toUserId=$toUserIdDbValue and status=$requestStatus";
         }
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {

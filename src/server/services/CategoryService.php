@@ -74,6 +74,28 @@ class CategoryService {
         }
     }
 
+    public static function getCategorySharingRequests($emailAddress, $toUserId, $requestStatus) {
+        if (!empty($emailAddress)) {
+            $emailAddressDbValue = DBUtils::escapeStrValue($emailAddress);
+            $sqlStmt = "select * from CategorySharingRequest where emailAddress=$emailAddressDbValue and status=$requestStatus";
+        } else {
+            $toUserIdDbValue = DBUtils::escapeStrValue($toUserId);
+            $sqlStmt = "select * from CategorySharingRequest where $toUserId=$toUserIdDbValue and status=$requestStatus";
+        }
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::CATEGORY_SERVICE, "Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+        } else {
+            $retValue = array();
+            while (($row = mysql_fetch_assoc($result))) {
+                $retValue[] = $row;
+            }
+            return $retValue;
+        }
+    }
+
+
     public static function createCategorySharingRequest($fromUserId, $categoryId, $toUserId, $toEmailAddress) {
         if (empty($toUserId) && empty($toEmailAddress)) {
             throw new Exception("Both toUserId and toEmailAddress cannot be null");
@@ -83,8 +105,8 @@ class CategoryService {
         $toUserIdDbValue = DBUtils::escapeStrValue($toUserId);
         $toEmailAddressDbValue = DBUtils::escapeStrValue($toEmailAddress);
         $statusDbValue = self::CATEGORY_SHARING_REQUEST_SENT;
-        $sqlStmt = "Insert into CategorySharingRequest(fromUserId, categoryId, toUserId, toEmailAddress, status)
-                            values ($fromUserIdDbValue, $categoryIdDbValue, $toUserIdDbValue, $toEmailAddressDbValue, $statusDbValue)";
+        $sqlStmt = "Insert into CategorySharingRequest(creationDate, fromUserId, categoryId, toUserId, toEmailAddress, status)
+                            values (NOW(),$fromUserIdDbValue, $categoryIdDbValue, $toUserIdDbValue, $toEmailAddressDbValue, $statusDbValue)";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::CATEGORY_SERVICE, "Error in executing sql stmt [$sqlStmt] error " . mysql_error());
@@ -114,7 +136,7 @@ class CategoryService {
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
         if (!empty($toUserId)) {
             $toEmailAddressDbValue = DBUtils::escapeStrValue($toEmailAddress);
-            $sqlStmt = "Update CategorySharingRequest set status=$statusDbValue where
+            $sqlStmt = "Update CategorySharingRequest set status=$statusDbValue, lastModificationDate=NOW() where
                                     categoryId=$categoryIdDbValue and toEmailAddress=$toEmailAddressDbValue";
         } else {
             $toUserIdDbValue = DBUtils::escapeStrValue($toUserId);

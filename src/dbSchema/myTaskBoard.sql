@@ -53,12 +53,13 @@ create table Task (
 
 create table CategorySharingRequest (
     id                      int primary key auto_increment,
+    creationDate              datetime,
+    lastModificationDate      datetime,
     fromUserId              varchar(23),
     toUserId                varchar(23),
     categoryId              varchar(23),
     toEmailAddress            varchar(256),
-    status                  tinyint(1),
-    acceptedDate            datetime
+    status                  tinyint(1)
 
 );
 

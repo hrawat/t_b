@@ -53,6 +53,11 @@ class UserService {
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
             self::createDefaultCategories($id);
+            $categorySharingRequests = CategoryService::getCategorySharingRequests($emailAddress,
+                                        NULL, CategoryService::CATEGORY_SHARING_REQUEST_SENT);
+            foreach ($categorySharingRequests as $categorySharingRequest) {
+                CategoryService::acceptCategorySharingRequest($categorySharingRequest['categoryId'], $id, $emailAddress);
+            }
             return $id;
         }
 

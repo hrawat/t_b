@@ -14,6 +14,10 @@ class CategoryService {
     const CATEGORY_USER_TYPE_OWNER = 1;
     const CATEGORY_USER_TYPE_COLLABORATOR = 2;
 
+    const CATEGORY_SHARING_REQUEST_SENT = 0;
+    const CATEGORY_SHARING_REQUEST_ACCEPTED= 1;
+    const CATEGORY_SHARING_REQUEST_REJECTED = 2;
+
     public static function lookup($categoryId) {
         // Get category name and color code
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
@@ -69,6 +73,63 @@ class CategoryService {
             return $id;
         }
     }
+
+    public static function createCategorySharingRequest($fromUserId, $categoryId, $toUserId, $toEmailAddress) {
+        if (empty($toUserId) && empty($toEmailAddress)) {
+            throw new Exception("Both toUserId and toEmailAddress cannot be null");
+        }
+        $fromUserIdDbValue = DBUtils::escapeStrValue($fromUserId);
+        $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
+        $toUserIdDbValue = DBUtils::escapeStrValue($toUserId);
+        $toEmailAddressDbValue = DBUtils::escapeStrValue($toEmailAddress);
+        $statusDbValue = self::CATEGORY_SHARING_REQUEST_SENT;
+        $sqlStmt = "Insert into CategorySharingRequest(fromUserId, categoryId, toUserId, toEmailAddress, status)
+                            values ($fromUserIdDbValue, $categoryIdDbValue, $toUserIdDbValue, $toEmailAddressDbValue, $statusDbValue)";
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::CATEGORY_SERVICE, "Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+        } else {
+            return mysql_insert_id();
+        }
+    }
+
+    public static function acceptCategorySharingRequest($categoryId, $toUserId, $toEmailAddress) {
+        $statusDbValue = self::CATEGORY_SHARING_REQUEST_ACCEPTED;
+        $affectedRequests = self::setCategorySharingRequestStatus($categoryId, $toUserId, $toEmailAddress, $statusDbValue);
+        if ($affectedRequests > 0) {
+            self::addUser($categoryId, $toUserId);
+        }
+    }
+
+    public static function rejectCategorySharingRequest($categoryId, $toUserId, $toEmailAddress) {
+        $statusDbValue = self::CATEGORY_SHARING_REQUEST_REJECTED;
+        $affectedRequests = self::setCategorySharingRequestStatus($categoryId, $toUserId, $toEmailAddress, $statusDbValue);
+        if ($affectedRequests > 0) {
+            self::addUser($categoryId, $toUserId);
+        }
+    }
+
+    private static function setCategorySharingRequestStatus($categoryId, $toUserId, $toEmailAddress, $statusDbValue) {
+        $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
+        if (!empty($toUserId)) {
+            $toEmailAddressDbValue = DBUtils::escapeStrValue($toEmailAddress);
+            $sqlStmt = "Update CategorySharingRequest set status=$statusDbValue where
+                                    categoryId=$categoryIdDbValue and toEmailAddress=$toEmailAddressDbValue";
+        } else {
+            $toUserIdDbValue = DBUtils::escapeStrValue($toUserId);
+            $sqlStmt = "Update CategorySharingRequest set status=$statusDbValue where
+                                    categoryId=$categoryIdDbValue and  toUserId=$toUserIdDbValue";
+        }
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::CATEGORY_SERVICE, "Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt] error " . mysql_error());
+        } else {
+            return mysql_affected_rows();
+        }
+    }
+
 
     public static function addUser($categoryId, $userId) {
         self::addUserInternal($categoryId, $userId, self::CATEGORY_USER_TYPE_COLLABORATOR);

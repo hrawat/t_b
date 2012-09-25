@@ -51,13 +51,12 @@ create table Task (
     priority                  tinyint(1)
 );
 
-create table CategorySharingInvitation (
+create table CategorySharingRequest (
     id                      int primary key auto_increment,
     fromUserId              varchar(23),
     toUserId                varchar(23),
     categoryId              varchar(23),
-    emailAddress            varchar(256),
-    emailKey                varchar(32),
+    toEmailAddress            varchar(256),
     status                  tinyint(1),
     acceptedDate            datetime
 

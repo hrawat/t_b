@@ -68,8 +68,10 @@ function handleCreateCategory($userId) {
         if ($user == NULL) {
             // Handle this case
             Logger::debug("email address $emailAddress doesn't exist");
+            CategoryService::createCategorySharingRequest($userId, $categoryId, NULL, $emailAddress);
         } else {
-            CategoryService::addUser($categoryId, $user['id']);
+            CategoryService::createCategorySharingRequest($userId, $categoryId, $user['id'], $emailAddress);
+            CategoryService::acceptCategorySharingRequest($categoryId, $user['id'], $emailAddress);
         }
     }
 

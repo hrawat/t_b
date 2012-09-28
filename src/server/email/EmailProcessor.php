@@ -99,7 +99,7 @@ class EmailProcessor {
 
             list($toAddress, $toName) = $this->getEmailAddress($userId);
             $fromAddress = "taskwhiteboard@gmail.com";
-            $fromName = "taskPal";
+            $fromName = "TaskPal";
             list($subject, $emailBody) = $this->emailMsgGenerator->getEmailMsg($event);
             if (!empty($subject) || !empty($emailBody)) {
                 $this->emailSender->sendHTMLEmail($fromAddress, $fromName, $toAddress, $toName, $subject, $emailBody, $eventName);

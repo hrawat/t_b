@@ -13,35 +13,34 @@
     }
     window.fbAsyncInit = function() {
         var loggedInCookie = getCookie("LoggedIn");
+           FB.init({
+               appId      : '420637114648782', // App ID
+               channelUrl : 'http://ec2-107-20-25-51.compute-1.amazonaws.com/channel.html', // Channel File
+               status     : true, // check login status
+               cookie     : true, // enable cookies to allow the server to access the session
+               xfbml      : true  // parse XFBML
+              });
 
-        FB.init({
-            appId      : '420637114648782', // App ID
-            channelUrl : 'http://ec2-107-20-25-51.compute-1.amazonaws.com/channel.html', // Channel File
-            status     : true, // check login status
-            cookie     : true, // enable cookies to allow the server to access the session
-            xfbml      : true  // parse XFBML
-        });
 
-
-        if (loggedInCookie != null) {
-            redirectToMainPage();
-//            FB.getLoginStatus( function(response) {
-//                if (response.status == 'connected') {
-//                    redirectToMainPage();
-//                } else {
-//                    $('#login').css("display", "block");
-//                }
-//            });
+        if (loggedInCookie == "true") {
+            FB.getLoginStatus( function(response) {
+                if (response.status == 'connected') {
+                    redirectToMainPage();
+                } else {
+                    $('#login').css("display", "block");
+                }
+            });
         } else {
             $('#login').css("display", "block");
+            window.setTimeout(function(){
+                 FB.Event.subscribe('auth.authResponseChange', function(response) {
+                   if (response.status == 'connected') {
+                       redirectToMainPage();
+                   } 
+                  })}, 1000);
         }
 
 
-       FB.Event.subscribe('auth.authResponseChange', function(response) {
-          if (response.status == 'connected') {
-              redirectToMainPage();
-          } 
-       });
         
     };
     // Load the SDK Asynchronously

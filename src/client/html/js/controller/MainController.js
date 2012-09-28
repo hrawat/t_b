@@ -170,20 +170,14 @@ TaskBoard.controller.MainController = {
                 categories = payload ;
                 renderFunction();
             },
-            function(errCode, errMsg) {
-                alert("gor error from server err code " + errCode + " err msg " + errMsg);
-
-            });
+            errorFn);
 
         // Get user tasks
         TaskBoard.TaskModel.loadTasksFromServer(function(payload) {
                 tasks = payload ;
                 renderFunction();
             },
-            function(errCode, errMsg) {
-                alert("gor error from server err code " + errCode + " err msg " + errMsg);
-
-            });
+            errorFn);
 
     }
 

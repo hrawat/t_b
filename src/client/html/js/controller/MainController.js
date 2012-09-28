@@ -13,6 +13,7 @@ TaskBoard.controller.MainController = {
         var userInfo, categories, tasks;
         var initializeFn = arguments.callee;
         var errorFn = function(errCode, errMsg) {
+            redirectToLoginPage();
             alert("Error in communicating with server err code: " + errCode + " err msg: "+errMsg);
         };
 

@@ -1,5 +1,8 @@
 <?php
 
+require_once(dirname(__FILE__) . "/../services/AuthenticationService.php");
+require_once(dirname(__FILE__) . "/../utils/ControllerUtils.php");
+
 function handleRequest() {
    if (!isset($_GET['reqType'])) {
         $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_ARGS, "Mandatory parameter reqType missing");

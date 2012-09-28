@@ -1,25 +1,24 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>My Facebook Login Page</title>
-    <script src="lib/jquery-1.7.2.js"></script>
-    <script src="js/utils/BrowserUtils.js"></script>
-</head>
-<body>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
 
-<div id="fb-root"></div>
-<script>
+<script src="lib/jquery-1.7.2.js"></script>
+<script src="js/utils/BrowserUtils.js"></script>
+<script type="text/javascript">
     function redirectToMainPage() {
-       window.location = '/index_main.html'
+        window.location = '/index_main.html'
     }
     window.fbAsyncInit = function() {
         var loggedInCookie = getCookie("LoggedIn");
-           FB.init({
-               appId      : '420637114648782', // App ID
-               channelUrl : 'http://ec2-107-20-25-51.compute-1.amazonaws.com/channel.html', // Channel File
-               status     : true, // check login status
-               cookie     : true, // enable cookies to allow the server to access the session
-               xfbml      : true  // parse XFBML
-              });
+        FB.init({
+            appId      : '420637114648782', // App ID
+            channelUrl : 'http://ec2-107-20-25-51.compute-1.amazonaws.com/channel.html', // Channel File
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
 
 
         if (loggedInCookie == "true") {
@@ -33,15 +32,15 @@
         } else {
             $('#login').css("display", "block");
             window.setTimeout(function(){
-                 FB.Event.subscribe('auth.authResponseChange', function(response) {
-                   if (response.status == 'connected') {
-                       redirectToMainPage();
-                   } 
-                  })}, 1000);
+                FB.Event.subscribe('auth.authResponseChange', function(response) {
+                    if (response.status == 'connected') {
+                        redirectToMainPage();
+                    }
+                })}, 1000);
         }
 
 
-        
+
     };
     // Load the SDK Asynchronously
     (function(d){
@@ -51,13 +50,193 @@
         js.src = "http://connect.facebook.net/en_US/all.js";
         ref.parentNode.insertBefore(js, ref);
     }(document));
-
 </script>
 
-<div id="login" style="display:none;">
-<h1> Welcome to myTaskBoard </h1>
-<div id="fbLoginButton" class="fb-login-button"  scope="email">Login with Facebook</div>
+<style type="text/css">
+<!--
+body {
+	font: 100%/1.4 Georgia, "Times New Roman", Times, serif;
+	background: #e5e5e5;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+ul, ol, dl { 
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p{
+	margin-top: 0;	 
+	padding-right: 15px;
+	padding-left: 15px; 
+}
+a img { 
+	border: none;
+}
+a:link {
+	color: #42413C;
+	text-decoration: underline; 
+}
+a:visited {
+	color: #6E6C64;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus {
+	text-decoration: none;
+}
+
+.container {
+	width: 100%;
+	text-align:center;
+	padding: 30px 0;
+	hegith: 500px;
+	min-width: 1080px;
+	background: #ffffff; /* Old browsers */
+
+	background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 40%); /* FF3.6+ */
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(40%,#e5e5e5)); /* Chrome,Safari4+ */
+	
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 40%); /* Chrome10+,Safari5.1+ */
+	
+	background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 40%); /* Opera 11.10+ */
+	
+	background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 40%); /* IE10+ */
+	
+	background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 40%); /* W3C */
+	
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
+}
+
+/*
+
+
+.content {
+	padding: 30px 0;
+	height:50px;
+	width: 960px;
+	margin: 0 auto; 
+}
+.content ul li {
+	list-style:none;
+	float:left;
+	width: 28%;
+	margin: 25px;	
+}
+*/
+
+.content {
+	position:relative;
+	width: 1180px;
+	margin: 0 auto;
+}
+.clearfloat { 
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+
+.item1 {
+	font-size: 12px;
+	line-height:20px;
+	color:#999;
+	position: absolute;
+	top: 108px;
+	left: 80px;
+	width: 207px;
+	text-align:center;
+}
+.item2 {
+	font-size: 12px;
+	line-height:20px;
+	color:#999;
+	position: absolute;
+	top: 305px;
+	left: 13px;
+	width: 200px;
+	text-align:center;
+}
+.item3 {
+	font-size: 12px;
+	line-height:20px;
+	color:#999;
+	position: absolute;
+	top: 318px;
+	left: 947px;
+	width: 230px;
+	text-align:center;
+}
+.item4 {
+	font-size: 12px;
+	line-height:20px;
+	color:#999;
+	position: absolute;
+	top: 114px;
+	left: 880px;
+	width: 230px;
+	text-align:center;
+}
+
+.signup {
+	line-height:40px;
+	font-size: 18px;
+}
+.signup a{
+	display:inline-block;
+	background:url(img/facebook_button_sprint.png) bottom;
+	width: 250px; height:38px;
+	margin:0 1em;
+	text-indent:-99999px;
+}
+.signup a:hover {
+	background-position:0 0;	
+}
+em {
+	font-style:normal;
+	font-weight:bold;
+	font-size:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="fb-root"></div>
+
+<div class="container">
+	<div class="content">
+        <img src="img/logo.png" height="53" width="208" />
+        <p>. Todos made easy .</p>
+        
+        <img src="img/laptop.png" height="425" width="800" /> <br />
+        <div class="signup">
+            Signup today, It is <em>easy</em>, It is <em>free</em>!
+            <!-- <a href="#">test</a> -->
+            <div id="fbLoginButton" class="fb-login-button"  scope="email" style="display: block; ">Login with Facebook</div>
+    	</div>
+        <div class="item1">
+            <img src="img/stickies.png" height="100" width="100" />
+            <p>View and prioritize your tasks as you would in the real world</p>
+        </div>
+        <div class="item2">
+            <img src="img/friends.png" height="100" width="100" />
+       	  <p>Share tasks with your friends, and stay on track</p>
+        </div>
+		<div class="item3">
+            <img src="img/clock.png" height="100" width="100" />
+            <p>Stay organizad and efficient, so you can have more time to yourself</p>
+        </div>
+        <div class="item4">
+            <img src="img/cloud.png" height="100" width="100" />
+            <p>Access your task anywhere  as you go</p>
+        </div>
+	</div>
 </div>
+
 
 </body>
 </html>

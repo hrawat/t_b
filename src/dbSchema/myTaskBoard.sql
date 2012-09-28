@@ -14,6 +14,8 @@ create table User (
     invitedBy                 varchar(23)
 );
 
+create unique index User_fbUid on User(fbUid);
+
 create table Category (
     id                        varchar(23) primary key,
     creationDate              datetime,

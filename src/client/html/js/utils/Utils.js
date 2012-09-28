@@ -89,6 +89,9 @@ function getTimeDiffInStr(refDate) {
         return value + (value > 1 ?  " mins " : " min ");
     } else {
         value = Math.floor(secsDiff);
+        if (value <= 0) {
+           value = 1;
+        }
         return value + (value > 1 ? " secs " : " sec ");
     }
 }

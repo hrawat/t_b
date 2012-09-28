@@ -3,6 +3,55 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Untitled Document</title>
+
+<script src="lib/jquery-1.7.2.js"></script>
+<script src="js/utils/BrowserUtils.js"></script>
+<script type="text/javascript">
+    function redirectToMainPage() {
+        window.location = '/index_main.html'
+    }
+    window.fbAsyncInit = function() {
+        var loggedInCookie = getCookie("LoggedIn");
+        FB.init({
+            appId      : '420637114648782', // App ID
+            channelUrl : 'http://ec2-107-20-25-51.compute-1.amazonaws.com/channel.html', // Channel File
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
+
+
+        if (loggedInCookie == "true") {
+            FB.getLoginStatus( function(response) {
+                if (response.status == 'connected') {
+                    redirectToMainPage();
+                } else {
+                    $('#login').css("display", "block");
+                }
+            });
+        } else {
+            $('#login').css("display", "block");
+            window.setTimeout(function(){
+                FB.Event.subscribe('auth.authResponseChange', function(response) {
+                    if (response.status == 'connected') {
+                        redirectToMainPage();
+                    }
+                })}, 1000);
+        }
+
+
+
+    };
+    // Load the SDK Asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "http://connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+</script>
+
 <style type="text/css">
 <!--
 body {
@@ -156,6 +205,8 @@ em {
 
 <body>
 
+<div id="fb-root"></div>
+
 <div class="container">
 	<div class="content">
         <img src="img/logo.png" height="53" width="208" />
@@ -164,7 +215,8 @@ em {
         <img src="img/laptop.png" height="425" width="800" /> <br />
         <div class="signup">
             Signup today, It is <em>easy</em>, It is <em>free</em>!
-            <a href="#">test</a>
+            <!-- <a href="#">test</a> -->
+            <div id="fbLoginButton" class="fb-login-button"  scope="email" style="display: block; ">Login with Facebook</div>
     	</div>
         <div class="item1">
             <img src="img/stickies.png" height="100" width="100" />

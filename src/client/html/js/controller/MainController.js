@@ -12,20 +12,27 @@ TaskBoard.controller.MainController = {
     initialize : function() {
         var userInfo, categories, tasks;
         var initializeFn = arguments.callee;
+        var errorFn = function(errCode, errMsg) {
+            alert("Error in communicating with server err code: " + errCode + " err msg: "+errMsg);
+        };
 
         var renderHeaderFn = function () {
            var headerData = {};
            headerData['userInfo'] = userInfo;
            headerData['taskStats'] = TaskBoard.TaskModel.stats(userInfo['id']);
            TaskBoard.view.Header.render(headerData);
+           TaskBoard.view.Header.setLogoutHandler(function(){
+                    TaskBoard.UserModel.logout(function() {
+                            redirectToLoginPage();
+                    },
+                    errorFn);
+            });
 
         };
  
         var renderRightContentFn = function() {
             var rightContentData = {};
-            var errorFn = function(errCode, errMsg) {
-              alert("Error in communicating with server err code: " + errCode + " err msg: "+errMsg);
-            };
+
             var renderFn = arguments.callee;
             var successFn = function() {
                TaskBoard.TaskModel.loadTasksFromServer(function() {

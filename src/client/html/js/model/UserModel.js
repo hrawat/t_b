@@ -20,6 +20,28 @@ TaskBoard.UserModel = {
 
         });
 
+    } ,
+
+    logout : function(successCallback, failureCallback) {
+        var logoutReq = $.ajax({
+            url : "authentication",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "logout"
+            },
+            context : this
+        });
+        logoutReq.done(function(result) {
+            if (result['success']) {
+                successCallback.call(this, result['payload']);
+            } else {
+                failureCallback.call(this, result['errCode'], result['errMsg']);
+            }
+
+        });
+
     }
 
 }

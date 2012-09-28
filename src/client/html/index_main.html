@@ -151,7 +151,7 @@
             <li>
                 <p>Pick a category</p>
                 <ul class="cat_selector">
-                    <li id="addCategoryInTaskForm"><a class="addcat" onclick="addcategory()">Add</a></li>
+                    <li id="addCategoryInTaskForm"><a class="addcat">Add</a></li>
                 </ul>
                 <br style="clear:both;" />
             </li>
@@ -165,7 +165,7 @@
             </li>
 
             <script>
-                function addcategory(id) {
+                function toggleDisplay(id) {
                     var status = document.getElementById(id).style.display;
                     if (status == '' || status == 'none'){
                         document.getElementById(id).style.display = "block";
@@ -203,11 +203,11 @@
         <ul>
             <li><strong id="existingTasksCountId">2</strong> Existing tasks</li>
             <li><strong id="tasksDoneInWeekCountId">34</strong> Done this week</li>
-            <li onmouseover="addcategory('setting');"  onMouseOut="addcategory('setting');"><a href="#"><img id="userSmallAvatarUrlId" src="" /><span class="down_triangle"></span></a>
+            <li onmouseover="toggleDisplay('setting');"  onMouseOut="toggleDisplay('setting');"><a href="#"><img id="userSmallAvatarUrlId" src="" /><span class="down_triangle"></span></a>
   				 <div id="setting" >
                     <ul>
-                        <li><a href="#">Setting</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <!-- <li><a href="#">Setting</a></li>  -->
+                        <li><a id="logoutAction" href="#">Logout</a></li>
                     </ul>
         </div>         
 	            

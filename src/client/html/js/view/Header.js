@@ -13,6 +13,11 @@ TaskBoard.view.Header = {
         $("#existingTasksCountId").text(data.taskStats.existingTasks);
         $("#tasksDoneInWeekCountId").text(data.taskStats.tasksCompletedInWeek);
         $("#userSmallAvatarUrlId").attr("src", data.userInfo.userSmallAvatarUrl)
+    },
+
+    setLogoutHandler : function(callBack) {
+        $('#logoutAction').unbind("click");
+        $('#logoutAction').click(callBack);
     }
 }
 

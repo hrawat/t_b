@@ -56,6 +56,14 @@ class AuthenticationService {
         }
     }
 
+    public static function logout() {
+        $uid = self::getUidFromSession();
+        if (!empty($uid)) {
+            session_destroy();
+        }
+
+    }
+
 
     private static function getUidFromSession() {
         $uid = NULL;

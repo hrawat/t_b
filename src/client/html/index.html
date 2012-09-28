@@ -2,6 +2,7 @@
 <head>
     <title>My Facebook Login Page</title>
     <script src="lib/jquery-1.7.2.js"></script>
+    <script src="js/utils/BrowserUtils.js"></script>
 </head>
 <body>
 
@@ -11,6 +12,8 @@
        window.location = '/index_main.html'
     }
     window.fbAsyncInit = function() {
+        var loggedInCookie = getCookie("LoggedIn");
+
         FB.init({
             appId      : '420637114648782', // App ID
             channelUrl : 'http://ec2-107-20-25-51.compute-1.amazonaws.com/channel.html', // Channel File
@@ -18,14 +21,21 @@
             cookie     : true, // enable cookies to allow the server to access the session
             xfbml      : true  // parse XFBML
         });
-  
-        FB.getLoginStatus( function(response) {
-           if (response.status == 'connected') {
-              redirectToMainPage();
-           } else {
-             $('#login').css("display", "block");
-           }
-       });
+
+
+        if (loggedInCookie != null) {
+            redirectToMainPage();
+//            FB.getLoginStatus( function(response) {
+//                if (response.status == 'connected') {
+//                    redirectToMainPage();
+//                } else {
+//                    $('#login').css("display", "block");
+//                }
+//            });
+        } else {
+            $('#login').css("display", "block");
+        }
+
 
        FB.Event.subscribe('auth.authResponseChange', function(response) {
           if (response.status == 'connected') {

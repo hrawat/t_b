@@ -45,6 +45,7 @@ class AuthenticationService {
                 error_log("did not get user from signed cookie");
                 return NULL;
             } else {
+                set_cookie("LoggedIn", "true");
                 $uid = self::lookupOrCreateFBUser($fbUid);
                 if (isset($uid)) {
                     self::setUidInSession($uid);
@@ -61,6 +62,7 @@ class AuthenticationService {
         if (!empty($uid)) {
             session_destroy();
         }
+        set_cookie("LoggedIn", "false", -3600);
 
     }
 

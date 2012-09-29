@@ -1,6 +1,6 @@
 <?php
 
-define ('EMAIL_TESTING_MODE', True);
+define ('EMAIL_TESTING_MODE', FALSE);
 
 
 define ('MANDRILL_SEND_API_URL', 'https://mandrillapp.com/api/1.0/messages/send.json');

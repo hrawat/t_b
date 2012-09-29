@@ -25,7 +25,8 @@ TaskBoard.view.CreateTaskForm = {
         for (index=0; index < categories.length; index++) {
             var categoryElt = "<li class='category'><a id='createTFCategory_{0}'>{1}<div style='background:#{2}'></div></a></li>".format(
                                         categories[index].id, categories[index].name, categories[index].colorCode);
-            $("#addCategoryInTaskForm").before(categoryElt);
+            //$("#addCategoryInTaskForm").before(categoryElt);
+            $("#categoriesInTaskForm").append(categoryElt);
             if (selectedCategoryId == categories[index].id) {
                $("#createTFCategory_"+selectedCategoryId).addClass("selected");
             }

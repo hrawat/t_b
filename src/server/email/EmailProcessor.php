@@ -72,21 +72,26 @@ class EmailProcessor {
 
     }
 
-    private function getEmailAddress($userId) {
-        $user = UserService::lookupUser($userId);
-        $emailAddress = $user['emailAddress'];
-        if (empty($emailAddress)) {
-            throw new Exception("User $userId doesn't have email address");
-        }
-        $fullName = '';
-        if (!empty($user['firstName'])) {
-            $fullName .= $user['firstName'];
-        }
-        if (!empty($user['lastName'])) {
-            $fullName .= " " . $user['lastName'];
+    private function getEmailAddress($event) {
+        if (!empty($event['emailAddress'])) {
+            return array ($event['emailAddress'], $event['emailAddress']);
+        } else {
+            $user = UserService::lookupUser($userId);
+            $emailAddress = $user['emailAddress'];
+            if (empty($emailAddress)) {
+                throw new Exception("User $userId doesn't have email address");
+            }
+            $fullName = '';
+            if (!empty($user['firstName'])) {
+                $fullName .= $user['firstName'];
+            }
+            if (!empty($user['lastName'])) {
+                $fullName .= " " . $user['lastName'];
+            }
+
+            return array($emailAddress, $fullName);
         }
 
-        return array($emailAddress, $fullName);
     }
 
 
@@ -97,7 +102,7 @@ class EmailProcessor {
             $userId = $event['userId'];
             $eventName = $event['eventName'];
 
-            list($toAddress, $toName) = $this->getEmailAddress($userId);
+            list($toAddress, $toName) = $this->getEmailAddress($event);
             $fromAddress = "taskwhiteboard@gmail.com";
             $fromName = "TaskPal";
             list($subject, $emailBody) = $this->emailMsgGenerator->getEmailMsg($event);

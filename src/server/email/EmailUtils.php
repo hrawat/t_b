@@ -7,17 +7,19 @@ class EmailUtils {
 
     const EMAIL_SERVICE = "emailService";
 
-    public static function logEvent($eventName, $userId, $categoryId, $taskId, $refUserId, $processAfterSecs) {
+    public static function logEvent($eventName, $userId, $emailAddress, $categoryId, $taskId, $refUserId, $processAfterSecs) {
         $eventNameDbValue = DBUtils::escapeStrValue($eventName);
         $userIdDbValue = DBUtils::escapeStrValue($userId);
+        $emailAddressDbValue = DBUtils::escapeStrValue($emailAddress);
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
         $taskIdDbValue = DBUtils::escapeStrValue($taskId);
         $refUserIdDbValue = DBUtils::escapeStrValue($refUserId);
 
 
-        $sqlStmt = "Insert into Notification(eventDate, eventName, userId, categoryId, taskId, refUserId, emailProcessingTime)
-                                    values(NOW(), $eventNameDbValue, $userIdDbValue,
-                                              $categoryIdDbValue, $taskIdDbValue, $refUserIdDbValue, ADDDATE(NOW(), INTERVAL $processAfterSecs SECOND))";
+        $sqlStmt = "Insert into Notification(eventDate, eventName, userId, emailAddress, categoryId, taskId, refUserId, emailProcessingTime)
+                                    values(NOW(), $eventNameDbValue, $userIdDbValue, $emailAddressDbValue,
+                                              $categoryIdDbValue, $taskIdDbValue, $refUserIdDbValue,
+                                              ADDDATE(NOW(), INTERVAL $processAfterSecs SECOND))";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::EMAIL_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
@@ -49,7 +51,7 @@ class EmailUtils {
     private static function getUnprocessedEventsLockedByAgent($agentName) {
         $agentNameDbValue = DBUtils::escapeStrValue($agentName);
         $processingState = 1;
-        $sqlStmt = "select id, eventName, UNIX_TIMESTAMP(eventDate) as eventDate, userId, categoryId, taskId, refUserId
+        $sqlStmt = "select id, eventName, UNIX_TIMESTAMP(eventDate) as eventDate, userId, emailAddress, categoryId, taskId, refUserId
                                                 from Notification where emailStatus=$processingState and agentName=$agentNameDbValue";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {

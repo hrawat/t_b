@@ -42,7 +42,17 @@ class EmailMsgGenerator {
             $body = "$userFullName completed '$taskTitle' in $categoryName category";
             return array($subject, $body);
 
-        } else {
+        } else if ($eventName == NotificationEvents::USER_REGISTRATION_INVITATION_EVENT) {
+            $params = $this->getCategorySharedParams($event);
+            $userFullName = $params['userFullName'];
+            $categoryName = $params['categoryName'];
+
+            $subject = "$userFullName shared $categoryName list with you on TaskPal app";
+            $body = "<html><body>$userFullName shared $categoryName list with you on TaskPal app.
+                                        To access the category click <a href='http://mytaskboard.net'> here</a></body></html>";
+            return array($subject, $body);
+
+        }else {
             return array("", "");
         }
     }

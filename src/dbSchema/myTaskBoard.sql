@@ -70,6 +70,7 @@ create table Notification (
   eventDate               datetime,
   eventName               varchar(32),
   userId                  varchar(23),
+  emailAddress            varchar(128) default null,
   categoryId              varchar(23),
   taskId                  varchar(23),
   refUserId               varchar(23),

@@ -112,6 +112,9 @@ class CategoryService {
             Logger::error(self::CATEGORY_SERVICE, "Error in executing sql stmt [$sqlStmt] error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt] error " . mysql_error());
         } else {
+            if (empty($toUserId)) {
+                EmailUtils::logEvent(NotificationEvents::USER_REGISTRATION_INVITATION_EVENT, NULL, $toEmailAddress, $categoryId, NULL, NULL, 0);
+            }
             return mysql_insert_id();
         }
     }
@@ -127,9 +130,6 @@ class CategoryService {
     public static function rejectCategorySharingRequest($categoryId, $toUserId, $toEmailAddress) {
         $statusDbValue = self::CATEGORY_SHARING_REQUEST_REJECTED;
         $affectedRequests = self::setCategorySharingRequestStatus($categoryId, $toUserId, $toEmailAddress, $statusDbValue);
-        if ($affectedRequests > 0) {
-            self::addUser($categoryId, $toUserId);
-        }
     }
 
     private static function setCategorySharingRequestStatus($categoryId, $toUserId, $toEmailAddress, $statusDbValue) {
@@ -153,9 +153,12 @@ class CategoryService {
     }
 
 
-    public static function addUser($categoryId, $userId) {
+    public static function addUser($categoryId, $userId, $sendNotification=TRUE) {
         self::addUserInternal($categoryId, $userId, self::CATEGORY_USER_TYPE_COLLABORATOR);
-        EmailUtils::logEvent(NotificationEvents::CATEGORY_SHARED, $userId, $categoryId, NULL, NULL, 0);
+        if ($sendNotification) {
+            EmailUtils::logEvent(NotificationEvents::CATEGORY_SHARED, $userId, NULL, $categoryId, NULL, NULL, 0);
+        }
+
     }
 
     private static function addUserInternal($categoryId, $userId, $type) {

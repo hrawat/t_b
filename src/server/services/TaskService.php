@@ -122,7 +122,7 @@ class TaskService {
         } else {
             foreach($category['users'] as $categoryUser) {
                 if ($categoryUser['userId'] != $createdBy) {
-                    EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $categoryUser['userId'],
+                    EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $categoryUser['userId'], NULL,
                                                             $categoryId, $id, $createdBy, self::TASK_EMAIL_DELAY);
                 }
 
@@ -164,7 +164,7 @@ class TaskService {
             $category = CategoryService::lookup($task['categoryId']);
             foreach($category['users'] as $categoryUser) {
                 if ($categoryUser['userId'] != $completedBy) {
-                    EmailUtils::logEvent(NotificationEvents::TASK_COMPLETED, $categoryUser['userId'],
+                    EmailUtils::logEvent(NotificationEvents::TASK_COMPLETED, $categoryUser['userId'], NULL,
                                                 $task['categoryId'], $taskId, $completedBy, self::TASK_EMAIL_DELAY);
                 }
 

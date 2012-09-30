@@ -38,7 +38,8 @@
             if (position.top > positionContainer1.top) {
                 $(dragged).remove();
                 $('#container_1').append(dragged);
-                $('#container_1').masonry( 'reload' );
+                $('#container_1').masonry( 'reloadItems' );
+                $('#container_1').masonry(masonryOptions);
                 return true;
             }
 
@@ -292,7 +293,34 @@
 
             </div>
         </div>
+
+        <div class="pro_pad-shadow item">
+            <div class="pro_curved-hz-2">
+                <div class="pro_text-shadow " >
+                    <div class="handle block_tag pink" style="height:25px;"></div>
+                    <div class="pro_text-shadow upper_content important">
+                        Test task
+                        <div class="secondOptions annie">
+                            <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                            <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
+                        </div>
+                    </div>
+                    <div class="lower_portion">
+                        <img src="img/_per1.jpg" />
+                        <div class="details">
+                            <ul>
+                                <li>Susan & me</li>
+                                <li>2 mins ago</li>
+                            </ul>
+                        </div>
+                        <br class="clear:both;" />
+                        <a class="focused tooltip" href="#"><span class="classic">This task is important</span></a>
+                    </div>
+
+                </div>
+            </div>
         </div>
+     </div>
 
 </div>
 </body>

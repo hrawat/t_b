@@ -74,8 +74,9 @@ class EmailProcessor {
 
     private function getEmailAddress($event) {
         if (!empty($event['emailAddress'])) {
-            return array ($event['emailAddress'], $event['emailAddress']);
+            return array ($event['emailAddress'], "");
         } else {
+            $userId = $event['userId'];
             $user = UserService::lookupUser($userId);
             $emailAddress = $user['emailAddress'];
             if (empty($emailAddress)) {
@@ -106,6 +107,8 @@ class EmailProcessor {
             $fromAddress = "taskwhiteboard@gmail.com";
             $fromName = "TaskPal";
             list($subject, $emailBody) = $this->emailMsgGenerator->getEmailMsg($event);
+            
+            Logger::debug(self::EMAIL_SERVICE, "Sending '$subject' msg to $toAddress");
             if (!empty($subject) || !empty($emailBody)) {
                 $this->emailSender->sendHTMLEmail($fromAddress, $fromName, $toAddress, $toName, $subject, $emailBody, $eventName);
                 return TRUE;

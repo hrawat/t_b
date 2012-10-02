@@ -201,10 +201,15 @@ class TaskService {
         } else {
             $tasks = array();
             // todo: fix this, unoptimal implementation
+            $userIdToInfoMap = array();
             while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
                 $taskRow['status'] = self::taskStatusStrValue($taskRow['status'] );
                 $taskRow['priority'] = self::taskPriorityStrValue($taskRow['priority'] );
-                $taskRow['createdBy'] = UserService::lookupUser($taskRow['createdBy']);
+                if (!isset($userIdToInfoMap[$taskRow['createdBy']])) {
+                   $userIdToInfoMap[$taskRow['createdBy']] = 
+                                          UserService::lookupUser($taskRow['createdBy']);
+                }
+                $taskRow['createdBy'] = $userIdToInfoMap[$taskRow['createdBy']];
                 $taskRow['deleted'] = ($taskRow['deleted'] == 1) ? TRUE : FALSE;
                 $tasks[] = $taskRow;
             }

@@ -13,7 +13,6 @@ TaskBoard.TaskModel = {
 
     TASK_STATUS_ACTIVE : "taskActive",
     TASK_STATUS_COMPLETED : "taskCompleted",
-    TASK_STATUS_DELETED : "taskDeleted",
 
     LOW_PRIORITY : 'lowPriority',
     MEDIUM_PRIORITY : 'mediumPriority',
@@ -42,7 +41,7 @@ TaskBoard.TaskModel = {
         userTasksReq.done(function(result) {
             if (result['success']) {
                 this._saveAllTasks(result['payload'], result['currTimestamp']);
-                successCallBack.call(this, result['payload']);
+                successCallBack.call(this, this.todaysTasks(0));
             } else {
                 failureCallBack.call(this, result['errCode'], result['errMsg']);
             }
@@ -242,7 +241,7 @@ TaskBoard.TaskModel = {
         retValue = new Array();
         allTasks = this._allTasks();
         for (index=0; index < allTasks.length; index++) {
-            if (allTasks[index].status == this.TASK_STATUS_DELETED) {
+            if (allTasks[index].deleted) {
                 continue;
             }
             if ( ((prevRefDate == null) || (allTasks[index].dueDate.getTime() >= refDate.getTime())) &&

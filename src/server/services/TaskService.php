@@ -15,11 +15,9 @@ class TaskService {
 
     const TASK_STATUS_ACTIVE = 1;
     const TASK_STATUS_COMPLETED = 2;
-    const TASK_STATUS_DELETED = 3;
 
     const TASK_STATUS_ACTIVE_STR = "taskActive";
     const TASK_STATUS_COMPLETED_STR = "taskCompleted";
-    const TASK_STATUS_DELETED_STR = "taskDeleted";
 
     const TASK_PRIORITY_LOW = 1;
     const TASK_PRIORITY_MEDIUM = 2;
@@ -59,8 +57,6 @@ class TaskService {
             return self::TASK_STATUS_ACTIVE;
         } else if ($strValue == self::TASK_STATUS_COMPLETED_STR) {
             return self::TASK_STATUS_COMPLETED;
-        }  else if ($strValue == self::TASK_STATUS_DELETED_STR) {
-            return self::TASK_STATUS_DELETED;
         } else {
             throw new Exception("Invalid status value $strValue");
         }
@@ -195,20 +191,21 @@ class TaskService {
                                                 categoryId, title, description,
                                                 UNIX_TIMESTAMP(dueDate) as dueDate, 
                                                 UNIX_TIMESTAMP(completionDate) as completionDate,
-                                                status, createdBy, priority, completedBy
+                                                status, createdBy, priority, completedBy, deleted 
                             from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
-                            and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince and deleted=0";
+                            and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
             $tasks = array();
+            // todo: fix this, unoptimal implementation
             while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
                 $taskRow['status'] = self::taskStatusStrValue($taskRow['status'] );
                 $taskRow['priority'] = self::taskPriorityStrValue($taskRow['priority'] );
-                // todo: fix this, unoptimal implementation
                 $taskRow['createdBy'] = UserService::lookupUser($taskRow['createdBy']);
+                $taskRow['deleted'] = ($taskRow['deleted'] == 1) ? TRUE : FALSE;
                 $tasks[] = $taskRow;
             }
             return $tasks;

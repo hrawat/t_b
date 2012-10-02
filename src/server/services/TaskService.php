@@ -186,6 +186,9 @@ class TaskService {
 
     public static function userTasks($userId, $updatedSince=0) {
         $userIdDbValue = DBUtils::escapeStrValue($userId);
+        // send all active tasks or tasks that were updated in last 7 days
+        $activeStatusDbValue = self::TASK_STATUS_ACTIVE;
+        $sevenDateUpDateValue = time() - 8*86400 ;
         $sqlStmt = "Select id, UNIX_TIMESTAMP(creationDate) as creationDate,
                                                 UNIX_TIMESTAMP(lastModificationDate) as lastModificationDate,
                                                 categoryId, title, description,
@@ -193,7 +196,8 @@ class TaskService {
                                                 UNIX_TIMESTAMP(completionDate) as completionDate,
                                                 status, createdBy, priority, completedBy, deleted 
                             from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
-                            and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince";
+                            and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince
+                            and (status=$activeStatusDbValue or (UNIX_TIMESTAMP(lastModificationDate) > $sevenDateUpDateValue))";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());

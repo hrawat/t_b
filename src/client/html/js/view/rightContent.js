@@ -19,7 +19,7 @@ TaskBoard.view.rightContent = {
             var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
             var focussedClassValue =  task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "focusStar";
             var createdTimeAgo = getTimeDiffInStr(task.creationDate);
-            var taskStatusClass = task['status'] == TaskBoard.TaskModel.TASK_STATUS_COMPLETE ? "completedTask" : "task"
+            var taskStatusClass = task['status'] == TaskBoard.TaskModel.TASK_STATUS_COMPLETED ? "completedTask" : "task"
             var taskElt = "<div id='task_{0}' class='pro_pad-shadow item {1}'> \
                                 <div class='pro_curved-hz-2'> \
                                     <div class='pro_text-shadow' > \

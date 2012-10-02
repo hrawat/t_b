@@ -251,7 +251,7 @@
 
             timeDiffInStr = getTimeDiffInStr(task.creationDate);
             category = TaskBoard.CategoryModel.get(task.categoryId);
-            if (task.status == TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
+            if (task.status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED) {
                 taskDiv = ("<div id='{0}' class='item task' style='background:#{1}'>" +
                         "<div class='doneOverlay'> <p>DONE </p></div>" +
                         "<br/><p class='{2}' > {3}</p>" +
@@ -294,7 +294,7 @@
             
             $('#todayTaskContainer').append(taskDiv);
 
-            if (task.status != TaskBoard.TaskModel.TASK_STATUS_COMPLETE) {
+            if (task.status != TaskBoard.TaskModel.TASK_STATUS_COMPLETED) {
                 $("#"+task.id).mouseover(function() {
                     var taskId = $(this).attr("id");
                     $('#'+taskId + ' div').css("display", "block");

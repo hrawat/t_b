@@ -12,7 +12,8 @@ TaskBoard.TaskModel = {
     LATER : "later",
 
     TASK_STATUS_ACTIVE : "taskActive",
-    TASK_STATUS_COMPLETE : "taskComplete",
+    TASK_STATUS_COMPLETED : "taskCompleted",
+    TASK_STATUS_DELETED : "taskDeleted",
 
     LOW_PRIORITY : 'lowPriority',
     MEDIUM_PRIORITY : 'mediumPriority',
@@ -241,9 +242,12 @@ TaskBoard.TaskModel = {
         retValue = new Array();
         allTasks = this._allTasks();
         for (index=0; index < allTasks.length; index++) {
+            if (allTasks[index].status == this.TASK_STATUS_DELETED) {
+                continue;
+            }
             if ( ((prevRefDate == null) || (allTasks[index].dueDate.getTime() >= refDate.getTime())) &&
                             ((refDate == null) || (allTasks[index].dueDate.getTime() <= refDate.getTime()))) {
-                if (allTasks[index].status == this.TASK_STATUS_COMPLETE) {
+                if (allTasks[index].status == this.TASK_STATUS_COMPLETED) {
                     if ((allTasks[index].completionDate == undefined) || (this._sameDay(now, allTasks[index].completionDate) == false)) {
                         continue;
                     }
@@ -282,7 +286,7 @@ TaskBoard.TaskModel = {
         retValue['remainingTasksOfWeek'] = 0;
         for (index=0; index < allTasks.length; index++) {
             var task = allTasks[index];
-            if (task['status'] == this.TASK_STATUS_COMPLETE) {
+            if (task['status'] == this.TASK_STATUS_COMPLETED) {
                 if ( (task['completionDate'] >= startOfWeekDate) && (task['completionDate'] <= endOfWeekDate)) {
                     if (task['completedBy'] == userId) {
                        retValue['tasksCompletedInWeek']++;

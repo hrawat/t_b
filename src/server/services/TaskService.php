@@ -15,9 +15,11 @@ class TaskService {
 
     const TASK_STATUS_ACTIVE = 1;
     const TASK_STATUS_COMPLETED = 2;
+    const TASK_STATUS_DELETED = 3;
 
     const TASK_STATUS_ACTIVE_STR = "taskActive";
-    const TASK_STATUS_COMPLETE_STR = "taskComplete";
+    const TASK_STATUS_COMPLETED_STR = "taskCompleted";
+    const TASK_STATUS_DELETED_STR = "taskDeleted";
 
     const TASK_PRIORITY_LOW = 1;
     const TASK_PRIORITY_MEDIUM = 2;
@@ -55,8 +57,10 @@ class TaskService {
     public static function taskStatusIntValue($strValue) {
         if ($strValue == self::TASK_STATUS_ACTIVE_STR) {
             return self::TASK_STATUS_ACTIVE;
-        } else if ($strValue == self::TASK_STATUS_COMPLETE_STR) {
+        } else if ($strValue == self::TASK_STATUS_COMPLETED_STR) {
             return self::TASK_STATUS_COMPLETED;
+        }  else if ($strValue == self::TASK_STATUS_DELETED_STR) {
+            return self::TASK_STATUS_DELETED;
         } else {
             throw new Exception("Invalid status value $strValue");
         }
@@ -66,7 +70,7 @@ class TaskService {
         if ($intValue == self::TASK_STATUS_ACTIVE) {
             return self::TASK_STATUS_ACTIVE_STR;
         } else if ($intValue == self::TASK_STATUS_COMPLETED) {
-            return self::TASK_STATUS_COMPLETE_STR;
+            return self::TASK_STATUS_COMPLETED_STR;
         } else {
             throw new Exception("Invalid status value $intValue");
         }

@@ -159,25 +159,24 @@ TaskBoard.controller.MainController = {
         TaskBoard.UserModel.getUserInfo(
             function(payload) {
                 userInfo = payload;
-                renderFunction();
+                // Get categories
+                TaskBoard.CategoryModel.list(function(payload) {
+                        categories = payload ;
+                        renderFunction();
+                    },
+                    errorFn);
+
+                // Get user tasks
+                TaskBoard.TaskModel.loadTasksFromServer(function(payload) {
+                        tasks = payload ;
+                        renderFunction();
+                    },
+                    errorFn);
             },
             function(errCode, ErrMsg) {
                 alert("Internal error, err code "+errCode+ " errMsg "+errMsg);
             });
 
-        // Get categories
-        TaskBoard.CategoryModel.list(function(payload) {
-                categories = payload ;
-                renderFunction();
-            },
-            errorFn);
-
-        // Get user tasks
-        TaskBoard.TaskModel.loadTasksFromServer(function(payload) {
-                tasks = payload ;
-                renderFunction();
-            },
-            errorFn);
 
     }
 

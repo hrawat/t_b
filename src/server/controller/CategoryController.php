@@ -62,12 +62,16 @@ function handleCreateCategory($userId) {
     $categoryId = CategoryService::create($name, $colorCode, $userId);
     $sharedWithUsersStr = ControllerUtils::getArgValue("sharedWithUsersEmail", "");
     $sharedUserEmails = explode(",", $sharedWithUsersStr);
+    print_r($sharedUserEmails); 
     foreach($sharedUserEmails as $emailAddress) {
         $emailAddress = trim($emailAddress);
+        if (empty($emailAddress)) {
+           continue;
+        }
         $user = UserService::lookupUserByEmailAddress($emailAddress);
         if ($user == NULL) {
             // Handle this case
-            Logger::debug("email address $emailAddress doesn't exist");
+            Logger::debug("categoryService", "email address $emailAddress doesn't exist");
             CategoryService::createCategorySharingRequest($userId, $categoryId, NULL, $emailAddress);
         } else {
             CategoryService::createCategorySharingRequest($userId, $categoryId, $user['id'], $emailAddress);

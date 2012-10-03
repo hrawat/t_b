@@ -6,8 +6,12 @@ if (typeof(TaskBoard) == "undefined") {
 }
 
 TaskBoard.CategoryModel = {
+    CategoryColorCodes : new Array("00FFFF", "0000FF", "0000A0",
+                                            "ADD8E6", "800080", "FFFF00", "00FF00" , "FF00FF"),
+
     create: function(categoryParams, successCallBack, failureCallBack) {
 
+        var colorCode = (categoryParams['colorCode'] == undefined) ? this._findUnusedColorCode() : categoryParams['colorCode'];
         var createReq = $.ajax({
             url : "category",
             dataType : "json",
@@ -16,7 +20,8 @@ TaskBoard.CategoryModel = {
             data : {
                 "reqType" : "createCategory",
                 "name" : categoryParams.name,
-                "sharedWithUsersEmail" : categoryParams.sharedWithUsersEmail
+                "sharedWithUsersEmail" : categoryParams.sharedWithUsersEmail,
+                "colorCode" : colorCode
             },
             context : this
         });
@@ -155,6 +160,29 @@ TaskBoard.CategoryModel = {
         }
         return -1;
 
+    },
+
+    _findUnusedColorCode : function() {
+        var allCategories = this._allCategories();
+        var index, colorCode;
+        for (index=0; index < this.CategoryColorCodes.length; index++) {
+            colorCode = this.CategoryColorCodes[index];
+            if (this._isColorCodeInUse(allCategories, colorCode) == false) {
+                return colorCode;
+            }
+        }
+        // pick the first one
+        return this.CategoryColorCodes[0];
+    },
+
+    _isColorCodeInUse : function(allCategories, colorCode) {
+        var index;
+        for (index=0; index < allCategories.length; index++) {
+            if (allCategories[index].colorHexCode == colorCode) {
+                return false;
+            }
+        }
+        return true;
     },
 
     _allCategories: function() {

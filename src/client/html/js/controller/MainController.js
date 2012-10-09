@@ -54,7 +54,7 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.delete(taskId, 
                                             function() {
                                                successFn(); 
-                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' deleted".format('taskTitle'));
+                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' deleted".format(taskTitle));
                                             } , errorFn);
                                     },
                                     function(taskId, important) {

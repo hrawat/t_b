@@ -25,7 +25,7 @@ TaskBoard.view.rightContent = {
                                     <div class='pro_text-shadow' > \
                                         <div class='block_tag' style='background:#{2}'></div> \
                                             <div class='pro_text-shadow upper_content {3}'> \
-                                                {4}   \
+                                                <p>{4}</p>   \
                                             <div class='secondOptions'> \
                                                 <div class='doneAction' ><a class='Botton menuButtons taskDone' href='#'>Done</a></div>  \
                                                 <div class='delete-alt deleteme'><a href=''#'></a></div> \
@@ -116,7 +116,8 @@ TaskBoard.view.rightContent = {
                idStr = $(this).parents(".completedTask").attr("id");
             }
             var taskId = idStr.substring("task_".length);
-            deleteCallBack(taskId);
+            var taskTitle = $(this).parents(".upper_content").children("p").text();
+            deleteCallBack(taskId, taskTitle);
             return false;
         });
 

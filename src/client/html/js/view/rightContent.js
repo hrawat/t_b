@@ -9,7 +9,6 @@ if (typeof(TaskBoard) == "undefined") {
 }
 
 TaskBoard.view.rightContent = {
-    statusTime : 60,
     render : function(data) {
         var todayTasks = data['todayTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
@@ -60,7 +59,6 @@ TaskBoard.view.rightContent = {
 
         });
 
-        TaskBoard.view.rightContent.hideGlobalStatus();
         $('#container').masonry( 'reload' );
 
     },
@@ -134,13 +132,9 @@ TaskBoard.view.rightContent = {
         $("#globalStatus").append("<p>{0}</p>".format(statusText));
         $("#globalStatus").css("display", "block");
         TaskBoard.view.rightContent.statusTime = Math.round(new Date().getTime()/1000.0) ;
-    },
-
-    hideGlobalStatus: function() {
-        var currTime = Math.round(new Date().getTime()/1000.0) ;
-        if (currTime - TaskBoard.view.rightContent.statusTime > 60) {
-           $("#globalStatus").css("display", "none");
-        }
+        window.setTimeout(function() {
+            $("#globalStatus").css("display", "none");
+        }, 15*1000)
     }
 }
 

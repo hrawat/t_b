@@ -9,6 +9,7 @@ if (typeof(TaskBoard) == "undefined") {
 }
 
 TaskBoard.view.rightContent = {
+    statusTime : 60,
     render : function(data) {
         var todayTasks = data['todayTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
@@ -129,12 +130,17 @@ TaskBoard.view.rightContent = {
     },
 
     setGlobalStatus: function(statusText) {
-        $("#globalStatus p").text(statusText);
+        $("#globalStatus").empty();
+        $("#globalStatus").append("<p>{0}</p>".format(statusText));
         $("#globalStatus").css("display", "block");
+        TaskBoard.view.rightContent.statusTime = Math.round(new Date().getTime()/1000.0) ;
     },
 
     hideGlobalStatus: function() {
-        $("#globalStatus").css("display", "none");
+        var currTime = Math.round(new Date().getTime()/1000.0) ;
+        if (currTime - TaskBoard.view.rightContent.statusTime > 60) {
+           $("#globalStatus").css("display", "none");
+        }
     }
 }
 

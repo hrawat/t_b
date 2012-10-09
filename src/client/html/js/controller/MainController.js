@@ -50,8 +50,12 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.complete(taskId, successFn, errorFn);
 
                                     },
-                                    function(taskId) {
-                                        TaskBoard.TaskModel.delete(taskId, successFn, errorFn);
+                                    function(taskId, taskTitle) {
+                                        TaskBoard.TaskModel.delete(taskId, 
+                                            function() {
+                                               successFn(); 
+                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' deleted".format('taskTitle'));
+                                            } , errorFn);
                                     },
                                     function(taskId, important) {
                                         changePriorityReq = {}  ;

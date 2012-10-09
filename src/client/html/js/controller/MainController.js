@@ -80,6 +80,7 @@ TaskBoard.controller.MainController = {
                                 TaskBoard.TaskModel.loadTasksFromServer(function() {
                                                          renderHeaderFn();
                                                          renderFn();
+                                                         TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' created".format(createTaskRes.title));
                                                       }, errorFn);
                             },
                             function(errCode, errMsg) {

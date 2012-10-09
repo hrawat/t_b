@@ -58,7 +58,9 @@ TaskBoard.view.rightContent = {
 
 
         });
-          $('#container').masonry( 'reload' );
+
+        TaskBoard.view.rightContent.hideGlobalStatus();
+        $('#container').masonry( 'reload' );
 
     },
 
@@ -124,6 +126,15 @@ TaskBoard.view.rightContent = {
     setAddTaskHandler : function(callBack) {
         $("#addTaskId").unbind("click");
         $("#addTaskId").click(callBack);
+    },
+
+    setGlobalStatus: function(statusText) {
+        $("#globalStatus p").text(statusText);
+        $("#globalStatus").css("display", "block");
+    },
+
+    hideGlobalStatus: function() {
+        $("#globalStatus").css("display", "none");
     }
 }
 

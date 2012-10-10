@@ -53,10 +53,18 @@
 
 <style>
 
+.notification {
+	width: 500px;
+	background:#FFC;
+	border:#FC3 1px solid;
+	text-align:center;
+	padding:10px;
+	position:absolute;
+}
 		
 
 </style>
-
+	
     <div class="banner">
     	<img src="img/logo.png" height="53" width="208" />
         <div class="user_status">
@@ -101,6 +109,11 @@
     </div>
 	
     <div class="rightContent">
+    	<div id="notification">
+            <span><p>I am a notification note, I will stay here for 10 sec to tell you what you have just done :)</p></span>
+        </div>
+        
+        
     	<div class="dailyHeader">Today</div>
         
         <script>
@@ -134,7 +147,8 @@
                         <div class="pro_text-shadow upper_content important" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
                             Book flight to Isreal 
                             <div class="secondOptions annie">
-                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Edit</a>
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');"> Done </a>
                                 <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
                             </div>
                         </div>
@@ -161,8 +175,9 @@
                         <div class="block_tag blue"></div>
                         <div class="pro_text-shadow upper_content" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
                             Get the stupid Seam release finished!
-                            <div class="secondOptions annie">
-                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                             <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Edit</a>
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');"> Done </a>
                                 <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
                             </div>
                         </div>
@@ -188,8 +203,9 @@
                         <div class="block_tag blue"></div>
                         <div class="pro_text-shadow upper_content important" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
                             Review Hibernate in Action second edition
-                            <div class="secondOptions annie">
-                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                             <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Edit</a>
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');"> Done </a>
                                 <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
                             </div>
                         </div>
@@ -215,8 +231,9 @@
                         <div class="block_tag pink"></div>
                         <div class="pro_text-shadow upper_content" onmouseover="showmenu(this);" onmouseout="hidemenu(this);">
                             Haircut
-                            <div class="secondOptions annie">
-                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Done</a>
+                             <div class="secondOptions annie">
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');">Edit</a>
+                                <a class="Botton menuButtons" href="#" onclick="alert('Done');"> Done </a>
                                 <div class="delete-alt deleteme"><a href="#" onclick="alert('Delete');"></a></div>
                             </div>
                         </div>

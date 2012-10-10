@@ -66,30 +66,31 @@ TaskBoard.view.rightContent = {
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
         $("#container .task .upper_content").unbind("mouseover");
         $("#container .task .upper_content").mouseover(function(){
-            $(this).children().css("display", "block")
+            $(this).children(".secondOptions").css("display", "block")
         });
 
         $("#container .task .upper_content").unbind("mouseout");
         $("#container .task .upper_content").mouseout(function() {
-            $(this).children().css("display", "none")
+            $(this).children(".secondOptions").css("display", "none")
         });
 
         $("#container .completedTask .upper_content").unbind("mouseover");
         $("#container .completedTask .upper_content").mouseover(function(){
             $(this).children().css("display", "block")
-            $(this).children().children(".doneAction").css("display", "none")
+            $(this).children(".secondOptions").children(".doneAction").css("display", "none")
         });
 
         $("#container .completedTask .upper_content").unbind("mouseout");
         $("#container .completedTask .upper_content").mouseout(function() {
-            $(this).children().css("display", "none")
+            $(this).children(".secondOptions").css("display", "none")
         });
 
         $(".taskDone").unbind("click");
         $(".taskDone").click(function() {
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
-            doneCallBack(taskId);
+            var taskTitle = $(this).parents(".upper_content").children("p").text();
+            doneCallBack(taskId, taskTitle);
             return false;
         });
 

@@ -46,8 +46,12 @@ TaskBoard.controller.MainController = {
             rightContentData['selectedCategoryId'] = selectedCategoryId;
             TaskBoard.view.rightContent.render(rightContentData);
             TaskBoard.view.rightContent.setTaskActionHandlers(
-                                    function(taskId) {
-                                        TaskBoard.TaskModel.complete(taskId, successFn, errorFn);
+                                    function(taskId, taskTitle) {
+                                        TaskBoard.TaskModel.complete(taskId, 
+                                           function() {
+                                              successFn();
+                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' completed".format(taskTitle));
+                                           }, errorFn);
 
                                     },
                                     function(taskId, taskTitle) {

@@ -27,7 +27,8 @@ TaskBoard.view.rightContent = {
                                             <div class='pro_text-shadow upper_content {3}'> \
                                                 <p>{4}</p>   \
                                             <div class='secondOptions'> \
-                                                <div class='doneAction' ><a class='Botton menuButtons taskDone' href='#'>Done</a></div>  \
+                                                <a class='Botton menuButtons taskDone' href='#'>Done</a>  \
+                                                <a class='Botton menuButtons taskEdit' href='#'>Edit</a>  \
                                                 <div class='delete-alt deleteme'><a href=''#'></a></div> \
                                             </div> \
                                         </div> \
@@ -91,6 +92,12 @@ TaskBoard.view.rightContent = {
             var taskId = idStr.substring("task_".length);
             var taskTitle = $(this).parents(".upper_content").children("p").text();
             doneCallBack(taskId, taskTitle);
+            return false;
+        });
+
+        $(".taskEdit").unbind("click");
+        $(".taskEdit").click(function() {
+            alert("task edit clicked, tbd launch create task page in edit mode");
             return false;
         });
 

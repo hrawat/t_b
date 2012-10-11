@@ -130,12 +130,12 @@ TaskBoard.view.rightContent = {
     },
 
     setGlobalStatus: function(statusText) {
-        $("#globalStatus").empty();
-        $("#globalStatus").append("<p>{0}</p>".format(statusText));
-        $("#globalStatus").css("display", "block");
+        $("#notification").empty();
+        $("#notification").append("<span><p>{0}</p></span>".format(statusText));
+        $("#notification").css("display", "block");
         TaskBoard.view.rightContent.statusTime = Math.round(new Date().getTime()/1000.0) ;
         window.setTimeout(function() {
-            $("#globalStatus").css("display", "none");
+            $("#notification").css("display", "none");
         }, 15*1000)
     }
 }

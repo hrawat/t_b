@@ -11,6 +11,7 @@ TaskBoard.view.CreateTaskForm = {
     render : function(data) {
         var categories = data['categories'];
         var selectedCategoryId = data['selectedCategoryId'];
+        var taskId = (data['taskId'] == undefined) ? "" : data['taskId'];
         var index = 0;
         var displayFn = this.display;
 
@@ -30,6 +31,10 @@ TaskBoard.view.CreateTaskForm = {
             if (selectedCategoryId == categories[index].id) {
                $("#createTFCategory_"+selectedCategoryId).addClass("selected");
             }
+        }
+
+        if (taskId != "") {
+            $("#submitCreateTaskId").attr("value", "Save");
         }
         displayFn(true);
         
@@ -60,7 +65,7 @@ TaskBoard.view.CreateTaskForm = {
             var taskTitle = $("#taskTitle").val();
             var categoryId = $("#createTaskForm a.selected").attr("id").substr("createTFCategory_".length);
             if (submitHandler) {
-               submitHandler(taskTitle, categoryId);
+               submitHandler(taskId, taskTitle, categoryId);
             }
             return false;
         });

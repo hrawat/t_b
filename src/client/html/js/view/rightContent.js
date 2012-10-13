@@ -95,11 +95,6 @@ TaskBoard.view.rightContent = {
             return false;
         });
 
-        $(".taskEdit").unbind("click");
-        $(".taskEdit").click(function() {
-            alert("task edit clicked, tbd launch create task page in edit mode");
-            return false;
-        });
 
         $(".makeImportant").unbind("click");
         $(".makeImportant").click(function() {
@@ -135,6 +130,14 @@ TaskBoard.view.rightContent = {
         $("#addTaskId").unbind("click");
         $("#addTaskId").click(callBack);
     },
+
+    setEditTaskHandler : function(callBack) {
+        $(".taskEdit").unbind("click");
+        $(".taskEdit").click(callBack);
+
+    },
+
+
 
     setGlobalStatus: function(statusText) {
         $("#notification").empty();

@@ -60,6 +60,7 @@ TaskBoard.TaskModel = {
             async :true,
             data : {
                     "reqType" : "create",
+                    "taskId" : (taskParams.taskId == undefined) ? "" : taskParams.taskId,
                     "categoryId" : taskParams.categoryId,
                     "title" : taskParams.title,
                     "description" : taskParams.description,

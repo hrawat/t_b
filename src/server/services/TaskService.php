@@ -94,7 +94,7 @@ class TaskService {
 
     }
 
-    public static function create($id, $categoryId, $title, $description, $priorityStr, $dueDate, $createdBy) {
+    public static function create($taskId, $categoryId, $title, $description, $priorityStr, $dueDate, $createdBy) {
 
         $category = CategoryService::lookup($categoryId);
 

@@ -33,7 +33,9 @@ TaskBoard.view.CreateTaskForm = {
             }
         }
 
-        if (taskId != "") {
+        if (taskId == "") {
+            $("#submitCreateTaskId").attr("value", "Create");
+        } else {
             $("#submitCreateTaskId").attr("value", "Save");
         }
         displayFn(true);

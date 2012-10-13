@@ -68,11 +68,14 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.changePriority(changePriorityReq, successFn, errorFn);
                                     });
 
-            var createEditCallbackFn = function() {
+            var createEditCallbackFn = function(taskId) {
+
                 // launch create task
                 var createTaskFormData = {};
                 createTaskFormData.categories = categories;
                 createTaskFormData.selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
+                createTaskFormData.taskId = taskId;
+
                 TaskBoard.view.CreateTaskForm.render(createTaskFormData);
                 TaskBoard.view.CreateTaskForm.setSubmitHandler(function(taskId, taskTitle, categoryId) {
                     var taskReq = {};

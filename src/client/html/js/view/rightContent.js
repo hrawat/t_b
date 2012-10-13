@@ -128,12 +128,18 @@ TaskBoard.view.rightContent = {
 
     setAddTaskHandler : function(callBack) {
         $("#addTaskId").unbind("click");
-        $("#addTaskId").click(callBack);
+        $("#addTaskId").click(function(){
+            callBack("");
+        });
     },
 
     setEditTaskHandler : function(callBack) {
         $(".taskEdit").unbind("click");
-        $(".taskEdit").click(callBack);
+        $(".taskEdit").click(function(){
+            var idStr = $(this).parents(".task").attr("id");
+            var taskId = idStr.substring("task_".length);
+            callBack(taskId);
+        });
 
     },
 

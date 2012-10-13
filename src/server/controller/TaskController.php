@@ -100,6 +100,7 @@ function handleCreate($createdBy) {
     if ($mandatoryArgsCheckRetValue != NULL) {
         return $mandatoryArgsCheckRetValue;
     } else {
+        $taskId = ControllerUtils::getArgValue("taskId", NULL);
         $categoryId = $_GET["categoryId"];
         $title = $_GET["title"];
         $description = ControllerUtils::getArgValue("description", NULL);
@@ -107,7 +108,7 @@ function handleCreate($createdBy) {
 
         $dueDate = $_GET["dueDate"];
 
-        $taskId = TaskService::create($categoryId, $title, $description, $priorityStr, $dueDate, $createdBy);
+        $taskId = TaskService::create($taskId, $categoryId, $title, $description, $priorityStr, $dueDate, $createdBy);
         $task = TaskService::lookupTask($taskId);
         if (isset($task)) {
             $retValue = ControllerUtils::getSuccessResponse($task);

@@ -94,12 +94,11 @@ class TaskService {
 
     }
 
-    public static function create($categoryId, $title, $description, $priorityStr, $dueDate, $createdBy) {
+    public static function create($id, $categoryId, $title, $description, $priorityStr, $dueDate, $createdBy) {
 
         $category = CategoryService::lookup($categoryId);
 
-        $id = DBUtils::generateUniqId();
-        $idDbValue = DBUtils::escapeStrValue($id);
+
         $categoryIdDbValue = DBUtils::escapeStrValue($categoryId);
         $titleDbValue = DBUtils::escapeStrValue($title);
         $descriptionDbValue = DBUtils::escapeStrValue($description);
@@ -110,25 +109,40 @@ class TaskService {
 
         $createdByDbValue = DBUtils::escapeStrValue($createdBy);
 
-        $sqlStmt = "Insert into Task(id, creationDate, lastModificationDate, deleted,
+        if (empty($taskId)) {
+            $id = DBUtils::generateUniqId();
+            $idDbValue = DBUtils::escapeStrValue($id);
+            $sqlStmt = "Insert into Task(id, creationDate, lastModificationDate, deleted,
                                         categoryId, title, description, dueDate, status, createdBy, priority)
                                         value($idDbValue, NOW(), NOW(), 0, $categoryIdDbValue, $titleDbValue,
                                                     $descriptionDbValue, FROM_UNIXTIME($dueDate), $status,
                                                         $createdByDbValue, $priority)";
+        } else {
+            $taskIdDbValue = DBUtils::escapeStrValue($taskId);
+            $sqlStmt = "Update Task  set lastModificationDate=NOW(), categoryId=$categoryIdDbValue,
+                                            title=$titleDbValue, description=$descriptionDbValue,
+                                            dueDate=FROM_UNIXTIME($dueDate), priority=$priority where id=$taskIdDbValue";
+        }
+
+
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
             foreach($category['users'] as $categoryUser) {
-                if ($categoryUser['userId'] != $createdBy) {
-                    EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $categoryUser['userId'], NULL,
-                                                            $categoryId, $id, $createdBy, self::TASK_EMAIL_DELAY);
+                //todo: add support for update event
+                if (empty($taskId)) {
+                    if ($categoryUser['userId'] != $createdBy) {
+                        EmailUtils::logEvent(NotificationEvents::TASK_CREATED, $categoryUser['userId'], NULL,
+                            $categoryId, $id, $createdBy, self::TASK_EMAIL_DELAY);
+                    }
                 }
+
 
             }
 
-            return $id;
+            return empty($taskId) ? $id : $taskId;
         }
     }
 

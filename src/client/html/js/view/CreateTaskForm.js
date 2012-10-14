@@ -51,10 +51,18 @@ TaskBoard.view.CreateTaskForm = {
         
 
         // Set the click handler for selecting a category
-        $("#createTaskForm li a").click(function() {
-           $("#createTaskForm .selected").removeClass("selected");
+        $("#categoriesInTaskForm li a").click(function() {
+           $("#categoriesInTaskForm .selected").removeClass("selected");
            $(this).addClass("selected");
         });
+
+
+        // Set the click handler for selecting a category
+        $("#whenId li a").click(function() {
+            $("#whenId .selected").removeClass("selected");
+            $(this).addClass("selected");
+        });
+
 
         if (this.initialized) {
            return ;

@@ -43,7 +43,7 @@ TaskBoard.view.CreateTaskForm = {
         if (taskTitle == "") {
             $("#taskTitle").val("What is your task?");
         } else {
-            $("#taskTitle").val(title);
+            $("#taskTitle").val(taskTitle);
         }
 
 

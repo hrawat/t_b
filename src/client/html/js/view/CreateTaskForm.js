@@ -12,6 +12,7 @@ TaskBoard.view.CreateTaskForm = {
         var categories = data['categories'];
         var selectedCategoryId = data['selectedCategoryId'];
         var taskId = (data['taskId'] == undefined) ? "" : data['taskId'];
+        var taskTitle = (data['taskTitle'] == undefined) ? "" : data['taskTitle'];
         var index = 0;
         var displayFn = this.display;
 
@@ -38,6 +39,14 @@ TaskBoard.view.CreateTaskForm = {
         } else {
             $("#submitCreateTaskId").attr("value", "Save");
         }
+
+        if (taskTitle == "") {
+            $("#taskTitle").val("What is your task?");
+        } else {
+            $("#taskTitle").val(title);
+        }
+
+
         displayFn(true);
         
 
@@ -82,7 +91,7 @@ TaskBoard.view.CreateTaskForm = {
        if (show) {
             $("#createTaskContainer").show().css("display", "block");
             $("#createTaskContainerShadow").show().css("display", "block");
-            $("#taskTitle").val("What is your task?");
+
             $('#taskTitle').focus(function() {
                 if ($("#taskTitle").val() == 'What is your task?') {
                     $("#taskTitle").val("");

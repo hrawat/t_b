@@ -68,13 +68,14 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.changePriority(changePriorityReq, successFn, errorFn);
                                     });
 
-            var createEditCallbackFn = function(taskId) {
+            var createEditCallbackFn = function(taskId, taskTitle) {
 
                 // launch create task
                 var createTaskFormData = {};
                 createTaskFormData.categories = categories;
                 createTaskFormData.selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
                 createTaskFormData.taskId = taskId;
+                createTaskFormData.taskTitle = taskTitle;
 
                 TaskBoard.view.CreateTaskForm.render(createTaskFormData);
                 TaskBoard.view.CreateTaskForm.setSubmitHandler(function(taskId, taskTitle, categoryId) {
@@ -93,7 +94,12 @@ TaskBoard.controller.MainController = {
                             TaskBoard.TaskModel.loadTasksFromServer(function() {
                                 renderHeaderFn();
                                 renderFn();
-                                TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' created".format(createTaskRes.title));
+                                if (taskId == "") {
+                                    TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' created".format(createTaskRes.title));
+                                } else {
+                                    TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' saved".format(createTaskRes.title));
+                                }
+
                             }, errorFn);
                         },
                         function(errCode, errMsg) {

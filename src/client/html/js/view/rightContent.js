@@ -129,7 +129,7 @@ TaskBoard.view.rightContent = {
     setAddTaskHandler : function(callBack) {
         $("#addTaskId").unbind("click");
         $("#addTaskId").click(function(){
-            callBack("");
+            callBack("", "");
         });
     },
 
@@ -138,7 +138,8 @@ TaskBoard.view.rightContent = {
         $(".taskEdit").click(function(){
             var idStr = $(this).parents(".task").attr("id");
             var taskId = idStr.substring("task_".length);
-            callBack(taskId);
+            var taskTitle = $(this).parents(".upper_content").children("p").text();
+            callBack(taskId, taskTitle);
         });
 
     },

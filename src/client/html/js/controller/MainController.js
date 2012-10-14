@@ -78,7 +78,7 @@ TaskBoard.controller.MainController = {
                 createTaskFormData.taskTitle = taskTitle;
 
                 TaskBoard.view.CreateTaskForm.render(createTaskFormData);
-                TaskBoard.view.CreateTaskForm.setSubmitHandler(function(taskId, taskTitle, categoryId) {
+                TaskBoard.view.CreateTaskForm.setSubmitHandler(function(taskId, taskTitle, categoryId, completeBy) {
                     var taskReq = {};
                     taskReq.taskId = taskId;
                     taskReq.title = taskTitle;
@@ -86,7 +86,8 @@ TaskBoard.controller.MainController = {
 
                     taskReq.categoryId = categoryId;
                     taskReq.priority = TaskBoard.TaskModel.MEDIUM_PRIORITY;
-                    taskReq.completeBy = TaskBoard.TaskModel.TODAY;
+                    //taskReq.completeBy = TaskBoard.TaskModel.TODAY;
+                    taskReq.completeBy = completeBy;
 
                     TaskBoard.TaskModel.create(taskReq,
                         function(createTaskRes) {

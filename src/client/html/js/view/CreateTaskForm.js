@@ -82,9 +82,10 @@ TaskBoard.view.CreateTaskForm = {
         $("#submitCreateTaskId").click(function() {
             var submitHandler = TaskBoard.view.CreateTaskForm.submitHandler;
             var taskTitle = $("#taskTitle").val();
-            var categoryId = $("#createTaskForm a.selected").attr("id").substr("createTFCategory_".length);
+            var categoryId = $("#categoriesInTaskForm a.selected").attr("id").substr("createTFCategory_".length);
+            var completeBy = ( $("#whenId a.selected").attr("id") == "soonId") ? TaskBoard.TaskModel.TODAY : TaskBoard.TaskModel.LATER;
             if (submitHandler) {
-               submitHandler(taskId, taskTitle, categoryId);
+               submitHandler(taskId, taskTitle, categoryId, completeBy);
             }
             return false;
         });

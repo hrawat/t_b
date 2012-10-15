@@ -11,57 +11,66 @@ if (typeof(TaskBoard) == "undefined") {
 TaskBoard.view.rightContent = {
     render : function(data) {
         var todayTasks = data['todayTasks'];
+        var laterTasks = data['laterTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
         $('#container .task').remove();
         $('#container .completedTask').remove();
         todayTasks.forEach(function(task, index) {
-            var category = TaskBoard.CategoryModel.get(task['categoryId']);
-            var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
-            var focussedClassValue =  task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "focusStar";
-            var createdTimeAgo = getTimeDiffInStr(task.creationDate);
-            var taskStatusClass = task['status'] == TaskBoard.TaskModel.TASK_STATUS_COMPLETED ? "completedTask" : "task"
-            var taskElt = "<div id='task_{0}' class='pro_pad-shadow item {1}'> \
-                                <div class='pro_curved-hz-2'> \
-                                    <div class='pro_text-shadow' > \
-                                        <div class='block_tag' style='background:#{2}'></div> \
-                                            <div class='pro_text-shadow upper_content {3}'> \
-                                                <p>{4}</p>   \
-                                            <div class='secondOptions'> \
-                                                <a class='Botton menuButtons taskDone' href='#'>Done</a>  \
-                                                <a class='Botton menuButtons taskEdit' href='#'>Edit</a>  \
-                                                <div class='delete-alt deleteme'><a href=''#'></a></div> \
-                                            </div> \
-                                        </div> \
-                                        <div class='lower_portion'> \
-                                            <img src='{5}' /> \
-                                            <div class='details'> \
-                                                <ul> \
-                                                    <li>{6}</li>  \
-                                                    <li>{7} ago</li>  \
-                                                </ul>                    \
-                                            </div> \
-                                            <br class='clear:both;' /> \
-                                            <a class='{8} tooltip makeImportant' href='#'><span class='classic'>This task is important</span></a> \
-                                            \
-                                        </div> \
-                                    </div> \
-                                </div> \
-                            </div>".format(task['id'],
-                                                taskStatusClass,
-                                                category.colorCode,
-                                                importantClassValue,
-                                                task['title'],
-                                                task['createdBy']['userSmallAvatarUrl'],
-                                                category['name'],
-                                                createdTimeAgo,
-                                                focussedClassValue);
+            var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
             $("#container").append(taskElt);
-
-
         });
-
         $('#container').masonry( 'reload' );
 
+        laterTasks.forEach(function(task, index) {
+            var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
+            $("#laterTasksContainer").append(taskElt);
+        });
+        $('#laterTasksContainer').masonry( 'reload' );
+
+    },
+
+    _createTaskElement : function(task) {
+        var category = TaskBoard.CategoryModel.get(task['categoryId']);
+        var importantClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "important" : "";
+        var focussedClassValue = task['priority'] == TaskBoard.TaskModel.HIGH_PRIORITY ? "focused" : "focusStar";
+        var createdTimeAgo = getTimeDiffInStr(task.creationDate);
+        var taskStatusClass = task['status'] == TaskBoard.TaskModel.TASK_STATUS_COMPLETED ? "completedTask" : "task"
+        var taskElt = "<div id='task_{0}' class='pro_pad-shadow item {1}'> \
+                                    <div class='pro_curved-hz-2'> \
+                                        <div class='pro_text-shadow' > \
+                                            <div class='block_tag' style='background:#{2}'></div> \
+                                                <div class='pro_text-shadow upper_content {3}'> \
+                                                    <p>{4}</p>   \
+                                                <div class='secondOptions'> \
+                                                    <a class='Botton menuButtons taskDone' href='#'>Done</a>  \
+                                                    <a class='Botton menuButtons taskEdit' href='#'>Edit</a>  \
+                                                    <div class='delete-alt deleteme'><a href=''#'></a></div> \
+                                                </div> \
+                                            </div> \
+                                            <div class='lower_portion'> \
+                                                <img src='{5}' /> \
+                                                <div class='details'> \
+                                                    <ul> \
+                                                        <li>{6}</li>  \
+                                                        <li>{7} ago</li>  \
+                                                    </ul>                    \
+                                                </div> \
+                                                <br class='clear:both;' /> \
+                                                <a class='{8} tooltip makeImportant' href='#'><span class='classic'>This task is important</span></a> \
+                                                \
+                                            </div> \
+                                        </div> \
+                                    </div> \
+                                </div>".format(task['id'],
+            taskStatusClass,
+            category.colorCode,
+            importantClassValue,
+            task['title'],
+            task['createdBy']['userSmallAvatarUrl'],
+            category['name'],
+            createdTimeAgo,
+            focussedClassValue);
+        return taskElt;
     },
 
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {

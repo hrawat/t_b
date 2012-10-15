@@ -15,6 +15,9 @@ TaskBoard.view.CreateTaskForm = {
         var taskTitle = (data['taskTitle'] == undefined) ? "" : data['taskTitle'];
         var index = 0;
         var displayFn = this.display;
+        var completeBy = data['completeBy'];
+
+
 
         if (selectedCategoryId == 0) {
            selectedCategoryId = categories[0].id;
@@ -33,6 +36,16 @@ TaskBoard.view.CreateTaskForm = {
                $("#createTFCategory_"+selectedCategoryId).addClass("selected");
             }
         }
+
+        // Set the approproiate when
+
+        $("#whenId .selected").removeClass("selected");
+        if (completeBy == TaskBoard.TaskModel.LATER) {
+            $(this).addClass("laterId");
+        } else {
+            $(this).addClass("soonId");
+        }
+
 
         if (taskId == "") {
             $("#submitCreateTaskId").attr("value", "Create");
@@ -61,15 +74,17 @@ TaskBoard.view.CreateTaskForm = {
             return false;
         });
         
-        if (this.initialized) {
-           return ;
-        }
+
 
         // Set the click handler for selecting a category
         $("#categoriesInTaskForm li a").click(function() {
            $("#categoriesInTaskForm .selected").removeClass("selected");
            $(this).addClass("selected");
         });
+
+        if (this.initialized) {
+            return ;
+        }
 
 
         // Set the click handler for selecting a category

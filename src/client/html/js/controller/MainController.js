@@ -43,7 +43,7 @@ TaskBoard.controller.MainController = {
             };
             selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
             rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(selectedCategoryId);
-            rightContentData['lasterTasks'] = TaskBoard.TaskModel.laterTasks(selectedCategoryId);
+            rightContentData['laterTasks'] = TaskBoard.TaskModel.laterTasks(selectedCategoryId);
             rightContentData['selectedCategoryId'] = selectedCategoryId;
             TaskBoard.view.rightContent.render(rightContentData);
             TaskBoard.view.rightContent.setTaskActionHandlers(

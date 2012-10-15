@@ -48,7 +48,22 @@ TaskBoard.view.CreateTaskForm = {
 
 
         displayFn(true);
+        $("#submitCreateTaskId").unbind("click");
+        // todo: figure out better way to pass taskId
+        $("#submitCreateTaskId").click(function() {
+            var submitHandler = TaskBoard.view.CreateTaskForm.submitHandler;
+            var taskTitle = $("#taskTitle").val();
+            var categoryId = $("#categoriesInTaskForm a.selected").attr("id").substr("createTFCategory_".length);
+            var completeBy = ( $("#whenId a.selected").attr("id") == "soonId") ? TaskBoard.TaskModel.TODAY : TaskBoard.TaskModel.LATER;
+            if (submitHandler) {
+               submitHandler(taskId, taskTitle, categoryId, completeBy);
+            }
+            return false;
+        });
         
+        if (this.initialized) {
+           return ;
+        }
 
         // Set the click handler for selecting a category
         $("#categoriesInTaskForm li a").click(function() {
@@ -64,9 +79,6 @@ TaskBoard.view.CreateTaskForm = {
         });
 
 
-        if (this.initialized) {
-           return ;
-        }
 
         // Set click handler for shadow
         $("#createTaskContainerShadow").click(function() {
@@ -79,16 +91,6 @@ TaskBoard.view.CreateTaskForm = {
             return false;
         });
 
-        $("#submitCreateTaskId").click(function() {
-            var submitHandler = TaskBoard.view.CreateTaskForm.submitHandler;
-            var taskTitle = $("#taskTitle").val();
-            var categoryId = $("#categoriesInTaskForm a.selected").attr("id").substr("createTFCategory_".length);
-            var completeBy = ( $("#whenId a.selected").attr("id") == "soonId") ? TaskBoard.TaskModel.TODAY : TaskBoard.TaskModel.LATER;
-            if (submitHandler) {
-               submitHandler(taskId, taskTitle, categoryId, completeBy);
-            }
-            return false;
-        });
         this.initialized = true;
     },
 

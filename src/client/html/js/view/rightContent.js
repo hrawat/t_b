@@ -13,8 +13,8 @@ TaskBoard.view.rightContent = {
         var todayTasks = data['todayTasks'];
         var laterTasks = data['laterTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
-        $('#container .task').remove();
-        $('#container .completedTask').remove();
+        $('.task').remove();
+        $('.completedTask').remove();
         todayTasks.forEach(function(task, index) {
             var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
             $("#container").append(taskElt);
@@ -74,24 +74,24 @@ TaskBoard.view.rightContent = {
     },
 
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
-        $("#container .task .upper_content").unbind("mouseover");
-        $("#container .task .upper_content").mouseover(function(){
+        $(".task .upper_content").unbind("mouseover");
+        $(".task .upper_content").mouseover(function(){
             $(this).children(".secondOptions").css("display", "block")
         });
 
-        $("#container .task .upper_content").unbind("mouseout");
-        $("#container .task .upper_content").mouseout(function() {
+        $(".task .upper_content").unbind("mouseout");
+        $(".task .upper_content").mouseout(function() {
             $(this).children(".secondOptions").css("display", "none")
         });
 
-        $("#container .completedTask .upper_content").unbind("mouseover");
-        $("#container .completedTask .upper_content").mouseover(function(){
+        $(".completedTask .upper_content").unbind("mouseover");
+        $(".completedTask .upper_content").mouseover(function(){
             $(this).children().css("display", "block")
             $(this).children(".secondOptions").children(".doneAction").css("display", "none")
         });
 
-        $("#container .completedTask .upper_content").unbind("mouseout");
-        $("#container .completedTask .upper_content").mouseout(function() {
+        $(".completedTask .upper_content").unbind("mouseout");
+        $(".completedTask .upper_content").mouseout(function() {
             $(this).children(".secondOptions").css("display", "none")
         });
 
@@ -138,6 +138,10 @@ TaskBoard.view.rightContent = {
     setAddTaskHandler : function(callBack) {
         $("#addTaskId").unbind("click");
         $("#addTaskId").click(function(){
+            callBack("", "");
+        });
+        $("#laterAddTaskId").unbind("click");
+        $("#laterAddTaskId").click(function(){
             callBack("", "");
         });
     },

@@ -59,6 +59,17 @@
                 columnWidth : 240
             });
 
+            $('#laterTasksContainer').masonry({
+                // options
+                //itemSelector : '.item',
+                isAnimated: false,
+                animationOptions: {
+                    duration: 400,
+                    easing: 'linear',
+                    queue: false
+                },
+                columnWidth : 240
+            });
             TaskBoard.controller.MainController.initialize();
         });
 

@@ -87,7 +87,8 @@ TaskBoard.view.rightContent = {
         $(".completedTask .upper_content").unbind("mouseover");
         $(".completedTask .upper_content").mouseover(function(){
             $(this).children().css("display", "block")
-            $(this).children(".secondOptions").children(".doneAction").css("display", "none")
+            $(this).children(".secondOptions").children(".taskDone").css("display", "none")
+            $(this).children(".secondOptions").children(".taskEdit").css("display", "none")
         });
 
         $(".completedTask .upper_content").unbind("mouseout");

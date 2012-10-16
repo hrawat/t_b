@@ -51,7 +51,7 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.complete(taskId, 
                                            function() {
                                               successFn();
-                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' completed".format(taskTitle));
+                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' completed".format(getTaskTitleSubstring(taskTitle)));
                                            }, errorFn);
 
                                     },
@@ -59,7 +59,7 @@ TaskBoard.controller.MainController = {
                                         TaskBoard.TaskModel.delete(taskId, 
                                             function() {
                                                successFn(); 
-                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' deleted".format(taskTitle));
+                                               TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' deleted".format(getTaskTitleSubstring(taskTitle)));
                                             } , errorFn);
                                     },
                                     function(taskId, important) {
@@ -97,9 +97,9 @@ TaskBoard.controller.MainController = {
                                 renderHeaderFn();
                                 renderFn();
                                 if (taskId == "") {
-                                    TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' created".format(createTaskRes.title));
+                                    TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' created".format(getTaskTitleSubstring(createTaskRes.title)));
                                 } else {
-                                    TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' saved".format(createTaskRes.title));
+                                    TaskBoard.view.rightContent.setGlobalStatus("Task '{0}' saved".format(getTaskTitleSubstring(createTaskRes.title)));
                                 }
 
                             }, errorFn);

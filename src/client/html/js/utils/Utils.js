@@ -95,3 +95,12 @@ function getTimeDiffInStr(refDate) {
         return value + (value > 1 ? " secs " : " sec ");
     }
 }
+
+
+function getTaskTitleSubstring(taskTitle) {
+   if (taskTitle.length > 64) {
+      taskTitle = taskTitle.substring(0, 60) + "...";
+   }
+   return taskTitle;
+
+}

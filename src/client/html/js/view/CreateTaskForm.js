@@ -16,6 +16,9 @@ TaskBoard.view.CreateTaskForm = {
         var index = 0;
         var displayFn = this.display;
         var completeBy = data['completeBy'];
+        if (completeBy == undefined) {
+           completeBy = TaskBoard.TaskModel.TODAY;
+        }
 
 
 
@@ -41,9 +44,9 @@ TaskBoard.view.CreateTaskForm = {
 
         $("#whenId .selected").removeClass("selected");
         if (completeBy == TaskBoard.TaskModel.LATER) {
-            $(this).addClass("laterId");
+            $("#laterId").addClass("selected");
         } else {
-            $(this).addClass("soonId");
+            $("#soonId").addClass("selected");
         }
 
 

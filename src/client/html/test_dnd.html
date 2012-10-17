@@ -14,6 +14,37 @@
     <script src="lib/jquery.event.drop-2.2.js"></script>
     <script src="lib/jquery.masonry_dnd.min.js"></script>
 
+    <style type="text/css">
+        .progressBar {
+            background-color: white;
+
+            /*border-radius: 13px; *//* (height of inner div) / 2 + padding */
+            padding: 0px;
+            width: 150px;
+            border: 2px solid #000000;
+        }
+
+        .progressBar div {
+            background-color: #149414;
+            width: 60%; /* Adjust with JavaScript */
+            height: 20px;
+            /*border-radius: 10px;*/
+        }
+
+        .meter {
+            height: 20px;  /* Can be anything */
+            position: relative;
+            background: #555;
+            -moz-border-radius: 25px;
+            -webkit-border-radius: 25px;
+            border-radius: 25px;
+            padding: 10px;
+            -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+            -moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
+            box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+        }
+    </style>
+
     <!-- <script src="lib/jquery.masonry.min.js"></script>-->
 
     <script type="text/javascript" src="lib/jquery.mousewheel-3.0.6.pack.js"></script>
@@ -133,8 +164,22 @@
     </ul>
 </div>
 
+
+
+
 <div class="rightContent">
     <div class="dailyHeader">Today</div>
+
+    <div  style="float: right; display: block; padding-right: 20px"  >
+        <div class="progressBar" style="display: inline-block;">
+            <div></div>
+        </div>
+        <p style="display: inline;"><strong>1/5</strong>  Completed</p>
+    </div>
+
+    <br/>
+    <br/>
+
 
     <script>
         function showmenu(task) {
@@ -145,7 +190,7 @@
         }
     </script>
 
-    <div id="container_0">
+    <div id="container_0" style="display: block;">
 
         <div class="pro_pad-shadow item">
 

@@ -21,9 +21,14 @@ TaskBoard.view.rightContent = {
         });
         var totalTasks = thisWeeksTasks.length;
         var completedTasks = TaskBoard.view.rightContent._getCompletedTasks(thisWeeksTasks)
+        var completedPercent = 0;
+        if (completedTasks > 0) {
+           completedPercent =  ((completedTasks*100)/totalTasks);
+        }
 
         $("#weeklyTaskStatusId").text("{0}/{1}".format(completedTasks, totalTasks));
-        $("#thisWeekProgressBarId div").css("width", ((completedTasks*100)/totalTasks) + "%");
+        
+        $("#thisWeekProgressBarId div").css("width", completedPercent + "%");
 
 
         $('#container').masonry( 'reload' );

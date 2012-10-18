@@ -211,7 +211,7 @@ class TaskService {
                                                 status, createdBy, priority, completedBy, deleted 
                             from Task where categoryId in (select categoryId from CategoryUser where userId =$userIdDbValue)
                             and UNIX_TIMESTAMP(lastModificationDate) > $updatedSince
-                            and (status=$activeStatusDbValue or (UNIX_TIMESTAMP(lastModificationDate) > $sevenDateUpDateValue)) order by priority desc, creationDate desc";
+                            and (status=$activeStatusDbValue or (UNIX_TIMESTAMP(lastModificationDate) > $sevenDateUpDateValue)) order by status asc, priority desc, creationDate desc";
         $result = DBUtils::execute($sqlStmt);
         if ($result == FALSE) {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());

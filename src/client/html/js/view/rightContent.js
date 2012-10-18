@@ -23,7 +23,7 @@ TaskBoard.view.rightContent = {
         var completedTasks = TaskBoard.view.rightContent._getCompletedTasks(thisWeeksTasks)
 
         $("#weeklyTaskStatusId").text("{0}/{1}".format(completedTasks, totalTasks));
-        $("#weeklyTaskStatusId .progressBar div").css("width", ((completedTasks*100)/totalTasks) + "%");
+        $("#thisWeekProgressBarId div").css("width", ((completedTasks*100)/totalTasks) + "%");
 
 
         $('#container').masonry( 'reload' );
@@ -40,7 +40,7 @@ TaskBoard.view.rightContent = {
 
         var completedTasks = 0;
         var index = 0;
-        for (index=0; index < tasksCount; index++) {
+        for (index=0; index < tasks.length; index++) {
             if (tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED) {
                 completedTasks++;
             }

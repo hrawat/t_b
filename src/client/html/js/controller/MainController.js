@@ -42,7 +42,7 @@ TaskBoard.controller.MainController = {
                                                       }, errorFn);
             };
             selectedCategoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
-            rightContentData['todayTasks'] = TaskBoard.TaskModel.todaysTasks(selectedCategoryId);
+            rightContentData['thisWeeksTasks'] = TaskBoard.TaskModel.thisWeeksTasks(selectedCategoryId);
             rightContentData['laterTasks'] = TaskBoard.TaskModel.laterTasks(selectedCategoryId);
             rightContentData['selectedCategoryId'] = selectedCategoryId;
             TaskBoard.view.rightContent.render(rightContentData);

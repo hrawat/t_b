@@ -210,7 +210,9 @@ TaskBoard.TaskModel = {
         var today, prevRefDate, refDate;
         today = new Date();
 
-        prevRefDate = this._getDate(today, this.TOMORROW);
+        //prevRefDate = this._getDate(today, this.TOMORROW);
+        // get all tasks for which dueDate is less than end of week
+        prevRefDate = null;
         refDate = this._getDate(today, this.THIS_WEEK);
         return this._tasksList(categoryId, prevRefDate, refDate);
     },

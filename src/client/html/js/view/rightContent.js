@@ -10,22 +10,38 @@ if (typeof(TaskBoard) == "undefined") {
 
 TaskBoard.view.rightContent = {
     render : function(data) {
-        var todayTasks = data['todayTasks'];
+        var thisWeeksTasks = data['thisWeeksTasks'];
         var laterTasks = data['laterTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
         $('.task').remove();
         $('.completedTask').remove();
-        todayTasks.forEach(function(task, index) {
+        thisWeeksTasks.forEach(function(task, index) {
             var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
             $("#container").append(taskElt);
         });
+        $("#weeklyTaskStatusId").text(TaskBoard.view.rightContent._getStatusText(thisWeeksTasks));
+
         $('#container').masonry( 'reload' );
 
         laterTasks.forEach(function(task, index) {
             var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
             $("#laterTasksContainer").append(taskElt);
         });
+        $("#laterTaskStatusId").text(TaskBoard.view.rightContent._getStatusText(laterTasks));
         $('#laterTasksContainer').masonry( 'reload' );
+
+    },
+
+    _getStatusText : function(tasks) {
+        var tasksCount = tasks.length;
+        var completedTasks = 0;
+        var index = 0;
+        for (index=0; index < tasksCount; index++) {
+            if (tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED) {
+                completedTasks++;
+            }
+        }
+        return "{0}/{1}".format(completedTasks, tasksCount);
 
     },
 

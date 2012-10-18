@@ -19,7 +19,12 @@ TaskBoard.view.rightContent = {
             var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
             $("#container").append(taskElt);
         });
-        $("#weeklyTaskStatusId").text(TaskBoard.view.rightContent._getStatusText(thisWeeksTasks));
+        var totalTasks = thisWeeksTasks.length;
+        var completedTasks = TaskBoard.view.rightContent._getCompletedTasks(thisWeeksTasks)
+
+        $("#weeklyTaskStatusId").text("{0}/{1}".format(completedTasks, totalTasks));
+        $("#weeklyTaskStatusId .progressBar div").css("width", ((completedTasks*100)/totalTasks) + "%");
+
 
         $('#container').masonry( 'reload' );
 
@@ -31,8 +36,8 @@ TaskBoard.view.rightContent = {
 
     },
 
-    _getStatusText : function(tasks) {
-        var tasksCount = tasks.length;
+    _getCompletedTasks : function(tasks) {
+
         var completedTasks = 0;
         var index = 0;
         for (index=0; index < tasksCount; index++) {
@@ -40,7 +45,7 @@ TaskBoard.view.rightContent = {
                 completedTasks++;
             }
         }
-        return "{0}/{1}".format(completedTasks, tasksCount);
+        return completedTasks;
 
     },
 

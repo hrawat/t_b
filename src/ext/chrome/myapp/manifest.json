@@ -1,0 +1,17 @@
+{
+  "name": "TaskPal",
+  "description": "Todos made easy!",
+  "version": "0.0.0.1",
+  "manifest_version": 2,
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app": {
+    "urls": [
+      "*://*.mytaskboard.net/"
+    ],
+    "launch": {
+      "web_url": "http://tushar.mytaskboard.net/"
+    }
+  }
+}

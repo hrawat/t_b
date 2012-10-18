@@ -27,7 +27,6 @@ TaskBoard.view.rightContent = {
             var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
             $("#laterTasksContainer").append(taskElt);
         });
-        $("#laterTaskStatusId").text(TaskBoard.view.rightContent._getStatusText(laterTasks));
         $('#laterTasksContainer').masonry( 'reload' );
 
     },

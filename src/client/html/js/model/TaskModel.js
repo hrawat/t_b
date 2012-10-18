@@ -249,12 +249,12 @@ TaskBoard.TaskModel = {
             }
             if ( ((prevRefDate == null) || (allTasks[index].dueDate.getTime() >= refDate.getTime())) &&
                             ((refDate == null) || (allTasks[index].dueDate.getTime() <= refDate.getTime()))) {
-                if (allTasks[index].status == this.TASK_STATUS_COMPLETED) {
-                    if ((allTasks[index].completionDate == undefined) || (this._sameDay(now, allTasks[index].completionDate) == false)) {
-                        continue;
-                    }
-
-                }
+//                if (allTasks[index].status == this.TASK_STATUS_COMPLETED) {
+//                    if ((allTasks[index].completionDate == undefined) || (this._sameDay(now, allTasks[index].completionDate) == false)) {
+//                        continue;
+//                    }
+//
+//                }
                 if (categoryId == 0) {
                     retValue.push(allTasks[index]);
                 } else if (allTasks[index].categoryId == categoryId) {

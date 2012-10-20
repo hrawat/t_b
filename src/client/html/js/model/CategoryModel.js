@@ -6,8 +6,9 @@ if (typeof(TaskBoard) == "undefined") {
 }
 
 TaskBoard.CategoryModel = {
-    CategoryColorCodes : new Array("00FFFF", "0000FF", "0000A0",
-                                            "ADD8E6", "800080", "FFFF00", "00FF00" , "FF00FF"),
+    CategoryColorCodes : new Array("FBB03B", "D9E021", "29ABE2",
+                                            "C69C6D", "ED1E79", "93278F", "7AC943" , "FF7BAC",
+                                            "FCEE21", "006837", "2E3192" , "603813"),
 
     create: function(categoryParams, successCallBack, failureCallBack) {
 

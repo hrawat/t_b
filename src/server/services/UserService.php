@@ -98,8 +98,8 @@ class UserService {
     }
 
     private static function createDefaultCategories($userId) {
-        $homeCategoryId = CategoryService::create("Home", "CFF", $userId);
-        $workCategoryId = CategoryService::create("Work", "FFECE5", $userId);
+        $homeCategoryId = CategoryService::create("Home", "FBB03B", $userId);
+        $workCategoryId = CategoryService::create("Work", "29ABE2", $userId);
     }
 
 }

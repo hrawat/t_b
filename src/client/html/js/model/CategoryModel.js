@@ -179,11 +179,11 @@ TaskBoard.CategoryModel = {
     _isColorCodeInUse : function(allCategories, colorCode) {
         var index;
         for (index=0; index < allCategories.length; index++) {
-            if (allCategories[index].colorHexCode == colorCode) {
-                return false;
+            if (allCategories[index].colorCode == colorCode) {
+                return true;
             }
         }
-        return true;
+        return false;
     },
 
     _allCategories: function() {

@@ -31,7 +31,39 @@ TaskBoard.view.rightContent = {
         $("#thisWeekProgressBarId div").css("width", completedPercent + "%");
 
 
-        $('#container').masonry( 'reload' );
+        //$('#container').masonry( 'reload' );
+        var masonryOptions = {
+                // options
+                //itemSelector : '.item',
+                isAnimated: false,
+                animationOptions: {
+                    duration: 400,
+                    easing: 'linear',
+                    queue: false
+                },
+                columnWidth : 240,
+                isDraggable: true,
+                dragHandleSelector: '.block_tag',
+                dragEndCallbackFn : function() {
+                   return false;
+                },
+                dragCallbackFn : function(topPos, leftPos) {
+                   var containerTop = $("#container").offset().top;
+                   var containerLeft = $("#container").offset().left;
+                   var containerBottom = $("#container").height() + containerTop;
+                   var containerRight = $("#container").width() + containerLeft;
+         
+                   if ( (topPos < containerTop) || (topPos > containerBottom) ||
+                               (leftPos < containerLeft) || (leftPos > containerRight)) { 
+                      console.log("returning false");
+                      // todo: fix this to restrict drag action only within container
+                      return true;
+                   }
+                   return true;
+                }
+            };
+        $('#container').masonry( 'reloadItems' );
+        $('#container').masonry(masonryOptions);
 
         laterTasks.forEach(function(task, index) {
             var taskElt = TaskBoard.view.rightContent._createTaskElement(task);

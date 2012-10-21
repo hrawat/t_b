@@ -39,6 +39,9 @@ function handleRequestInternal($userId) {
         } else if ($reqType == 'changePriority') {
             $retValue = handleChangePriority($userId);
             return $retValue;
+        } else if ($reqType == 'saveTasksOrder') {
+            $retValue = handleSaveTasksOrder($userId);
+            return $retValue;
         } else {
             $retValue = ControllerUtils::getErrorResponse(ErrorCodes::INVALID_REQUEST, "Request $reqType is not supported");
             return $retValue;
@@ -118,6 +121,18 @@ function handleCreate($createdBy) {
         return $retValue;
 
     }
+}
+
+function handleSaveTasksOrder($userId) {
+    $mandatoryArgsCheckRetValue = ControllerUtils::checkMandatoryArgs(array("taskIds"));
+    if ($mandatoryArgsCheckRetValue != NULL) {
+        return $mandatoryArgsCheckRetValue;
+    } else {
+        $taskIds = ControllerUtils::getArgValue("taskIds", NULL);
+        TaskService::saveTasksOrder($userId, $taskIds);
+        return ControllerUtils::getSuccessResponse(TRUE);
+    }
+
 }
 
 

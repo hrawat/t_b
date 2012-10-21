@@ -79,3 +79,13 @@ create table Notification (
   agentName               varchar(32) default NULL,
   emailSentDate           datetime
 );
+
+create table UserTaskOrder (
+
+  userId  varchar(23),
+  indexPos   tinyint(1),
+  taskIds varchar(1024)
+
+);
+
+create unique index UserTaskOrder_userId_indexPos on UserTaskOrder(userId, indexPos asc);

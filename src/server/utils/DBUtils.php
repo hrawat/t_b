@@ -8,6 +8,7 @@ class DBUtils {
     public static function generateUniqId() {
         $id = uniqid("", TRUE);
         $id = str_replace(".", "_", $id);
+        $id = str_replace(",", "_", $id);
         return $id;
     }
 

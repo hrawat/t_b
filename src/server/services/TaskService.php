@@ -217,9 +217,12 @@ class TaskService {
             Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         } else {
-            $tasks = array();
+
             // todo: fix this, unoptimal implementation
             $userIdToInfoMap = array();
+            $tasksOrder = self::getTasksOrder($userId);
+            $orderedTasks = array();
+            $nonExistentTasks = array();
             while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
                 $taskRow['status'] = self::taskStatusStrValue($taskRow['status'] );
                 $taskRow['priority'] = self::taskPriorityStrValue($taskRow['priority'] );
@@ -229,8 +232,18 @@ class TaskService {
                 }
                 $taskRow['createdBy'] = $userIdToInfoMap[$taskRow['createdBy']];
                 $taskRow['deleted'] = ($taskRow['deleted'] == 1) ? TRUE : FALSE;
-                $tasks[] = $taskRow;
+
+                if (isset($tasksOrder[$taskRow['id']])) {
+                    $orderedTasks[$tasksOrder[$taskRow['id']]] = $taskRow;
+                } else {
+                    $nonExistentTasks[] = $taskRow;
+                }
             }
+
+            $tasks = array_merge($nonExistentTasks, $orderedTasks);
+
+
+
             return $tasks;
 
         }
@@ -246,6 +259,53 @@ class TaskService {
             throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
         }
 
+    }
+
+    private static function getTasksOrder($userId) {
+        $retValue = array();
+        $userIdDbValue = DBUtils::escapeStrValue($userId);
+        $sqlStmt = "select taskIds from UserTaskOrder where userId=$userIdDbValue order by indexPos asc";
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+        }
+        $index = 0;
+        while ( ($row = mysql_fetch_assoc($result)) != FALSE) {
+            $taskIdsStr = $row['taskIds'];
+            $taskIds = explode(",",$taskIdsStr);
+            foreach ($taskIds as $taskId) {
+                $retValue[$row['taskId']] = $index;
+                $index++;
+            }
+        }
+        return $retValue;
+    }
+
+    public static function saveTasksOrder($userId, $taskIds) {
+        $userIdDbValue = DBUtils::escapeStrValue($userId);
+        DBUtils::execute("start transaction");
+        DBUtils::execute("delete from UserTaskOrder where userId=$userIdDbValue");
+        $taskIdsStr = "";
+        $index = 0;
+        foreach ($taskIds as $taskId) {
+            if (strlen($taskIdsStr) < 768) {
+                $taskIdsStr .= "$taskId,";
+            } else {
+                self::insertIntoUserTaskOrderTable($userIdDbValue, $index, $taskIdsStr);
+                $index++;
+                $taskIdsStr = "";
+            }
+        }
+        if (strlen($taskIdsStr) > 0) {
+            self::insertIntoUserTaskOrderTable($userIdDbValue, $index, $taskIdsStr);
+        }
+    }
+
+    public static function insertIntoUserTaskOrderTable($userIdDbValue, $index, $taskIdsStr){
+        $taskIdsDbValue = DBUtils::escapeStrValue($taskIdsStr);
+        $sqlStmt = "Insert into UserTaskOrder(userId, indexPos, taskIds) values ($userIdDbValue, $index, $taskIdsDbValue)";
+        DBUtils::execute($sqlStmt);
     }
 
 }

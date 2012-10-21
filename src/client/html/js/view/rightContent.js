@@ -44,7 +44,11 @@ TaskBoard.view.rightContent = {
                 columnWidth : 240,
                 isDraggable: true,
                 dragHandleSelector: '.block_tag',
+                dragStartCallbackFn : function() {
+                   TaskBoard.view.rightContent.draggingActive = true; 
+                },
                 dragEndCallbackFn : function() {
+                   TaskBoard.view.rightContent.draggingActive = false;
                    return false;
                 },
                 dragCallbackFn : function(topPos, leftPos) {
@@ -133,7 +137,9 @@ TaskBoard.view.rightContent = {
     setTaskActionHandlers : function(doneCallBack, deleteCallBack, makeImportantCallBack) {
         $(".task .upper_content").unbind("mouseover");
         $(".task .upper_content").mouseover(function(){
-            $(this).children(".secondOptions").css("display", "block")
+            if (TaskBoard.view.rightContent.draggingActive != true) {
+               $(this).children(".secondOptions").css("display", "block")
+            }
         });
 
         $(".task .upper_content").unbind("mouseout");
@@ -143,9 +149,11 @@ TaskBoard.view.rightContent = {
 
         $(".completedTask .upper_content").unbind("mouseover");
         $(".completedTask .upper_content").mouseover(function(){
-            $(this).children().css("display", "block")
-            $(this).children(".secondOptions").children(".taskDone").css("display", "none")
-            $(this).children(".secondOptions").children(".taskEdit").css("display", "none")
+            if (TaskBoard.view.rightContent.draggingActive != TRUE) {
+               $(this).children().css("display", "block")
+               $(this).children(".secondOptions").children(".taskDone").css("display", "none")
+               $(this).children(".secondOptions").children(".taskEdit").css("display", "none")
+            }
         });
 
         $(".completedTask .upper_content").unbind("mouseout");

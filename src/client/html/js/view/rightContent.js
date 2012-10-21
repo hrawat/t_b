@@ -49,6 +49,16 @@ TaskBoard.view.rightContent = {
                 },
                 dragEndCallbackFn : function() {
                    TaskBoard.view.rightContent.draggingActive = false;
+                   if (TaskBoard.view.rightContent.taskReorderedHandler != undefined) {
+                       var taskIds = new Array();
+                       $taskElements = $("#container .item");
+                       jQuery.each($taskElements, function(index, value) {
+                           var idStr = value.attr("id");
+                           var taskId = idStr.substring("task_".length);
+                           taskIds.push(taskId);
+                       });
+                       TaskBoard.view.rightContent.taskReorderedHandler(taskIds);
+                   }
                    return false;
                 },
                 dragCallbackFn : function(topPos, leftPos) {
@@ -221,6 +231,10 @@ TaskBoard.view.rightContent = {
             callBack(taskId, taskTitle);
         });
 
+    },
+
+    setTaskReorderedHandler : function(callBack) {
+        TaskBoard.view.rightContent.taskReorderedHandler = callBack;
     },
 
 

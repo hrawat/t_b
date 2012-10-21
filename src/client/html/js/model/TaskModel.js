@@ -109,6 +109,33 @@ TaskBoard.TaskModel = {
 
     },
 
+    reorderTasks : function(categoryId, taskIds, successCallBack, failureCallBack) {
+        var taskIdsStr = taskIds.join(",");
+        // todo: handle category Id != 0 scenario
+        if (categoryId != 0) {
+            return;
+        }
+        var reorderTasksReq = $.ajax({
+            url : "task",
+            dataType : "json",
+            type : "GET",
+            async :true,
+            data : {
+                "reqType" : "saveTasksOrder",
+                "taskIds" : taskIdsStr
+            }
+
+        });
+        reorderTasksReq.done(function(result) {
+            if (result['success']) {
+                successCallBack.call(this, result['payload']);
+            } else {
+                failureCallBack.call(this, result['errCode'], result['errMsg']);
+            }
+
+        });
+    },
+
     changePriority: function(taskParams, successCallBack, failureCallBack) {
 
         var taskChangePriorityReq = $.ajax({

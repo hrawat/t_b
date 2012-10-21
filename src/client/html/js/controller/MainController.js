@@ -116,6 +116,10 @@ TaskBoard.controller.MainController = {
             }
             TaskBoard.view.rightContent.setAddTaskHandler(createEditCallbackFn);
             TaskBoard.view.rightContent.setEditTaskHandler(createEditCallbackFn);
+            TaskBoard.view.rightContent.setTaskReorderedHandler(function(taskIds) {
+                var categoryId = TaskBoard.view.LeftNavigation.getSelectedCategoryId();
+                TaskBoard.TaskModel.reorderTasks(categoryId, taskIds, function() {}, function() {});
+            });
 
         }
 

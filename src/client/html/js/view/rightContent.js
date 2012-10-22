@@ -47,19 +47,19 @@ TaskBoard.view.rightContent = {
                 dragStartCallbackFn : function() {
                    TaskBoard.view.rightContent.draggingActive = true; 
                 },
-                dragEndCallbackFn : function() {
+                dragEndCallbackFn : function(draggedElt, beforeElt, afterElt) {
                    TaskBoard.view.rightContent.draggingActive = false;
                    if (TaskBoard.view.rightContent.taskReorderedHandler != undefined) {
-                       var taskIds = new Array();
-                       var taskElements = $("#container .item");
-                       jQuery.each(taskElements, function(index, value) {
-                           var idStr = value.id;
-                           if (idStr.indexOf("task_") == 0) {
-                              var taskId = idStr.substring("task_".length);
-                              taskIds.push(taskId);
-                           }
-                       });
-                       TaskBoard.view.rightContent.taskReorderedHandler(taskIds);
+                       var taskId = draggedElt.id.substring("task_".length);
+                       var beforeTaskId = null;
+                       if (beforeElt != null) {
+                          beforeTaskId = beforeElt.id.substring("task_".length);
+                       }
+                       var afterTaskId = null;
+                       if (afterElt != null) {
+                          afterTaskId = afterElt.id.substring("task_".length);
+                       }
+                       TaskBoard.view.rightContent.taskReorderedHandler(taskId, beforeTaskId, afterTaskId);
                    }
                    return false;
                 },

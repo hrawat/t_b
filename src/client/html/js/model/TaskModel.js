@@ -109,12 +109,30 @@ TaskBoard.TaskModel = {
 
     },
 
-    reorderTasks : function(categoryId, taskIds, successCallBack, failureCallBack) {
-        var taskIdsStr = taskIds.join(",");
-        // todo: handle category Id != 0 scenario
-        if (categoryId != 0) {
-            return;
+    reorderTasks : function(taskId, beforeTaskId, afterTaskId, successCallBack, failureCallBack) {
+        if ((beforeTaskId == null) && (afterTaskId == null)) {
+           return;
         }
+        var allTasks = TaskBoard.TaskModel._allTasks();
+        var insertPos = 0;
+        if (beforeTaskId != null) {
+           insertPos = TaskBoard.TaskModel._indexOf(beforeTaskId)+1;
+        } else {
+           insertPos = TaskBoard.TaskModel._indexOf(afterTaskId);
+        }
+
+        var taskIds = new Array();
+        var index = 0;
+        while (index < allTasks.length) {
+           if (index == insertPos) {
+              taskIds.push(taskId);
+           } 
+           if (allTasks[index].id != taskId) {
+              taskIds.push(allTasks[index].id);
+           }
+           index ++;
+        }
+        var taskIdsStr = taskIds.join(",");
         var reorderTasksReq = $.ajax({
             url : "task",
             dataType : "json",
@@ -335,7 +353,7 @@ TaskBoard.TaskModel = {
         var allTasks, index;
         allTasks = this._allTasks();
         for (index=0; index < allTasks.length; index++) {
-            if (allTasks[index].taskId == taskId) {
+            if (allTasks[index].id == taskId) {
                 return index;
             }
         }

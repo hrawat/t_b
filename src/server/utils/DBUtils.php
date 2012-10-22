@@ -14,7 +14,7 @@ class DBUtils {
 
     public static function execute($sqlStmt) {
         $dbConn = self::getDbConn();
-        Logger::debug("database", "Executing sql stmt [$sqlStmt]");
+        //Logger::debug("database", "Executing sql stmt [$sqlStmt]");
         $result = mysql_query($sqlStmt, $dbConn);
         return $result;
     }

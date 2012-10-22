@@ -222,7 +222,7 @@ class TaskService {
             $userIdToInfoMap = array();
             $tasksOrder = self::getTasksOrder($userId);
             $orderedTasks = array();
-            $nonExistentTasks = array();
+            $tasks = array();
             while (($taskRow = mysql_fetch_assoc($result)) != FALSE) {
                 $taskRow['status'] = self::taskStatusStrValue($taskRow['status'] );
                 $taskRow['priority'] = self::taskPriorityStrValue($taskRow['priority'] );
@@ -235,12 +235,16 @@ class TaskService {
 
                 if (isset($tasksOrder[$taskRow['id']])) {
                     $orderedTasks[$tasksOrder[$taskRow['id']]] = $taskRow;
+                    //Logger::debug(self::TASK_SERVICE, "adding task from ordered list " . $taskRow['id'] . " " . $tasksOrder[$taskRow['id']]);
                 } else {
-                    $nonExistentTasks[] = $taskRow;
+                    Logger::debug(self::TASK_SERVICE, "task id " . $taskRow['id'] . " doesnt exist");
+                    $tasks[] = $taskRow;
                 }
             }
 
-            $tasks = array_merge($nonExistentTasks, $orderedTasks);
+            for ($i=0; $i < count($orderedTasks); $i++) {
+               $tasks[] = $orderedTasks[$i];
+            }
 
 
 
@@ -275,7 +279,10 @@ class TaskService {
             $taskIdsStr = $row['taskIds'];
             $taskIds = explode(",",$taskIdsStr);
             foreach ($taskIds as $taskId) {
-                $retValue[$row['taskId']] = $index;
+                if ($taskId == "") {
+                   continue;
+                }
+                $retValue[$taskId] = $index;
                 $index++;
             }
         }

@@ -131,6 +131,26 @@
         }
 
 
+		 .completedTask {
+           text-decoration : line-through;
+        }
+
+        .addcat {
+            margin: 10px 0 0 10px;
+            width: 230px;
+
+            text-align:center;
+
+            line-height:50px;
+            font-weight:bold;
+            border-radius: 5px;
+            color:#e2e2e2;
+            border:solid #fff 1px;
+            -webkit-box-shadow: inset 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
+
+            background: #ffffff; /* Old browsers */
+        }
+
 
 </style>
 
@@ -251,27 +271,7 @@
         <p id="localDateId">Aug 12, 2012</p>
     </div>
 
-    <style>
-        .completedTask {
-           text-decoration : line-through;
-        }
-
-        .addcat {
-            margin: 10px 0 0 10px;
-            width: 230px;
-
-            text-align:center;
-
-            line-height:50px;
-            font-weight:bold;
-            border-radius: 5px;
-            color:#e2e2e2;
-            border:solid #fff 1px;
-            -webkit-box-shadow: inset 0px 0px 5px 5px rgba(200, 200, 200, 0.1);
-
-            background: #ffffff; /* Old browsers */
-        }
-    </style>
+  
 
     <ul id="categoriesList">
         <li ><a id="category_0" class="selected calendar">All Tasks</a></li>
@@ -284,17 +284,22 @@
 
     <div id="notification" class="notification" style="display: none"></div>
 
-    <div class="dailyHeader">This Week's Tasks</div>
-
-    <div  style="float: right; display: block; padding-right: 20px"  >
+    <div class="dailyHeader">
+    
+    	This Week
+        
+    	 <div  style="float: right; display: block; padding-right: 20px"  >
         <div id="thisWeekProgressBarId" class="progressBar" style="display: inline-block;">
             <div></div>
         </div>
-        <p style="display: inline;"><strong id="weeklyTaskStatusId">1/5</strong>  Completed</p>
+        <strong id="weeklyTaskStatusId">1/5</strong>  Completed
     </div>
-    <br/>
-    <br/>
+    
+    </div>
 
+   
+    
+    
     <div id="container">
         <div id="addTaskId" class="pro_pad-shadow item">
             <div class="pro_text-shadow background_color addblock item" >

@@ -161,11 +161,12 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	box-shadow: inset 0px 0px 2px 1px rgba(255, 255, 255, 1);
 	border-radius: 5px;
 	position:relative;
+	min-width:600px;
 }
 
 .rightContent #container {
 	padding: 10px;
-	background-color:#F3F3F3;	
+	background-color:#f8f8f8;
 }
 
 #notification {
@@ -345,7 +346,8 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	padding: 0 0 0 10px;
 	font-weight:bold;
 	border-radius: 5px;
-	
+	height:50px;
+	min-width:600px;
 	-webkit-box-shadow: inset 0px 0px 2px 2px rgba(255, 255, 255, 1);
 	box-shadow: inset 0px 0px 2px 1px rgba(255, 255, 255, 1);
 	

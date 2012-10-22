@@ -285,15 +285,44 @@
     <div id="notification" class="notification" style="display: none"></div>
 
     <div class="dailyHeader">
-    
-    	This Week
+    	<style>
+			.dailyHeader ul {
+				width:100%;	
+				position:relative;
+			}
+			.dailyHeader ul li{
+				list-style:none;
+				float:left;
+			}
+		</style>
         
-    	 <div  style="float: right; display: block; padding: 0 20px; border-left:1px solid #999;"  >
-        <div id="thisWeekProgressBarId" class="progressBar" style="display: inline-block;">
-            <div></div>
-        </div>
+    	 <ul>
+         	<li  style="padding: 0 40px 0 10px;" >This Week</li>
+         	<li>
+            	<div id="addTaskId"  style="padding: 0 20px; border-left:1px solid #ccc;" >
+                	<a style="cursor:pointer;"><img src="img/add.png" width="25" height="25" style="padding: 12px 10px 0 0;">Add New </a>
+            	</div>
+            </li>
+         	<li style="position:absolute; right:0;">
+            	<div  style="padding: 0 20px; border-left:1px solid #ccc;"  >
+                    <div id="thisWeekProgressBarId" class="progressBar" style="display: inline-block;">
+                        <div></div>
+                    </div>
+                <strong id="weeklyTaskStatusId">1/5</strong>  Completed
+            </div>
+            
+            </li>
+         </ul> 
+         <!--<span id="addTaskId" style="padding: 0 20px;  border-left:1px solid #999;" >
+         		<img src="img/add.png" width="16" height="16" />
+         </span>-->
+        
+         <!--<div  style="float: right; display: block; padding: 0 20px; border-left:1px solid #999;"  >
+            <div id="thisWeekProgressBarId" class="progressBar" style="display: inline-block;">
+                <div></div>
+            </div>
         <strong id="weeklyTaskStatusId">1/5</strong>  Completed
-    </div>
+    </div>-->
     
     </div>
 
@@ -301,11 +330,17 @@
     
     
     <div id="container">
-        <div id="addTaskId" class="pro_pad-shadow item">
+        <!--<div id="addTaskId" class="pro_pad-shadow item">
             <div class="pro_text-shadow background_color addblock item" >
                 <a  class="add" href='#'>+</a>
             </div>
-        </div>
+        </div>-->
+        
+        <div style="height:300px; width: 100%; line-height:270px; font-size:20px; margin-left: 190px; margin-top: 20px;">
+        	<img src="img/arrow.png" align="middle"/>Create a new task here. 
+        
+        </div>	
+        
     </div>
 
     <div class="dailyHeader">Later Tasks</div>

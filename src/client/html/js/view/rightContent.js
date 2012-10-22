@@ -51,11 +51,13 @@ TaskBoard.view.rightContent = {
                    TaskBoard.view.rightContent.draggingActive = false;
                    if (TaskBoard.view.rightContent.taskReorderedHandler != undefined) {
                        var taskIds = new Array();
-                       $taskElements = $("#container .item");
-                       jQuery.each($taskElements, function(index, value) {
-                           var idStr = value.attr("id");
-                           var taskId = idStr.substring("task_".length);
-                           taskIds.push(taskId);
+                       var taskElements = $("#container .item");
+                       jQuery.each(taskElements, function(index, value) {
+                           var idStr = value.id;
+                           if (idStr.indexOf("task_") == 0) {
+                              var taskId = idStr.substring("task_".length);
+                              taskIds.push(taskId);
+                           }
                        });
                        TaskBoard.view.rightContent.taskReorderedHandler(taskIds);
                    }
@@ -159,7 +161,7 @@ TaskBoard.view.rightContent = {
 
         $(".completedTask .upper_content").unbind("mouseover");
         $(".completedTask .upper_content").mouseover(function(){
-            if (TaskBoard.view.rightContent.draggingActive != TRUE) {
+            if (TaskBoard.view.rightContent.draggingActive != true) {
                $(this).children().css("display", "block")
                $(this).children(".secondOptions").children(".taskDone").css("display", "none")
                $(this).children(".secondOptions").children(".taskEdit").css("display", "none")

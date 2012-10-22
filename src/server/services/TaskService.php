@@ -284,8 +284,8 @@ class TaskService {
 
     public static function saveTasksOrder($userId, $taskIds) {
         $userIdDbValue = DBUtils::escapeStrValue($userId);
-        DBUtils::execute("start transaction");
-        DBUtils::execute("delete from UserTaskOrder where userId=$userIdDbValue");
+        self::executeUpdateStmt("start transaction");
+        self::executeUpdateStmt("delete from UserTaskOrder where userId=$userIdDbValue");
         $taskIdsStr = "";
         $index = 0;
         foreach ($taskIds as $taskId) {
@@ -300,12 +300,22 @@ class TaskService {
         if (strlen($taskIdsStr) > 0) {
             self::insertIntoUserTaskOrderTable($userIdDbValue, $index, $taskIdsStr);
         }
+        self::executeUpdateStmt("commit");
     }
 
     public static function insertIntoUserTaskOrderTable($userIdDbValue, $index, $taskIdsStr){
         $taskIdsDbValue = DBUtils::escapeStrValue($taskIdsStr);
         $sqlStmt = "Insert into UserTaskOrder(userId, indexPos, taskIds) values ($userIdDbValue, $index, $taskIdsDbValue)";
-        DBUtils::execute($sqlStmt);
+        self::executeUpdateStmt($sqlStmt);
     }
+
+    private static function executeUpdateStmt($sqlStmt) {
+        $result = DBUtils::execute($sqlStmt);
+        if ($result == FALSE) {
+            Logger::error(self::TASK_SERVICE, "Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+            throw new Exception("Error in executing sql stmt [$sqlStmt], error " . mysql_error());
+        }
+
+     }
 
 }

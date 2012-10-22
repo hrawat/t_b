@@ -17,7 +17,7 @@ function handleRequest() {
         $retValue = handleRequestInternal($userId);
     }
     $retValueInJson = json_encode($retValue);
-     Logger::debug("taskService", "return value $retValueInJson"); 
+     //Logger::debug("taskService", "return value $retValueInJson"); 
     echo $retValueInJson;
 }
 
@@ -128,7 +128,7 @@ function handleSaveTasksOrder($userId) {
     if ($mandatoryArgsCheckRetValue != NULL) {
         return $mandatoryArgsCheckRetValue;
     } else {
-        $taskIds = ControllerUtils::getArgValue("taskIds", NULL);
+        $taskIds = explode(",", ControllerUtils::getArgValue("taskIds", NULL));
         TaskService::saveTasksOrder($userId, $taskIds);
         return ControllerUtils::getSuccessResponse(TRUE);
     }

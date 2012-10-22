@@ -13,7 +13,9 @@ TaskBoard.view.rightContent = {
         var thisWeeksTasks = data['thisWeeksTasks'];
         var laterTasks = data['laterTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
-        if (thisWeeksTasks.length > 0) {
+        if (thisWeeksTasks.length == 0) {
+           $("#newTaskHintId").css("display", "block");
+        } else {
            $("#newTaskHintId").remove();
         }
         $('.task').remove();

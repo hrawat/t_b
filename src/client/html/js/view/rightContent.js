@@ -29,8 +29,8 @@ TaskBoard.view.rightContent = {
             }
 
         });
-        var totalTasks = thisWeeksTasks.length;
-        var completedTasks = TaskBoard.view.rightContent._getCompletedTasks(thisWeeksTasks)
+        var completedTasks = TaskBoard.view.rightContent._getTasksCount(thisWeeksTasks, true);
+        var totalTasks = completedTasks + TaskBoard.view.rightContent._getTasksCount(thisWeeksTasks, false);
         var completedPercent = 0;
         if (completedTasks > 0) {
            completedPercent =  ((completedTasks*100)/totalTasks);
@@ -99,17 +99,21 @@ TaskBoard.view.rightContent = {
 
     },
 
-    _getCompletedTasks : function(tasks) {
+    _getTasksCount : function(tasks, completedTasks) {
 
-        var completedTasks = 0;
+        var tasksCount = 0;
         var index = 0;
         for (index=0; index < tasks.length; index++) {
-            if ((tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED)
-                && (tasks[index]['completionDate'] > getStartOfWeekDate())) {
-                completedTasks++;
+            if (completedTasks) {
+               if ((tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED)
+                   && (tasks[index]['completionDate'] > getStartOfWeekDate())) {
+                   tasksCount++;
+               }
+            } else if (tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_ACTIVE) {
+                tasksCount++;
             }
         }
-        return completedTasks;
+        return tasksCount;
 
     },
 

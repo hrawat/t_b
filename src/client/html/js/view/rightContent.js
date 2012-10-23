@@ -13,11 +13,12 @@ TaskBoard.view.rightContent = {
         var thisWeeksTasks = data['thisWeeksTasks'];
         var laterTasks = data['laterTasks'];
         var selectedCategoryId = data['selectedCategoryId'];
+
+        $("#newTaskHintId").remove();
         if (thisWeeksTasks.length == 0) {
-           $("#newTaskHintId").css("display", "block");
-        } else {
-           $("#newTaskHintId").remove();
-        }
+           $("#container").append("<div id='newTaskHintId'><img  src='img/arrow.png' align='middle'/>Create a new task here.</div>");
+        } 
+
         $('.task').remove();
         $('.completedTask').remove();
         thisWeeksTasks.forEach(function(task, index) {

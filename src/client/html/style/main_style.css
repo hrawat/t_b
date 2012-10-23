@@ -619,3 +619,12 @@ right: 25px;
     height: 20px;
     /*border-radius: 10px;*/
 }
+
+#newTaskHintId {
+    height:300px;     
+    width: 100%;     
+    line-height:270px; 
+    font-size:20px; 
+    margin-left: 190px; 
+    margin-top: 20px;
+}

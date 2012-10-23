@@ -364,7 +364,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 
 .pro_pad-shadow {
     padding: 10px;
-    width: 220px;
+    width: 300px;
     
 }
 	.pro_curved-hz-2 {
@@ -405,7 +405,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, bo
 	.upper_content .secondOptions {
 		position:absolute;
 		top: 0; left:0;
-		width:220px;
+		width:300px;
 		text-align:center;
 		display:none;
 		z-index:100;

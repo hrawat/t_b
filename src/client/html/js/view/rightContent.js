@@ -51,7 +51,7 @@ TaskBoard.view.rightContent = {
                     easing: 'linear',
                     queue: false
                 },
-                columnWidth : 240,
+                columnWidth : 320,
                 isDraggable: true,
                 dragHandleSelector: '.block_tag',
                 dragStartCallbackFn : function() {

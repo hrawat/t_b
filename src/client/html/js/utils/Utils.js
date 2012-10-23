@@ -73,6 +73,11 @@ function createStandardCategories() {
     }
 }
 
+function getStartOfWeekInMillis() {
+    var first = currDate.getDate() - currDate.getDay(); // First day is the day of the month - the day of the week
+    var startOfWeekDate = (new Date()).setDate(first);
+    return (startOfWeekDate.getTime()/1000);
+}
 
 function getTimeDiffInStr(refDate) {
     var now = new Date();

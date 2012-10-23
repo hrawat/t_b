@@ -22,8 +22,12 @@ TaskBoard.view.rightContent = {
         $('.task').remove();
         $('.completedTask').remove();
         thisWeeksTasks.forEach(function(task, index) {
-            var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
-            $("#container").append(taskElt);
+            if ( (task['status'] == TaskBoard.TaskModel.TASK_STATUS_ACTIVE) ||
+                ((task['status'] == TaskBoard.TaskModel.TASK_STATUS_COMPLETED) && (task['completionDate'] > getStartOfWeekInMillis()))) {
+                var taskElt = TaskBoard.view.rightContent._createTaskElement(task);
+                $("#container").append(taskElt);
+            }
+
         });
         var totalTasks = thisWeeksTasks.length;
         var completedTasks = TaskBoard.view.rightContent._getCompletedTasks(thisWeeksTasks)
@@ -100,7 +104,8 @@ TaskBoard.view.rightContent = {
         var completedTasks = 0;
         var index = 0;
         for (index=0; index < tasks.length; index++) {
-            if (tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED) {
+            if ((tasks[index].status == TaskBoard.TaskModel.TASK_STATUS_COMPLETED)
+                && (task['completionDate'] > getStartOfWeekInMillis())) {
                 completedTasks++;
             }
         }

@@ -119,7 +119,10 @@ TaskBoard.controller.MainController = {
             TaskBoard.view.rightContent.setTaskReorderedHandler(function(taskId, beforeTaskId, afterTaskId) {
                 TaskBoard.TaskModel.reorderTasks(taskId, beforeTaskId, afterTaskId, 
                                                            function() {
-                                                              TaskBoard.TaskModel.loadTasksFromServer(function(){}, function() {});
+                                                              TaskBoard.TaskModel.loadTasksFromServer(
+                                                                 function(){
+                                                                    renderFn();
+                                                                 }, function() {});
                                                            }, 
                                                            function() {});
             });

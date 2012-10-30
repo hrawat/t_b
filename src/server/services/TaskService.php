@@ -237,13 +237,17 @@ class TaskService {
                     $orderedTasks[$tasksOrder[$taskRow['id']]] = $taskRow;
                     //Logger::debug(self::TASK_SERVICE, "adding task from ordered list " . $taskRow['id'] . " " . $tasksOrder[$taskRow['id']]);
                 } else {
-                    Logger::debug(self::TASK_SERVICE, "task id " . $taskRow['id'] . " doesnt exist");
+                    //Logger::debug(self::TASK_SERVICE, "task id " . $taskRow['id'] . " doesnt exist");
                     $tasks[] = $taskRow;
                 }
             }
 
             for ($i=0; $i < count($orderedTasks); $i++) {
-               $tasks[] = $orderedTasks[$i];
+               if (isset($orderedTasks[$i])) {
+                  $tasks[] = $orderedTasks[$i];
+               } else {
+                   Logger::debug(self::TASK_SERVICE, "task id " . $taskRow['id'] . " doesnt exist");
+               }
             }
 
 

@@ -44,7 +44,7 @@ TaskBoard.view.rightContent = {
         //$('#container').masonry( 'reload' );
         var masonryOptions = {
                 // options
-                //itemSelector : '.item',
+                itemSelector : '.item',
                 isAnimated: false,
                 animationOptions: {
                     duration: 400,
@@ -81,7 +81,7 @@ TaskBoard.view.rightContent = {
          
                    if ( (topPos < containerTop) || (topPos > containerBottom) ||
                                (leftPos < containerLeft) || (leftPos > containerRight)) { 
-                      console.log("returning false");
+                      //console.log("returning false");
                       // todo: fix this to restrict drag action only within container
                       return true;
                    }

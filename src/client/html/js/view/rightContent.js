@@ -44,7 +44,7 @@ TaskBoard.view.rightContent = {
         //$('#container').masonry( 'reload' );
         var masonryOptions = {
                 // options
-                itemSelector : '.item',
+                //itemSelector : '.item',
                 isAnimated: false,
                 animationOptions: {
                     duration: 400,
